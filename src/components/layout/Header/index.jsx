@@ -9,7 +9,7 @@ export default function Header() {
           <nav className="header__nav">
             <ul>
               <li>
-                <Link className="header__logo" to="/">
+                <Link className="header__logo" to="/staging/home">
                   <img
                     className="header__logo__img"
                     src={require("../../../assets/images/pylon.png")}
@@ -18,22 +18,22 @@ export default function Header() {
                 </Link>
               </li>
               <li className="menu-link">
-                <Link to="/">HOME</Link>
+                <Link to="/staging/home">HOME</Link>
               </li>
               <li className="menu-link">
-                <Link to="/about-pylon">ABOUT PYLON</Link>
+                <Link to="#">ABOUT PYLON</Link>
               </li>
               <li className="menu-link">
-                <Link to="/ycrv-vault">YCRV VAULT</Link>
+                <Link to="#">YCRV VAULT</Link>
               </li>
               <li className="menu-link">
-                <Link to="/fdi-vault">FDI VAULT</Link>
+                <Link to="#">FDI VAULT</Link>
               </li>
               <li className="menu-link">
-                <Link to="/pylon-gpu-vault">PYLON GPU VAULT</Link>
+                <Link to="#">PYLON GPU VAULT</Link>
               </li>
               <li className="menu-link">
-                <Link to="/partners">PARTNERS</Link>
+                <Link to="#">PARTNERS</Link>
               </li>
             </ul>
           </nav>

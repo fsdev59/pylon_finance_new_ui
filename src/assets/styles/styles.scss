@@ -11,6 +11,10 @@
     font-size: 1.5rem;
     color: #00b9eb;
     font-weight: bold;
+
+    &.orange {
+      color: #ff8200;
+    }
   }
 
   &__divider {

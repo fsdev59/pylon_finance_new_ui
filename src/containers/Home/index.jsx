@@ -168,7 +168,7 @@ export default function Home() {
                   <span className="desc">Invest</span>
                   <span className="value">$100,000</span>
                 </div>
-                <div className="content-item">
+                <div className="content-item border-dot">
                   <span className="desc">(+)Additional Invest</span>
                   <span className="value">$45,000</span>
                 </div>
@@ -179,7 +179,7 @@ export default function Home() {
                 </div>
                 <div className="content-item">
                   <span className="desc">Second Year Value</span>
-                  <span className="value border border-dot">$284,750</span>
+                  <span className="value border">$284,750</span>
                 </div>
                 <div className="content-item">
                   <span className="desc">First Year Total Investment</span>
@@ -187,38 +187,43 @@ export default function Home() {
                 </div>
                 <div className="content-item">
                   <span className="desc">Net Profit</span>
-                  <span className="value border border-dot">$139,750</span>
+                  <span className="value border">$139,750</span>
                 </div>
               </div>
-              <span>97% Profit in one year</span>
+              <span className="profit">97% Profit in one year</span>
             </div>
           </div>
         </div>
-
-        <div className="section valut-ecosystem">
-          <TextBlock title="Valut/ecosystem Flow Chart">
-            <div className="content">
-              <div className="description">
-                <p>
-                  The farms will mine Ethereum, banking on the <br />
-                  elevated gas fees and mining rewards as of late.
-                </p>
-                <p>
-                  These rewards are then returned into the $PYLON <br />
-                  ecosystem.
-                </p>
+        <div className="content-3">
+          <div className="section valut-ecosystem">
+            <TextBlock title="Valut/ecosystem Flow Chart" color="orange">
+              <div className="value-ecosystem-content">
+                <div className="content">
+                  <div className="description">
+                    <p>
+                      The farms will mine Ethereum, banking on the <br />
+                      elevated gas fees and mining rewards as of late.
+                    </p>
+                    <p>
+                      These rewards are then returned into the $PYLON <br />
+                      ecosystem.
+                    </p>
+                  </div>
+                </div>
+                <div className="mining-farm">
+                  <h2>Mining Farm</h2>
+                  Farms mine Ethereum transactions
+                  <br /> and earn rewards/gas fees
+                </div>
               </div>
-            </div>
-            <div className="mining-farm">
-              Farms mine Ethereum transactions
-              <br /> and earn rewards/gas fees
-            </div>
-          </TextBlock>
-          <img
-            className=""
-            src={require("../../assets/images/flow-chart.png")}
-            alt="Valut/ecosystem Flow Chart"
-          />
+            </TextBlock>
+            <img
+              className="flow-chart"
+              src={require("../../assets/images/flow-chart.png")}
+              alt="Valut/ecosystem Flow Chart"
+            />
+            <p className="capital">Capital is deployed to return<br/> maximum risk adjusted returns</p>
+          </div>
         </div>
       </div>
     </>

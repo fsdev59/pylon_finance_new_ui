@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 
 import Header from "./components/layout/Header";
@@ -13,12 +13,13 @@ const PublicRoutes = ({ history }) => {
     <ConnectedRouter history={history}>
       <Header />
       <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/login" component={Login} />
+        <Route exact path="/staging/home" component={Home} />
+        <Route exact path="/staging" component={Home} />
+        {/* <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Signup} />
-        <Route path="/register/i/:handle" component={Signup} />
+        <Route path="/register/i/:handle" component={Signup} /> */}
       </Switch>
-      <Footer/>
+      <Footer />
     </ConnectedRouter>
   );
 };

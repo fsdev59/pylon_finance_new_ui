@@ -1,13 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import "./styles.scss";
+
 export default function Footer() {
   return (
-    <div>
+    <>
       <footer className="footer">
-        <div className="footer_wrapper">
-          <div className="logo_wrapper">
-            <Link className="footer_logo" to="/">
+        <hr className="line" />
+        <div className="footer-wrapper">
+          <div className="logo-wrapper">
+            <Link className="footer-logo" to="/staging/home">
               <img
                 className="footer__logo__img"
                 src={require("../../../assets/images/pylon.png")}
@@ -20,27 +23,48 @@ export default function Footer() {
               </span>
             </Link>
           </div>
-          <div className="link_wrapper">
+          <div className="link-wrapper">
             <h3 className="caption">Links</h3>
-            <Link to="/">Home</Link>
-            <Link to="/">Services</Link>
-            <Link to="/">About Us</Link>
-            <Link to="/">News</Link>
-            <Link to="/">Career</Link>
-            <Link to="/">Blog</Link>
-            <Link to="/">Team</Link>
-            <Link to="/">Contact Us</Link>
+            <Link className="link" to="/">
+              Home
+            </Link>
+            <Link className="link" to="/">
+              Services
+            </Link>
+            <Link className="link" to="/">
+              About Us
+            </Link>
+            <Link className="link" to="/">
+              News
+            </Link>
+            <Link className="link" to="/">
+              Career
+            </Link>
+            <Link className="link" to="/">
+              Blog
+            </Link>
+            <Link className="link" to="/">
+              Team
+            </Link>
+            <Link className="link" to="/">
+              Contact Us
+            </Link>
           </div>
-          <div className="subscript_wrapper">
+          <div className="subscription-wrapper">
             <h3>Subscript Us</h3>
             <span>Enter Email</span>
             <input type="text" />
             <div className="subscribe-send"></div>
           </div>
         </div>
-        <div className="social_wrapper">
+        <div className="social-wrapper"></div>
+        <div className="footer-address">
+          <span className="address">
+            456 California Street, San Francisco, CA 75395
+          </span>
+          <span>©2020 Pylon Finance, Inc.</span>
         </div>
       </footer>
-    </div>
+    </>
   );
 }
