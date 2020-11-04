@@ -7,6 +7,7 @@ import Footer from "./components/layout/Footer";
 import Login from "./containers/Auth/Login";
 import Signup from "./containers/Auth/Signup";
 import Home from "./containers/Home";
+import Partners from "./containers/Partners";
 
 const PublicRoutes = ({ history }) => {
   return (
@@ -18,6 +19,7 @@ const PublicRoutes = ({ history }) => {
         {/* <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Signup} />
         <Route path="/register/i/:handle" component={Signup} /> */}
+        <Route exact path="/staging/partners" component={Partners} />
       </Switch>
       <Footer />
     </ConnectedRouter>
