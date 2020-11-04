@@ -33,7 +33,7 @@ export default function Header() {
                 <Link to="#">PYLON GPU VAULT</Link>
               </li>
               <li className="menu-link">
-                <Link to="#">PARTNERS</Link>
+                <Link to="/staging/partners">PARTNERS</Link>
               </li>
             </ul>
           </nav>
