@@ -8,6 +8,9 @@ import Login from "./containers/Auth/Login";
 import Signup from "./containers/Auth/Signup";
 import Home from "./containers/Home";
 import Partners from "./containers/Partners";
+import YCRVVault from "./containers/YCRVVault";
+import PYLONVault from "./containers/PYLONVault";
+import FDIVault from "./containers/FDIVault";
 
 const PublicRoutes = ({ history }) => {
   return (
@@ -19,6 +22,9 @@ const PublicRoutes = ({ history }) => {
         {/* <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Signup} />
         <Route path="/register/i/:handle" component={Signup} /> */}
+        <Route exact path="/staging/ycrv-vault" component={YCRVVault} />
+        <Route exact path="/staging/fdi-vault" component={FDIVault} />
+        <Route exact path="/staging/pylon-vault" component={PYLONVault} />
         <Route exact path="/staging/partners" component={Partners} />
       </Switch>
       <Footer />

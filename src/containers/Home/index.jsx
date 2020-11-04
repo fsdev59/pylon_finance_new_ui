@@ -222,7 +222,10 @@ export default function Home() {
               src={require("../../assets/images/flow-chart.png")}
               alt="Valut/ecosystem Flow Chart"
             />
-            <p className="capital">Capital is deployed to return<br/> maximum risk adjusted returns</p>
+            <p className="capital">
+              Capital is deployed to return
+              <br /> maximum risk adjusted returns
+            </p>
           </div>
         </div>
       </div>

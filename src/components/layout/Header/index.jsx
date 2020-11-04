@@ -24,13 +24,13 @@ export default function Header() {
                 <Link to="#">ABOUT PYLON</Link>
               </li>
               <li className="menu-link">
-                <Link to="#">YCRV VAULT</Link>
+                <Link to="/staging/ycrv-vault">YCRV VAULT</Link>
               </li>
               <li className="menu-link">
-                <Link to="#">FDI VAULT</Link>
+                <Link to="/staging/fdi-vault">FDI VAULT</Link>
               </li>
               <li className="menu-link">
-                <Link to="#">PYLON GPU VAULT</Link>
+                <Link to="/staging/pylon-vault">PYLON GPU VAULT</Link>
               </li>
               <li className="menu-link">
                 <Link to="/staging/partners">PARTNERS</Link>
