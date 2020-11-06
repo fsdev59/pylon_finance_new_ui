@@ -21,7 +21,7 @@ export default function Header() {
                 <Link to="/staging/home">HOME</Link>
               </li>
               <li className="menu-link">
-                <Link to="#">ABOUT PYLON</Link>
+                <Link to="/staging/about-pylon">ABOUT PYLON</Link>
               </li>
               <li className="menu-link">
                 <Link to="/staging/ycrv-vault">YCRV VAULT</Link>
