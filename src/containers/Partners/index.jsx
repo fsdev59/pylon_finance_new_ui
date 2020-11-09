@@ -7,7 +7,7 @@ import RectBlock from "../../components/common/RectBlock";
 
 import "./styles.scss";
 
-export default function Home() {
+export default function Partners() {
   return (
     <>
       <div className="root partners-container">
@@ -45,7 +45,17 @@ export default function Home() {
             <div className="right">
               <img
                 className="partners-background"
-                src={require("../../assets/images/right-partners-icon.png")}
+                src={require("../../assets/images/partners-yakuza.png")}
+                alt="Valut/ecosystem Flow Chart"
+              />
+              <img
+                className="partners-background"
+                src={require("../../assets/images/partners-b.png")}
+                alt="Valut/ecosystem Flow Chart"
+              />
+              <img
+                className="partners-background"
+                src={require("../../assets/images/partners-clock.png")}
                 alt="Valut/ecosystem Flow Chart"
               />
             </div>

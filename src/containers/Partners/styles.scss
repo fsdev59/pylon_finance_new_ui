@@ -50,12 +50,14 @@
       }
   
       .right {
-        margin-top: -20px;
+        margin-top: 15px;
         color: #fff;
         text-align: center;
         float: right;
+        display: flex;
       }
     }
+
     .contact-us {
       display: flow-root;
       width: 100%;
