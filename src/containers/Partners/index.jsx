@@ -26,7 +26,7 @@ export default function Partners() {
           <img
               className="partners-background"
               src={require("../../assets/images/partners-back-1.png")}
-              alt="Valut/ecosystem Flow Chart"
+              alt="hand shake background image"
             />
         </div>
 
@@ -44,19 +44,19 @@ export default function Partners() {
             </div>
             <div className="right">
               <img
-                className="partners-background"
+                className="partners-image"
                 src={require("../../assets/images/partners-yakuza.png")}
-                alt="Valut/ecosystem Flow Chart"
+                alt="Yakuza image"
               />
               <img
-                className="partners-background"
+                className="partners-image"
                 src={require("../../assets/images/partners-b.png")}
-                alt="Valut/ecosystem Flow Chart"
+                alt="B image"
               />
               <img
-                className="partners-background"
+                className="partners-image"
                 src={require("../../assets/images/partners-clock.png")}
-                alt="Valut/ecosystem Flow Chart"
+                alt="Clock image"
               />
             </div>
           </div>
@@ -93,17 +93,31 @@ export default function Partners() {
             </div>
             <div className="reach-us-form">
               <h2>Reach Us</h2>
-              <div className="contact-info-row">
-                <img
-                  className="partners-background"
-                  src={require("../../assets/images/contact-info-icon.png")}
-                  alt="Valut/ecosystem Flow Chart"
-                />
-                <div className="contact-info-right">
-                  <p>+44 (999) 999-9999</p>
-                  <p>exceedvision.uk@gmail.com</p>
-                  <p>456 California Street, San <br/>
-                  Francisco, CA 75395</p>
+              <div className="reach-us-list">
+                <div className="reach-us-row">
+                  <img
+                    className="partners-reach-us-background"
+                    src={require("../../assets/images/phone-icon.png")}
+                    alt="Reach Us phone icon"
+                  />
+                  <p>&nbsp;&nbsp; +44 (999) 999-9999</p>
+                </div>
+                <div className="reach-us-row">
+                  <img
+                    className="partners-reach-us-background"
+                    src={require("../../assets/images/mail-icon.png")}
+                    alt="Reach Us mail icon"
+                  />
+                  <p>&nbsp;&nbsp; exceedvision.uk@gmail.com</p>
+                </div>
+                <div className="reach-us-row">
+                  <img
+                    className="partners-reach-us-background"
+                    src={require("../../assets/images/location-icon.png")}
+                    alt="Reach Us location icon"
+                  />
+                  <p>&nbsp;&nbsp; 456 California Street, San<br/>
+                     &nbsp;&nbsp; Francisco, CA 75395</p>
                 </div>
               </div>
             </div>

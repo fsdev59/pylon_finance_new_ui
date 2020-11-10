@@ -13,12 +13,30 @@
       padding-bottom: 150px;
   
       background-color: #e7e6ec;
+
+      @media screen and (max-width: 1320px) {
+        padding-left: 10%;
+        padding-right: 10%;
+      }
+      @media screen and (max-width: 1024px) {
+        padding-left: 5%;
+        padding-right: 5%;
+      }
+      // @media screen and (max-width: 400px) {
+      //   padding-left: 0;
+      //   padding-right: 0;
+      // }
     }
   
     .section-concept {
       margin-top: 70px;
       padding-left: 20%;
       padding-right: 20%;
+
+      @media screen and (max-width: 1024px) {
+        padding-left: 10%;
+        padding-right: 10%;
+      }
     }
 
     .section-text {
@@ -26,6 +44,10 @@
       background-repeat: no-repeat;
       background-size: contain;
       background-position: right bottom;
+
+      @media screen and (max-width: 1024px) {
+        background-size: 0;
+      }
     }
 
     .partners-background {
@@ -33,11 +55,17 @@
     }
   
     .section-pylon-value {
-      display: flow-root;
-      flex-direction: row;
+      justify-content: space-between;
+      display: flex;
+      flex-wrap: wrap;
+      padding-left: 20px;
+
+      @media screen and (max-width: 619px) {
+        padding-left: 0px;
+      }
 
       .left {
-        float: left;
+
         h2 {
           font-size: 2rem;
           color: #1a2275;
@@ -50,30 +78,38 @@
       }
   
       .right {
-        margin-top: 15px;
-        color: #fff;
-        text-align: center;
-        float: right;
         display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        .partners-image {
+          @media screen and (max-width: 619px) {
+            width: 70%;
+            margin-top: 15px;
+          }
+        }
       }
     }
 
     .contact-us {
-      display: flow-root;
       width: 100%;
       margin-top: 84px;
-      margin-left: -15px;
-      height: 670px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
 
       .contact-us-form {
         background-color: #fff;
         width: 60%;
-        padding-top: 60px;
-        padding-bottom: 60px;
+        padding-top: 7%;
+        padding-bottom: 7%;
         padding-left: 5%;
         padding-right: 5%;
-        float: left;
         min-width: 220px;
+
+        @media screen and (max-width: 840px) {
+          width: 100%;
+        }
 
         h2 {
           font-size: 2rem;
@@ -81,16 +117,22 @@
         }
 
         .input-text-row {
-          display: flow-root;
+          display: flex;
+          justify-content: space-between;
+          flex-wrap: wrap;
 
           .input-text-left {
-            float: left;
             width: 47%;
+            @media screen and (max-width: 619px) {
+              width: 98%;
+            }
           }
 
           .input-text-right {
-            float: right;
             width: 47%;
+            @media screen and (max-width: 619px) {
+              width: 98%;
+            }
           }
           p{
             margin-left: 4px;
@@ -130,6 +172,10 @@
             padding: 12px 70px;
             border-radius: 8px;
             cursor: pointer;
+
+            @media screen and (max-width: 619px) {
+              width: 98%;
+            }
           }
         }
       }
@@ -140,32 +186,42 @@
         background-position: right bottom;
 
         width: 40%;
-        padding-top: 175px;
-        padding-left: 70px;
-        float: right;
-        height: 635px;
+        padding-top: 17%;
+        padding-bottom: 10%;
+        padding-left: 6%;
+
+        @media screen and (max-width: 840px) {
+          width: 100%;
+          background-size: 50%;
+          background-color: #1a2275;
+          padding-top: 8%;
+          padding-bottom: 8%;
+          padding-left:8%;
+
+        }
+
+        @media screen and (max-width: 470px) {
+        }
 
         h2 {
           font-size: 2rem;
           color: #fff;
         }
 
-        .contact-info-row {
-          display: float;
+        .reach-us-list {
           margin-top: 60px;
 
-          img {
-            float: left;
-            
-            width: 5%;
-          }
+          .reach-us-row {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
 
-          .contact-info-right {
-            margin-left: 30px;
-            
+            img {
+              width: 15px;
+              height: 15px;
+            }
             p {
               color: #fff;
-              margin-block-end: 30px;
             }
           }
         }
