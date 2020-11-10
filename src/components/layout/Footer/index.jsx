@@ -1,6 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPaperPlane, faChevronDown } from "@fortawesome/free-solid-svg-icons";
+
 import "./styles.scss";
 
 export default function Footer() {
@@ -12,7 +15,7 @@ export default function Footer() {
           <div className="logo-wrapper">
             <Link className="footer-logo" to="/staging/home">
               <img
-                className="footer__logo__img"
+                className="footer-logo-img"
                 src={require("../../../assets/images/pylon.png")}
                 alt="pylon - new"
               />
@@ -53,8 +56,12 @@ export default function Footer() {
           <div className="subscription-wrapper">
             <h3>Subscript Us</h3>
             <span>Enter Email</span>
-            <input type="text" />
-            <div className="subscribe-send"></div>
+            <div className="subscription-sender-wrapper">
+              <input type="text" />
+              <div className="subscribe-send" role="button">
+                <FontAwesomeIcon icon={faPaperPlane} />
+              </div>
+            </div>
           </div>
         </div>
         <div className="social-wrapper"></div>
