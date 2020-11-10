@@ -54,7 +54,7 @@ export default function Footer() {
             </Link>
           </div>
           <div className="subscription-wrapper">
-            <h3>Subscript Us</h3>
+            <h3>Subscribe Us</h3>
             <span>Enter Email</span>
             <div className="subscription-sender-wrapper">
               <input type="text" />
