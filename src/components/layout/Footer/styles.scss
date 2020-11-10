@@ -16,16 +16,26 @@
     margin-top: 50px;
     padding-bottom: 50px;
 
+    @media screen and (max-width: 768px) {
+      flex-direction: column;
+    }
+
     .logo-wrapper {
       flex: 1;
+      margin-bottom: 36px;
+
       .footer-logo {
         display: flex;
         flex-direction: row;
         align-items: flex-end;
 
+        .footer-logo-img {
+          height: 80px;
+        }
         span {
           font-weight: bold;
           padding-left: 15px;
+          padding-bottom: 5px;
         }
       }
     }
@@ -33,6 +43,7 @@
       flex: 1;
       display: flex;
       flex-flow: row wrap;
+      margin-bottom: 36px;
 
       h3 {
         color: #fff;
@@ -58,11 +69,33 @@
         margin-bottom: 10px;
       }
 
-      input {
-        background: transparent;
-        border: 1px solid #fff;
-        border-radius: 5px;
-        height: 30px;
+      .subscription-sender-wrapper {
+        display: flex;
+
+        input {
+          background: transparent;
+          border: 1px solid #fff;
+          border-radius: 5px;
+          height: 40px;
+          color: #fff;
+          line-height: 20px;
+          font-size: 20px;
+          width: 150px;
+          padding-left: 5px;
+        }
+
+        .subscribe-send {
+          width: 44px;
+          height: 44px;
+          border-radius: 4px;
+          margin-left: 10px;
+          background: #1a2275;
+          display: flex;
+          box-sizing: border-box;
+          padding-top: 14px;
+          padding-left: 12px;
+          cursor: pointer;
+        }
       }
     }
   }
@@ -74,12 +107,17 @@
     padding-right: 15%;
     width: 100%;
     padding-top: 40px;
-    padding-bottom: 40px;
+    padding-bottom: 25px;
     display: flex;
     flex-direction: row;
 
+    @media screen and (max-width: 525px) {
+      flex-direction: column;
+    }
+
     .address {
       flex: 1;
+      margin-bottom: 15px;
     }
   }
 }
