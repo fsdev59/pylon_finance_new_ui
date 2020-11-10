@@ -110,7 +110,7 @@ export default function (props) {
               <span className="percent"></span>
             </div>
             <div className="stake-content-row">
-              <button className="blue">Deposit</button>
+              <button className="blue ml">Approve</button>
             </div>
           </div>
           <div className="stake-content-section right">
