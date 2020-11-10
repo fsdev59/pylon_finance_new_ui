@@ -6,6 +6,7 @@
   padding-left: 15%;
   padding-right: 15%;
   padding-top: 50px;
+  padding-bottom: 20px;
 
   &__wrapper {
     display: flex;
@@ -49,6 +50,10 @@
 
         &.menu-link {
           &:hover {
+            border-bottom: 4px solid #f27c07;
+          }
+
+          &.active {
             border-bottom: 4px solid #f27c07;
           }
 

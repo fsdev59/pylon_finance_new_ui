@@ -1,9 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
 
 import "./styles.scss";
+import cx from "classnames";
 
-export default function Header() {
+const Header = ({ location }) => {
+  const [menuName, setMenuName] = useState("home");
+
+  useEffect(() => {
+    if (location.pathname.indexOf("/home") > 0) setMenuName("home");
+    if (location.pathname.indexOf("/about-pylon") > 0)
+      setMenuName("about-pylon");
+    if (location.pathname.indexOf("/fdi-vault") > 0) setMenuName("fdi-vault");
+    if (location.pathname.indexOf("/ycrv-vault") > 0) setMenuName("ycrv-vault");
+    if (location.pathname.indexOf("pylon-vault") > 0)
+      setMenuName("pylon-vault");
+    if (location.pathname.indexOf("partners") > 0) setMenuName("partners");
+  }, [location.pathname]);
+
   return (
     <>
       <header className="header">
@@ -17,22 +32,36 @@ export default function Header() {
           </Link>
           <nav className="header__nav">
             <ul>
-              <li className="menu-link">
+              <li className={cx("menu-link", { active: menuName === "home" })}>
                 <Link to="/staging/home">HOME</Link>
               </li>
-              <li className="menu-link">
+              <li
+                className={cx("menu-link", {
+                  active: menuName === "about-pylon",
+                })}
+              >
                 <Link to="/staging/about-pylon">ABOUT PYLON</Link>
               </li>
-              {/* <li className="menu-link">
+              {/* <li className={cx("menu-link", { active: menuName === "ycrv-vault" })}>
                 <Link to="/staging/ycrv-vault">YCRV VAULT</Link>
               </li> */}
-              <li className="menu-link">
+              <li
+                className={cx("menu-link", {
+                  active: menuName === "fdi-vault",
+                })}
+              >
                 <Link to="/staging/fdi-vault">FDI VAULT</Link>
               </li>
-              <li className="menu-link">
+              <li
+                className={cx("menu-link", {
+                  active: menuName === "pylon-vault",
+                })}
+              >
                 <Link to="/staging/pylon-vault">PYLON GPU VAULT</Link>
               </li>
-              <li className="menu-link">
+              <li
+                className={cx("menu-link", { active: menuName === "partners" })}
+              >
                 <Link to="/staging/partners">PARTNERS</Link>
               </li>
             </ul>
@@ -41,4 +70,6 @@ export default function Header() {
       </header>
     </>
   );
-}
+};
+
+export default withRouter(Header);
