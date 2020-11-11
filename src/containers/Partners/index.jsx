@@ -63,7 +63,7 @@ const ContactUsForm = ({ onValidated }) => {
       <div className="submit-button">
         <button onClick={submit}>Submit</button>
       </div>
-      {status === "success" && (<p>Success!</p>)}
+      {/* {status === "success" && (<p>Success!</p>)} */}
     </div>
   );
 };

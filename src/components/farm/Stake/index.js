@@ -27,7 +27,7 @@ const TextBlock = ({ title, content, align, colorTitle, colorContent }) => {
   );
 };
 
-export default function (props) {
+export default function ({ item }) {
   const [open, setOpen] = useState(true);
 
   return (
@@ -35,13 +35,13 @@ export default function (props) {
       <div className="stake-header">
         <div className="stake-header-section">
           <img
-            src={require("../../../assets/images/ycrv.png")}
+            src={require(`../../../assets/images/icons/${item.iconName}`)}
             alt=""
             height="36"
           />
           <TextBlock
-            title="YCRV"
-            content="ETH-USDC UNIv2 LP"
+            title={item.title}
+            content={item.tokenName}
             colorTitle="#182373"
             colorContent="#00b9ea"
           />
@@ -56,13 +56,13 @@ export default function (props) {
         </div>
         <div className="stake-header-section">
           <TextBlock
-            title="0.00 ETH"
+            title={`0.00 ${item.tokenName}`}
             content="Available to deposit"
             colorTitle="#182373"
             colorContent="#182373"
           />
           <TextBlock
-            title="0.00 ETH"
+            title={`0.00 ${item.tokenName}`}
             content="Deposited"
             colorTitle="#182373"
             colorContent="#182373"
@@ -85,19 +85,19 @@ export default function (props) {
         <div className="stake-content">
           <div className="stake-content-section left">
             <div className="stake-content-row">
-              <div className="title">YCRV deposited in VAULT</div>
-              <div className="content">19,958,14 YCRV</div>
+              <div className="title">{item.tokenName} deposited in VAULT</div>
+              <div className="content">19,958,14 {item.tokenName}</div>
             </div>
             <div className="stake-content-row">
               <div className="title">Max cap</div>
-              <div className="content">20,000 YCRV</div>
+              <div className="content">20,000 {item.tokenName}</div>
             </div>
-            <div className="stake-content-row">
-              <div className="title">View YCRV VAULT contract</div>
-            </div>
+            {/* <div className="stake-content-row">
+              <div className="title">View {item.tokenName} VAULT contract</div>
+            </div> */}
             <div className="stake-content-row">
               <div className="title"></div>
-              <div className="content">Your wallet 0.0000 YCRV</div>
+              <div className="content">Your wallet 0.0000 {item.tokenName}</div>
             </div>
             <div className="stake-content-row">
               <input type="text" />
@@ -114,21 +114,25 @@ export default function (props) {
             </div>
           </div>
           <div className="stake-content-section right">
-            <div className="stake-content-row">
+            {/* <div className="stake-content-row">
               <div className="title">Earning comitted to mining fund</div>
               <div className="content">75%</div>
-            </div>
+            </div> */}
             <div className="stake-content-row">
               <div className="title">Net Earning</div>
               <div className="content">25%</div>
             </div>
             <div className="stake-content-row">
-              <div className="title">View WETH VAULT contract</div>
+              <div className="title"><a href={`https://etherscan.io/address/${item.address}`} target="_blank">View {item.tokenName} VAULT contract</a></div>
             </div>
             <div className="stake-content-row">
               <div className="title"></div>
-              <div className="content">Your wallet 0.0000 ETH</div>
+              <div className="content">Your wallet 0.0000 {item.tokenName}</div>
             </div>
+            {/* <div className="stake-content-row">
+              <div className="title"></div>
+              <div className="content">Your wallet 0.0000 {item.tokenName}</div>
+            </div> */}
             <div className="stake-content-row">
               <input type="text" />
             </div>

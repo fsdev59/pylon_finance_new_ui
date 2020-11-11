@@ -8,12 +8,16 @@ import Stake from "../../components/farm/Stake";
 
 import "./styles.scss";
 
+import { PYLON_VAULT } from "../../helpers/pylonVault/constants";
+
 export default function PYLONVault() {
   return (
     <>
       <div className="root ycrv-valut-container">
         <div className="content-1">
-          <Stake />
+          {
+            PYLON_VAULT.map((item) => <Stake key={item.title} item={item} />)
+          }
         </div>
         <div className="content-2">
           <TextBlock title="PYLON VAULT" color="orange">

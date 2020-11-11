@@ -8,15 +8,16 @@ import Stake from "../../components/farm/Stake";
 
 import "./styles.scss";
 
+import { FDI_VAULT } from "../../helpers/fdiVault/constants";
+
 export default function FDIVault() {
   return (
     <>
       <div className="root ycrv-valut-container">
         <div className="content-1">
-          <Stake />
-          <Stake />
-          <Stake />
-          <Stake />
+          {
+            FDI_VAULT.map((item) => <Stake key={item.title} item={item} />)
+          }
         </div>
         <div className="content-2">
           <TextBlock title="PYLON VAULT" color="orange">

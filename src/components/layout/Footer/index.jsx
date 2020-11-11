@@ -27,7 +27,7 @@ const CustomForm = ({ onValidated }) => {
       <div className="subscribe-send" role="button" onClick={submit}>
         <FontAwesomeIcon icon={faPaperPlane}/>
       </div>
-      {status === "success" && (<p>Success!</p>)}
+      {/* {status === "success" && (<p>Success!</p>)} */}
     </div>
   );
 };

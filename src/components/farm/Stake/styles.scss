@@ -60,7 +60,11 @@
         flex-direction: row;
         margin-bottom: 8px;
         width: 100%;
+        min-height: 25px;
 
+        a {
+          color: #182373;
+        }
         .title {
           flex: 1;
           font-size: 13px;
