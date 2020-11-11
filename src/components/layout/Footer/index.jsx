@@ -4,7 +4,32 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
+import MailchimpSubscribe from "react-mailchimp-subscribe";
+
 import "./styles.scss";
+
+const url = process.env.REACT_APP_MAILCHIMP_URL;
+console.log(url);
+const CustomForm = ({ onValidated }) => {
+  let email;
+  const submit = () =>
+    email &&
+    email.value.indexOf("@") > -1 &&
+    onValidated({
+      EMAIL: email.value
+    });
+
+  return (
+    <div className="subscription-sender-wrapper">
+      <input
+        ref={node => (email = node)}
+        type="text" />
+      <div className="subscribe-send" role="button" onClick={submit}>
+        <FontAwesomeIcon icon={faPaperPlane}/>
+      </div>
+    </div>
+  );
+};
 
 export default function Footer() {
   return (
@@ -56,12 +81,14 @@ export default function Footer() {
           <div className="subscription-wrapper">
             <h3>Subscribe Us</h3>
             <span>Enter Email</span>
-            <div className="subscription-sender-wrapper">
-              <input type="text" />
-              <div className="subscribe-send" role="button">
-                <FontAwesomeIcon icon={faPaperPlane} />
-              </div>
-            </div>
+              <MailchimpSubscribe
+                url={url}
+                render={({ subscribe }) => (
+                  <CustomForm
+                    onValidated={formData => subscribe(formData)}
+                  />
+                )}
+              />
           </div>
         </div>
         <div className="social-wrapper"></div>
