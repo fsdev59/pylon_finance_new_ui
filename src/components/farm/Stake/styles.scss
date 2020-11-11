@@ -11,16 +11,31 @@
     display: flex;
     flex-direction: row;
 
-    .stake-header-section {
-      flex: 1;
+    .stake-header-wrapper {
+      width: calc(100% - 60px);
       display: flex;
       flex-direction: row;
-      align-items: flex-end;
 
-      img {
-        margin-right: 10px;
+      @media screen and (max-width: 600px) {
+        flex-direction: column;
+      }
+
+      .stake-header-section {
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+
+        @media screen and (max-width: 600px) {
+          margin-bottom: 10px;
+        }
+
+        img {
+          margin-right: 10px;
+        }
       }
     }
+
     .stake-header-up {
       width: 40px;
       height: 30px;
@@ -37,11 +52,15 @@
 
   .stake-content {
     border-top: 1px solid #eee;
-    width: calc(100% - 60px);
+    width: calc(100% - 40px);
     margin-top: 13px;
     padding-top: 16px;
     display: flex;
     flex-direction: row;
+
+    @media screen and (max-width: 768px) {
+      flex-direction: column;
+    }
 
     .stake-content-section {
       flex: 1;
@@ -85,6 +104,8 @@
           flex: 1;
           color: #00b9ea;
           font-size: 14px;
+          text-align: center;
+          cursor: pointer;
         }
 
         button {

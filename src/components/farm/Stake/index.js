@@ -27,47 +27,49 @@ const TextBlock = ({ title, content, align, colorTitle, colorContent }) => {
   );
 };
 
-export default function ({ item }) {
+export default function ({ type, item }) {
   const [open, setOpen] = useState(true);
 
   return (
     <div className="stake-container">
       <div className="stake-header">
-        <div className="stake-header-section">
-          <img
-            src={require(`../../../assets/images/icons/${item.iconName}`)}
-            alt=""
-            height="36"
-          />
-          <TextBlock
-            title={item.title}
-            content={item.tokenName}
-            colorTitle="#182373"
-            colorContent="#00b9ea"
-          />
-        </div>
-        <div className="stake-header-section">
-          <TextBlock
-            title="26.82% APY + 46% VALUE"
-            content="Yearly Growth"
-            colorTitle="#fd8300"
-            colorContent="#00b9ea"
-          />
-        </div>
-        <div className="stake-header-section">
-          <TextBlock
-            title={`0.00 ${item.tokenName}`}
-            content="Available to deposit"
-            colorTitle="#182373"
-            colorContent="#182373"
-          />
-          <TextBlock
-            title={`0.00 ${item.tokenName}`}
-            content="Deposited"
-            colorTitle="#182373"
-            colorContent="#182373"
-            align="right"
-          />
+        <div className="stake-header-wrapper">
+          <div className="stake-header-section">
+            <img
+              src={require(`../../../assets/images/icons/${item.iconName}`)}
+              alt=""
+              height="36"
+            />
+            <TextBlock
+              title={item.title}
+              content={item.tokenName}
+              colorTitle="#182373"
+              colorContent="#00b9ea"
+            />
+          </div>
+          <div className="stake-header-section">
+            <TextBlock
+              title="26.82% APY + 46% VALUE"
+              content="Yearly Growth"
+              colorTitle="#fd8300"
+              colorContent="#00b9ea"
+            />
+          </div>
+          <div className="stake-header-section">
+            <TextBlock
+              title={`0.00 ${item.tokenName}`}
+              content="Available to deposit"
+              colorTitle="#182373"
+              colorContent="#182373"
+            />
+            <TextBlock
+              title={`0.00 ${item.tokenName}`}
+              content="Deposited"
+              colorTitle="#182373"
+              colorContent="#182373"
+              align="right"
+            />
+          </div>
         </div>
         <div
           className="stake-header-up"
@@ -107,10 +109,9 @@ export default function ({ item }) {
               <span className="percent">50%</span>
               <span className="percent">75%</span>
               <span className="percent">100%</span>
-              <span className="percent"></span>
             </div>
             <div className="stake-content-row">
-              <button className="blue ml">Approve</button>
+              <button className="blue ml">Deposit</button>
             </div>
           </div>
           <div className="stake-content-section right">
@@ -123,7 +124,15 @@ export default function ({ item }) {
               <div className="content">25%</div>
             </div>
             <div className="stake-content-row">
-              <div className="title"><a href={`https://etherscan.io/address/${item.address}`} target="_blank">View {item.tokenName} VAULT contract</a></div>
+              <div className="title">
+                <a
+                  href={`https://etherscan.io/address/${item.address}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  View {item.tokenName} VAULT contract
+                </a>
+              </div>
             </div>
             <div className="stake-content-row">
               <div className="title"></div>
@@ -141,10 +150,11 @@ export default function ({ item }) {
               <span className="percent">50%</span>
               <span className="percent">75%</span>
               <span className="percent">100%</span>
-              <span className="percent"></span>
             </div>
             <div className="stake-content-row">
-              <button className="cyan mr">Withdraw</button>
+              {type === "PYLON" && (
+                <button className="cyan mr">Withdraw</button>
+              )}
               <button className="blue-out ml">Claim Rewards</button>
             </div>
           </div>
