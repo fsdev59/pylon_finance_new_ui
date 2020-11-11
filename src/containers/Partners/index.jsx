@@ -5,7 +5,68 @@ import TextBlock from "../../components/common/TextBlock";
 import Button from "../../components/common/Button";
 import RectBlock from "../../components/common/RectBlock";
 
+import MailchimpSubscribe from "react-mailchimp-subscribe";
+
 import "./styles.scss";
+
+const url = process.env.REACT_APP_MAILCHIMP_URL;
+console.log(url);
+const ContactUsForm = ({ onValidated }) => {
+  let fname, lname, email, subject, msg;
+  const submit = () =>
+    fname &&
+    lname &&
+    email &&
+    subject &&
+    msg &&
+    email.value.indexOf("@") > -1 &&
+    onValidated({
+      EMAIL: email.value,
+      NAME: fname.value + lname.value
+    });
+
+  return (
+    // <div className="subscription-sender-wrapper">
+    //   <input
+    //     ref={node => (email = node)}
+    //     type="text" />
+    //   <div className="subscribe-send" role="button" onClick={submit}>
+    //     <FontAwesomeIcon icon={faPaperPlane}/>
+    //   </div>
+    // </div>
+    <div className="contact-us-form">
+      <h2>Contact Us</h2>
+      <div className="input-text-row">
+        <div className="input-text-left">
+          <p>First Name</p>
+          <input ref={node => (fname = node)} type="text"></input>
+        </div>
+        <div className="input-text-right">
+          <p>last Name</p>
+          <input ref={node => (lname = node)} type="text"></input>
+        </div>
+      </div>
+      <div className="input-text-row">
+        <div className="input-text-left">
+          <p>Email</p>
+          <input ref={node => (email = node)} type="email"></input>
+        </div>
+        <div className="input-text-right">
+          <p>Subject</p>
+          <input ref={node => (subject = node)} type="text"></input>
+        </div>
+      </div>
+      <div className="input-text-row">
+        <p>Message</p>
+        <textarea ref={node => (msg = node)}></textarea>
+      </div>
+      <div className="submit-button">
+        <button onClick={submit}>Submit</button>
+      </div>
+      {status === "success" && (<p>Success!</p>)}
+    </div>
+  );
+};
 
 export default function Partners() {
   return (
@@ -61,36 +122,15 @@ export default function Partners() {
             </div>
           </div>
           <div className="section contact-us">
-            <div className="contact-us-form">
-              <h2>Contact Us</h2>
-              <div className="input-text-row">
-                <div className="input-text-left">
-                  <p>First Name</p>
-                  <input type="text"></input>
-                </div>
-                <div className="input-text-right">
-                  <p>last Name</p>
-                  <input type="text"></input>
-                </div>
-              </div>
-              <div className="input-text-row">
-                <div className="input-text-left">
-                  <p>Email</p>
-                  <input type="email"></input>
-                </div>
-                <div className="input-text-right">
-                  <p>Subject</p>
-                  <input type="text"></input>
-                </div>
-              </div>
-              <div className="input-text-row">
-                <p>Message</p>
-                <textarea></textarea>
-              </div>
-              <div className="submit-button">
-                <button>Submit</button>
-              </div>
-            </div>
+            <MailchimpSubscribe
+              url={url}
+              render={({ subscribe, status }) => (
+                <ContactUsForm
+                  status={status}
+                  onValidated={formData => subscribe(formData)}
+                />
+              )}
+              />
             <div className="reach-us-form">
               <h2>Reach Us</h2>
               <div className="reach-us-list">
