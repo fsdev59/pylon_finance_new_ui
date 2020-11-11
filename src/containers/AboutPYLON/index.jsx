@@ -15,16 +15,23 @@ export default function AboutPYLON() {
         <div className="content-1">
           <div className="section section-concept">
             <div className="section section-text">
-                <TextBlock title="Who We Are?">
-                    <p>
-                        Pylon is a utility token that pays dividends on real world GPU <br/>
-                        mining farm in the US. We are a 100% community mined token <br/>
-                        with no presale, no premine, and a low cap supply of 8400.<br/><br/><br/>
-                        We're 100% community mined, owned, and created and have a<br/>
-                        group of hard working volunteers to get all these things into<br/>
-                        place.
-                    </p>
-                </TextBlock>
+              <TextBlock title="Who We Are?">
+                <p>
+                  Pylon is a utility token that pays dividends on real world GPU{" "}
+                  <br />
+                  mining farm in the US. We are a 100% community mined token{" "}
+                  <br />
+                  with no presale, no premine, and a low cap supply of 8400.
+                  <br />
+                  <br />
+                  <br />
+                  We're 100% community mined, owned, and created and have a
+                  <br />
+                  group of hard working volunteers to get all these things into
+                  <br />
+                  place.
+                </p>
+              </TextBlock>
             </div>
             <img
               className="about-background"
@@ -34,27 +41,29 @@ export default function AboutPYLON() {
           </div>
           <div className="section section-concept">
             <div className="section section-pylon-mine">
-                <div className="left">
-                    <h2>Pylon's Latest Mine</h2>
-                    <p>
-                        We are a 100% community mined project with no ICO, presale, <br/>
-                        and low cap supply of 8.4k.<br/><br/>
-                        Mining units can generate 20-50% APY in a bear market and<br/>
-                        160-250%+ APY in a bull market.
-                    </p>
+              <div className="left">
+                <h2>Pylon's Latest Mine</h2>
+                <p>
+                  We are a 100% community mined project with no ICO, presale,{" "}
+                  <br />
+                  and low cap supply of 8.4k.
+                  <br />
+                  <br />
+                  Mining units can generate 20-50% APY in a bear market and
+                  <br />
+                  160-250%+ APY in a bull market.
+                </p>
+              </div>
+              <div className="right">
+                <div className="section1">Have questions about Us?</div>
+                <div className="section2">Find out frequently asked</div>
+                <div className="section2">
+                  questions <span>Here</span>
                 </div>
-                <div className="right">
-                    <div className="section1">Have questions about Us?</div>
-                    <div className="section2">
-                        Find out frequently asked
-                    </div>
-                    <div className="section2">
-                        questions <span>Here</span>
-                    </div>
-                </div>
+              </div>
             </div>
           </div>
-          
+
           <div className="section section-pylon-value">
             <div className="left">
               <div className="section mine-open">
@@ -86,17 +95,17 @@ export default function AboutPYLON() {
             </div>
             <div className="right">
               <FaqBlock
-              className="rect-block high-return"
-              title={`PYLON`}
-              title2={`FINANCE`}
-              subTitle="DOUNLOAD"
-              faq="FAQ"
-              content="BROCKURE"
-              background="#0540c8"
-              mainColor="#fff "
-              subColor="#7899de"
-              borderColor="#82a1e4"
-              width="260"
+                className="rect-block pylon-faq-brochure"
+                title={`PYLON`}
+                title2={`FINANCE`}
+                subTitle="DOUNLOAD"
+                faq="FAQ"
+                content="BROCHURE"
+                background="#0540c8"
+                mainColor="#fff "
+                subColor="#7899de"
+                borderColor="#82a1e4"
+                width="260"
               />
             </div>
           </div>
@@ -104,9 +113,8 @@ export default function AboutPYLON() {
 
         <div className="content-2">
           <div className="section section-pylon-path">
-              <TextBlock title="Pylon's Path" color="orange">
-              </TextBlock>
-              <p>Check our recent plans and achievements here</p>
+            <TextBlock title="Pylon's Path" color="orange"></TextBlock>
+            <p>Check our recent plans and achievements here</p>
           </div>
           <div className="section section-quarter">
             <PathBlock
