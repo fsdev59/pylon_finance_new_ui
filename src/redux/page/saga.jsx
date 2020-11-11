@@ -1,534 +1,821 @@
-import { all, takeLatest, call, put, fork, select } from "redux-saga/effects";
-
-// import { toast } from "react-toastify";
-
-import actions from "./actions";
-
-import Web3 from "web3";
 import {
-  DEV_API_PREFIX,
-  PROD_API_PREFIX,
-  DEV_ABI,
-  PROD_ABI,
-  DEV_SMARTCONTRACT_ADDRESS,
-  PROD_SMARTCONTRACT_ADDRESS,
-  DEV_WEB3_WEBSOCKET_PROVIDER,
-  PROD_WEB3_WEBSOCKET_PROVIDER,
-} from "../../helpers/constant";
+  all,
+  takeLatest,
+  takeEvery,
+  call,
+  put,
+  fork,
+  select,
+} from 'redux-saga/effects'
 
-import { getUserAddress } from "../../helpers/utility";
+import actions from './actions'
+import Web3 from 'web3'
 
-const { REACT_APP_BUILD_MODE } = process.env;
-var apiPrefix = "";
+import axios from 'axios'
+import BigNumber from 'bignumber.js'
 
-if (REACT_APP_BUILD_MODE === "development") {
-  apiPrefix = DEV_API_PREFIX;
-} else if (REACT_APP_BUILD_MODE === "production") {
-  apiPrefix = PROD_API_PREFIX;
-}
-
-/**
- * Get Partners From Filter
- */
-export function* getPartnersFilterRequest() {
-  yield takeLatest(actions.PARTNERS_FILTER_REQUEST, function* ({ payload }) {
-    const { filterProgram, filterSlot, filterId, page } = payload;
-    const userProfile = yield select((state) => state.Auth.profile);
-
-    try {
-      const response = yield call(
-        fetch,
-        apiPrefix +
-          `/partners?address=${userProfile.address}&matrix=${filterProgram}&level=${filterSlot}&search=${filterId}&page=${page}`
-      );
-
-      const data = yield call([response, response.json]);
-
-      if (data.code === "200") {
-        yield put({
-          type: actions.PARTNERS_FILTER_SUCCESS,
-          partners: data.value,
-        });
-      } else {
-        yield put({
-          type: actions.PARTNERS_FILTER_ERROR,
-          msg: "Failed to load partners list. Try again!",
-        });
-      }
-    } catch (e) {
-      yield put({ type: actions.PARTNERS_FILTER_ERROR, msg: e });
-      return null;
-    }
-  });
-}
+// import {
+//   MASTER_VAMPIRE_ADDRESS,
+//   MASTER_VAMPIRE_ABI,
+//   TOKEN_ABI,
+//   NERDLING_POOL,
+// } from '../../helper/constants'
+// import { add } from 'numeral'
 
 /**
- * Get Statistics From Filter
+ * Load Web3.js
  */
-export function* getStatisticsFilterRequest() {
-  yield takeLatest(actions.STATISTICS_FILTER_REQUEST, function* ({ payload }) {
-    const {
-      filterProgram,
-      filterSlot,
-      filterDirection,
-      filterType,
-      filterHash,
-      page,
-    } = payload;
-
-    const userProfile = yield select((state) => state.Auth.profile);
-
-    try {
-      const response = yield call(
-        fetch,
-        apiPrefix +
-          `/statistics?address=${userProfile.address}&matrix=${filterProgram}&level=${filterSlot}&direction=${filterDirection}&type=${filterType}&tx=${filterHash}&page=${page}`
-      );
-
-      const data = yield call([response, response.json]);
-
-      if (data.code === "200") {
-        yield put({
-          type: actions.STATISTICS_FILTER_SUCCESS,
-          statistics: data.value,
-        });
-      } else {
-        yield put({
-          type: actions.STATISTICS_FILTER_ERROR,
-          msg: "Failed to load statistics list. Try again!",
-        });
+const getWeb3 = () =>
+  new Promise(async (resolve, reject) => {
+    if (window.ethereum) {
+      const web3 = new Web3(window.ethereum)
+      try {
+        // Request account access if needed
+        await window.ethereum.enable()
+        // Acccounts now exposed
+        resolve(web3)
+      } catch (error) {
+        reject(error)
       }
-    } catch (e) {
-      yield put({ type: actions.STATISTICS_FILTER_ERROR, msg: e });
-      return null;
     }
-  });
+    // Legacy dapp browsers...
+    else if (window.web3) {
+      // Use Mist/MetaMask's provider.
+      const web3 = window.web3
+      // console.log("Injected web3 detected.");
+      resolve(web3)
+    }
+    // Fallback to localhost; use dev console port by default...
+    else {
+      const provider = new Web3.providers.HttpProvider('http://127.0.0.1:8545')
+      const web3 = new Web3(provider)
+      // console.log("No web3 instance injected, using Local web3.");
+      resolve(web3)
+    }
+  })
+
+// Helpers *********************************************************************************
+const lookUpPrices = async function (id_array) {
+  let ids = id_array.join('%2C')
+  let res = await fetch(
+    'https://api.coingecko.com/api/v3/simple/price?ids=' +
+      ids +
+      '&vs_currencies=usd',
+  )
+  return res.json()
 }
 
-/**
- * Get Slot Detail
- */
-export function* slotDetailRequest() {
-  yield takeLatest(actions.SLOT_DETAIL_REQUEST, function* ({ payload }) {
-    const { address, matrix, level } = payload;
-
-    let userAddress;
-    if (address) {
-      userAddress = yield call(getUserAddress, address);
-    } else {
-      const userProfile = yield select((state) => state.Auth.profile);
-      userAddress = userProfile.address;
-    }
-
-    try {
-      const response = yield call(
-        fetch,
-        apiPrefix +
-          `/slotdetail?address=${userAddress}&matrix=${matrix}&level=${level}`
-      );
-
-      const data = yield call([response, response.json]);
-
-      if (data.code === "200") {
-        yield put({
-          type: actions.SLOT_DETAIL_SUCCESS,
-          program: { matrix: matrix === 1 ? "x3" : "x4", level },
-          slotDetail: data.value,
-        });
-      } else {
-        yield put({
-          type: actions.SLOT_DETAIL_ERROR,
-          msg: "Failed to load statistics list. Try again!",
-        });
-      }
-    } catch (e) {
-      yield put({ type: actions.SLOT_DETAIL_ERROR, msg: e });
-      return null;
-    }
-  });
+const getBalanceAsync = async (instance, address) => {
+  return await instance.methods
+    // .balanceOf('0xbf26925f736e90e1715ce4e04cd9c289dd1bc002')
+    .balanceOf(address)
+    .call()
+    .then((data) => {
+      // console.log('balance data', address, data)
+      return data
+    })
+    .catch((error) => {
+      return error
+    })
 }
 
-/**
- * Get notification messsages
- */
-export function* getNotificationRequest() {
-  yield takeLatest(actions.GET_NOTIFICATION_REQUEST, function* () {
-    let abi;
-    let instance;
-    let web3;
+// const getPoolInfoAsync = async (instance, pid) => {
+//   return await instance.methods
+//     .poolInfo(pid)
+//     .call()
+//     .then((data) => {
+//       return data
+//     })
+//     .catch((error) => {
+//       return error
+//     })
+// }
 
-    let latestNotifications; // 50 latest
-    let notificationMessages = [];
+// const getDecimalAsync = async (instance) => {
+//   return await instance.methods
+//     .decimals()
+//     .call()
+//     .then((data) => {
+//       return data
+//     })
+//     .catch((error) => {
+//       return error
+//     })
+// }
 
-    const options = {
-      timeout: 30000, //ms
+// const getStakedAsync = async (instance, pid, address) => {
+//   return await instance.methods
+//     // .userInfo(pid, "0xbf26925f736e90e1715ce4e04cd9c289dd1bc002")
+//     .userInfo(pid, address)
+//     .call()
+//     .then((data) => {
+//       console.log('staked data', address, data)
+//       return data
+//     })
+//     .catch((error) => {
+//       return error
+//     })
+// }
 
-      clientConfig: {
-        maxReceivedFrameSize: 100000000,
-        maxReceivedMessageSize: 100000000,
-      },
+// const getPendingAsync = async (instance, pid, address) => {
+//   console.log('pending async', pid, address)
+//   return await instance.methods
+//     // .pendingNerdling(pid, '0xbf26925f736e90e1715ce4e04cd9c289dd1bc002')
+//     .pendingNerdling(pid, address)
+//     .call()
+//     .then((data) => {
+//       return data
+//     })
+//     .catch((error) => {
+//       return error
+//     })
+// }
 
-      reconnect: {
-        auto: true,
-        delay: 5000, //ms
-        maxAttempts: 5,
-        onTimeout: false,
-      },
-    };
-
-    if (REACT_APP_BUILD_MODE === "development") {
-      web3 = new Web3(
-        new Web3.providers.WebsocketProvider(
-          DEV_WEB3_WEBSOCKET_PROVIDER,
-          options
-        )
-      );
-
-      abi = JSON.parse(DEV_ABI);
-      instance = new web3.eth.Contract(abi, DEV_SMARTCONTRACT_ADDRESS);
-    } else if (REACT_APP_BUILD_MODE === "production") {
-      web3 = new Web3(
-        new Web3.providers.WebsocketProvider(
-          PROD_WEB3_WEBSOCKET_PROVIDER,
-          options
-        )
-      );
-
-      abi = JSON.parse(PROD_ABI);
-      instance = new web3.eth.Contract(abi, PROD_SMARTCONTRACT_ADDRESS);
-    }
-
-    instance.getPastEvents(
-      "allEvents",
-      {
-        fromBlock: 8306015,
-        toBlock: "latest",
-      },
-      function* (err, data) {
-        latestNotifications = data.slice(0, 10);
-        const length = latestNotifications.length;
-
-        let count = 0;
-        for (let i = 0; i < length; i++) {
-          let res = false;
-          res = yield call(returnMessage, latestNotifications[i]);
-
-          if (res) count++;
-        }
-        if (count === length) {
-          yield put({
-            type: actions.GET_NOTIFICATION_SUCCESS,
-            notificationMessages,
-          });
-        }
-      }
-    );
-
-    const returnMessage = async (notificationObject) => {
-      console.log(notificationObject);
-
-      let matrix = "x3";
-      if (notificationObject.returnValues.matrix === "1") {
-        matrix = "x6";
-      }
-      let { level } = notificationObject;
-
-      switch (notificationObject.event) {
-        case "Upgrade":
-          fetch(
-            apiPrefix + "/users?address=" + notificationObject.returnValues.user
-          )
-            .then((res) => res.json)
-            .then((res) => {
-              if (notificationMessages.length < 10) {
-                notificationMessages.push(
-                  `ID: ${res.value.id} buy slot ${level} in ${matrix}`
-                );
-                return true;
-              }
-            });
-          break;
-        case "Registration":
-          fetch(
-            apiPrefix + "/users?address=" + notificationObject.returnValues.user
-          )
-            .then((res) => res.json)
-            .then((res) => {
-              if (notificationMessages.length < 10) {
-                notificationMessages.push(
-                  `New user ID: ${res.value.id} Welcome to Dondi`
-                );
-                return true;
-              }
-            });
-          break;
-        case "MissedEthReceive":
-          fetch(
-            apiPrefix +
-              "/users?address=" +
-              notificationObject.returnValues.receiver
-          )
-            .then((res) => res.json)
-            .then((res) => {
-              if (notificationMessages.length < 10) {
-                notificationMessages.push(
-                  `Receiver ID: ${res.value.id} missed profit ${
-                    0.025 * Math.pow(2, level - 1)
-                  } ETH. You must perform the upgrade in ${matrix}`
-                );
-                return true;
-              }
-            });
-          break;
-        case "SentExtraEthDividends":
-          fetch(
-            apiPrefix +
-              "/users?address=" +
-              notificationObject.returnValues.receiver
-          )
-            .then((res) => res.json)
-            .then((res) => {
-              if (notificationMessages.length < 10) {
-                notificationMessages.push(
-                  `ID: ${res.value.id} received a bonus ${
-                    0.025 * Math.pow(2, level - 1)
-                  } ETH`
-                );
-                return true;
-              }
-            });
-
-          break;
-        case "NewUserPlace":
-          fetch(
-            apiPrefix +
-              "/users?address=" +
-              notificationObject.returnValues.referrer
-          )
-            .then((res) => res.json)
-            .then((res) => {
-              if (notificationMessages.length < 10) {
-                notificationMessages.push(
-                  `ID: ${res.value.id} earned ${
-                    0.025 * Math.pow(2, level - 1)
-                  } ETH in the ${matrix}`
-                );
-                return true;
-              }
-            });
-
-          break;
-        case "Reinvest":
-          fetch(
-            apiPrefix + "/users?address=" + notificationObject.returnValues.user
-          )
-            .then((res) => res.json)
-            .then((res) => {
-              if (notificationMessages.length < 10) {
-                notificationMessages.push(`ID: ${res.value.id} reinvests`);
-                return true;
-              }
-            });
-
-          break;
-        default:
-          return "";
-      }
-    };
-
-    if (latestNotifications) {
-      const length = latestNotifications.length;
-
-      let count = 0;
-      for (let i = 0; i < length; i++) {
-        let res = false;
-        res = yield call(returnMessage, latestNotifications[i]);
-        if (res) count++;
-      }
-      if (count === length) {
-        yield put({
-          type: actions.GET_NOTIFICATION_SUCCESS,
-          notificationMessages,
-        });
-      }
-    }
-
-    // alert
-    let alertData;
-    let message = "";
-
-    instance.events.allEvents({ fromBlock: "latest" }, function (err, data) {
-      if (err) {
-        console.log(err);
-      }
-
-      alertData = data;
-    });
-
-    if (alertData) {
-      let user, referrer, receiver;
-      const { matrix, level } = alertData.returnValues;
-      let matrixStr = matrix === "1" ? "x3" : "x6";
-
-      if (alertData.returnValues.user) {
-        const res = yield call(
-          fetch,
-          apiPrefix + "/users?address=" + alertData.returnValues.user
-        );
-
-        const resData = yield call([res, res.json]);
-
-        if (resData.code === "200") {
-          user = resData.value.id;
-        }
-      }
-
-      if (alertData.returnValues.referrer) {
-        const res = yield call(
-          fetch,
-          apiPrefix + "/users?address=" + alertData.returnValues.referrer
-        );
-
-        const resData = yield call([res, res.json]);
-
-        if (resData.code === "200") {
-          referrer = resData.value.id;
-        }
-      }
-
-      if (alertData.returnValues.receiver) {
-        const res = yield call(
-          fetch,
-          apiPrefix + "/users?address=" + alertData.returnValues.receiver
-        );
-
-        const resData = yield call([res, res.json]);
-
-        if (resData.code === "200") {
-          receiver = resData.value.id;
-        }
-      }
-
-      if (alertData.event === "NewUserPlace") {
-        if (
-          alertData.returnValues.matrix === "1" &&
-          alertData.returnValues.place < 3
-        ) {
-          if (referrer)
-            message = `ID: ${referrer} earned ${
-              0.025 * Math.pow(2, level - 1)
-            } ETH in the X3`;
-        } else if (
-          alertData.returnValues.matrix === "2" &&
-          alertData.returnValues.place > 2 &&
-          alertData.returnValues < 6
-        ) {
-          if (referrer)
-            message = `ID: ${referrer} earned ${
-              0.025 * Math.pow(2, level - 1)
-            } ETH in the X6`;
-        }
-      } else if (alertData.event === "Upgrade") {
-        if (user && referrer)
-          message = `ID: ${user} buy ${level} in ${matrixStr} from ReferrerID: ${referrer}`;
-      } else if (alertData.event === "Registration") {
-        if (user) message = `New user ID: ${user} Welcome to Dondi`;
-      } else if (alertData.event === "Reinvest") {
-        if (user) message = `ID: ${user} reinvests`;
-      } else if (alertData.event === "MissedEthReceive") {
-        if (receiver)
-          message = `Receiver ID: ${receiver} missed profit ${
-            0.025 * Math.pow(2, level - 1)
-          } ETH. You must perform the upgrade in ${matrixStr}`;
-      } else if (alertData.event === "SentExtraEthDividends") {
-        if (receiver)
-          message = `ID: ${receiver} received a bonus ${
-            0.025 * Math.pow(2, level - 1)
-          } ETH`;
-      }
-
-      yield put({
-        type: actions.GET_ALERT_MESSAGE_SUCCESS,
-        alertMessage: message,
-      });
-    }
-  });
+const getAllowanceAsync = async (instance, owner, sender) => {
+  return await instance.methods
+    // .allowance('0xbf26925f736e90e1715ce4e04cd9c289dd1bc002', sender)
+    .allowance(owner, sender)
+    .call()
+    .then((data) => {
+      // console.log('allowance', data);
+      return data
+    })
+    .catch((error) => {
+      return error
+    })
 }
 
-export function* getCurrencyRateRequest() {
-  yield takeLatest(actions.GET_CURRENCY_RATE_REQUEST, function* () {
-    try {
-      const response = yield call(
-        fetch,
-        `https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD,EUR,GBP`
-      );
+// const getTotalSupplyAsync = async (instance) => {
+//   return await instance.methods
+//     .totalSupply()
+//     .call()
+//     .then((data) => {
+//       // console.log('total supply async', data);
+//       return data
+//     })
+//     .catch((error) => {
+//       return error
+//     })
+// }
 
-      const data = yield call([response, response.json]);
+// const getReservesAsync = async (instance) => {
+//   return await instance.methods
+//     .getReserves()
+//     .call()
+//     .then((data) => {
+//       // console.log('reserves async', data)
+//       return data
+//     })
+//     .catch((error) => {
+//       return error
+//     })
+// }
 
-      if (data) {
-        yield put({
-          type: actions.GET_CURRENCY_RATE_SUCCESS,
-          currencyRate: data,
-        });
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  });
+// const getAdapterLockedAmountAsync = async (
+//   instance,
+//   poolAddress,
+//   victimPoolId,
+// ) => {
+//   return await instance.methods
+//     .lockedAmount(poolAddress, victimPoolId)
+//     .call()
+//     .then((data) => {
+//       return data
+//     })
+//     .catch((error) => {
+//       return error
+//     })
+// }
+
+const approveAsync = async (instance, web3, amount, address, spender) => {
+  console.log('before approve gas amount', new BigNumber(amount).toString())
+  console.log('before approve gas instance', instance)
+  const gasLimit = await instance.methods
+    .approve(
+      spender,
+      '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
+    )
+    .estimateGas({ from: address })
+
+  console.log('approve gas limit', gasLimit)
+
+  const response = await axios.get(
+    'https://ethgasstation.info/json/ethgasAPI.json',
+  )
+  let prices = {
+    low: response.data.safeLow / 10,
+    medium: response.data.average / 10,
+    high: response.data.fast / 10,
+    fastest: Math.round(response.data.fastest / 10),
+  }
+
+  // console.log('approve**********************')
+  // console.log('instance', instance)
+  // console.log('spender', spender)
+  // console.log('amount', amount)
+  // console.log('address', address)
+
+  return await instance.methods
+    .approve(
+      spender,
+      '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
+    )
+    .send({
+      from: address,
+      gasPrice: web3.utils.toWei(prices.medium.toString(), 'gwei'),
+      gas: gasLimit * 2,
+    })
+    .then((data) => {
+      return data
+    })
+    .catch((error) => {
+      return error
+    })
 }
 
-export function* getCurrency() {
-  yield takeLatest(actions.GET_CURRENCY_REQUEST, function* ({ payload }) {
-    yield put({ type: actions.UPDATE_CURRENCY, currency: payload });
-  });
+const depositAsync = async (instance, web3, amount, address) => {
+  const response = await axios.get(
+    'https://ethgasstation.info/json/ethgasAPI.json',
+  )
+  let prices = {
+    low: response.data.safeLow / 10,
+    medium: response.data.average / 10,
+    high: response.data.fast / 10,
+    fastest: Math.round(response.data.fastest / 10),
+  }
+
+  const gasLimit = await instance.methods
+    .deposit(
+      new BigNumber(amount).times(new BigNumber(10).pow(18)).toString(),
+    )
+    .estimateGas({ from: address })
+
+  return await instance.methods
+    .deposit(
+      new BigNumber(amount).times(new BigNumber(10).pow(18)).toString(),
+    )
+    .send({
+      from: address,
+      gasPrice: web3.utils.toWei(prices.medium.toString(), 'gwei'),
+      gas: gasLimit * 2,
+    })
+    .then((data) => {
+      return data
+    })
+    .catch((error) => {
+      return error
+    })
 }
 
-export function* getUserProfile() {
-  yield takeLatest(actions.GET_USER_PROFILE_REQUEST, function* ({ payload }) {
-    const userAddress = yield call(getUserAddress, payload);
+const depositAllAsync = async (instance, web3, address) => {
+  const response = await axios.get(
+    'https://ethgasstation.info/json/ethgasAPI.json',
+  )
+  let prices = {
+    low: response.data.safeLow / 10,
+    medium: response.data.average / 10,
+    high: response.data.fast / 10,
+    fastest: Math.round(response.data.fastest / 10),
+  }
 
-    if (userAddress !== "0x0000000000000000000000000000000000000000") {
-      const userRes = yield call(
-        fetch,
-        apiPrefix + "/profile?address=" + userAddress
-      );
+  const gasLimit = await instance.methods
+    .depositAll().estimateGas({ from: address })
 
-      const userResData = yield call([userRes, userRes.json]);
-
-      if (userResData.code === "200") {
-        // let profile = {
-        //   id: userResData.value.id,
-        //   address: currentUserAddress,
-        //   referrerAddress: userResData.value.referrer,
-        //   partnersCount: userResData.value.partnersCount,
-        //   x3Balance: userResData.value.x3Balance,
-        //   x6Balance: userResData.value.x6Balance,
-        //   affiliateLink: userResData.value.affiliateLink,
-        //   x3Matrix: userResData.value.x3Matrix,
-        //   x6Matrix: userResData.value.x6Matrix,
-        //   activeX3Levels: userResData.value.activeX3Levels,
-        //   activeX6Levels: userResData.value.activeX6Levels,
-        // };
-
-        yield put({
-          type: actions.GET_USER_PROFILE_SUCCESS,
-          iProfile: userResData.value,
-        });
-      }
-    } else {
-      console.log("No user!");
-    }
-  });
+  return await instance.methods
+    .depositAll()
+    .send({
+      from: address,
+      gasPrice: web3.utils.toWei(prices.medium.toString(), 'gwei'),
+      gas: gasLimit * 2,
+    })
+    .then((data) => {
+      return data
+    })
+    .catch((error) => {
+      return error
+    })
 }
+
+const withdrawAsync = async (instance, web3, amount, address) => {
+  const response = await axios.get(
+    'https://ethgasstation.info/json/ethgasAPI.json',
+  )
+  let prices = {
+    low: response.data.safeLow / 10,
+    medium: response.data.average / 10,
+    high: response.data.fast / 10,
+    fastest: Math.round(response.data.fastest / 10),
+  }
+
+  const gasLimit = await instance.methods
+    .withdraw(
+      new BigNumber(amount).times(new BigNumber(10).pow(18)).toString(),
+    )
+    .estimateGas({ from: address })
+
+  return await instance.methods
+    .withdraw(
+      new BigNumber(amount).times(new BigNumber(10).pow(18)).toString(),
+    )
+    .send({
+      from: address,
+      gasPrice: web3.utils.toWei(prices.medium.toString(), 'gwei'),
+      gas: gasLimit * 2,
+    })
+    .then((data) => {
+      return data
+    })
+    .catch((error) => {
+      return error
+    })
+}
+
+const withdrawAllAsync = async (instance, web3, address) => {
+  const response = await axios.get(
+    'https://ethgasstation.info/json/ethgasAPI.json',
+  )
+  let prices = {
+    low: response.data.safeLow / 10,
+    medium: response.data.average / 10,
+    high: response.data.fast / 10,
+    fastest: Math.round(response.data.fastest / 10),
+  }
+
+  const gasLimit = await instance.methods
+    .withdrawAll().estimateGas({ from: address })
+
+  return await instance.methods
+    .withdrawAll()
+    .send({
+      from: address,
+      gasPrice: web3.utils.toWei(prices.medium.toString(), 'gwei'),
+      gas: gasLimit * 2,
+    })
+    .then((data) => {
+      return data
+    })
+    .catch((error) => {
+      return error
+    })
+}
+
+const rewardAsync = async (instance, web3, amount, address) => {
+  const response = await axios.get(
+    'https://ethgasstation.info/json/ethgasAPI.json',
+  )
+  let prices = {
+    low: response.data.safeLow / 10,
+    medium: response.data.average / 10,
+    high: response.data.fast / 10,
+    fastest: Math.round(response.data.fastest / 10),
+  }
+
+  const gasLimit = await instance.methods
+    .reward(
+      new BigNumber(amount).times(new BigNumber(10).pow(18)).toString(),
+    )
+    .estimateGas({ from: address })
+
+  return await instance.methods
+    .reward(
+      new BigNumber(amount).times(new BigNumber(10).pow(18)).toString(),
+    )
+    .send({
+      from: address,
+      gasPrice: web3.utils.toWei(prices.medium.toString(), 'gwei'),
+      gas: gasLimit * 2,
+    })
+    .then((data) => {
+      return data
+    })
+    .catch((error) => {
+      return error
+    })
+}
+
+// const harvestAsync = async (instance, web3, pid, address) => {
+//   const response = await axios.get(
+//     'https://ethgasstation.info/json/ethgasAPI.json',
+//   )
+//   let prices = {
+//     low: response.data.safeLow / 10,
+//     medium: response.data.average / 10,
+//     high: response.data.fast / 10,
+//     fastest: Math.round(response.data.fastest / 10),
+//   }
+
+//   const gasLimit = await instance.methods
+//     .emergencyWithdraw(pid)
+//     .estimateGas({ from: address })
+
+//   return await instance.methods
+//     .emergencyWithdraw(pid)
+//     .send({
+//       from: address,
+//       gasPrice: web3.utils.toWei(prices.medium.toString(), 'gwei'),
+//       gas: gasLimit * 2,
+//     })
+//     .then((data) => {
+//       return data
+//     })
+//     .catch((error) => {
+//       return error
+//     })
+// }
+
+// const drainAsync = async (instance, web3, pid, address) => {
+//   const response = await axios.get(
+//     'https://ethgasstation.info/json/ethgasAPI.json',
+//   )
+//   let prices = {
+//     low: response.data.safeLow / 10,
+//     medium: response.data.average / 10,
+//     high: response.data.fast / 10,
+//     fastest: Math.round(response.data.fastest / 10),
+//   }
+
+//   return await instance.methods
+//     .drain(pid)
+//     .send({
+//       from: address,
+//       gasPrice: web3.utils.toWei(prices.medium.toString(), 'gwei'),
+//       gas: 1000000,
+//     })
+//     .then((data) => {
+//       return data
+//     })
+//     .catch((error) => {
+//       return error
+//     })
+// }
+
+// //----------------------------------------------------------------------------
+// export function* getBalance() {
+//   yield takeEvery(actions.GET_BALANCE, function* ({ payload }) {
+//     const { tokenAddress, callback } = payload
+
+//     const web3 = yield call(getWeb3)
+//     const abi = TOKEN_ABI
+//     const instance = new web3.eth.Contract(abi, tokenAddress)
+
+//     // Get Wallet Account
+//     const accounts = yield call(web3.eth.getAccounts)
+
+//     const balance = yield call(getBalanceAsync, instance, accounts[0])
+//     callback(balance)
+//   })
+// }
+
+// export function* getAllowance() {
+//   yield takeEvery(actions.GET_ALLOWANCE, function* ({ payload }) {
+//     const { tokenAddress, callback } = payload
+
+//     const web3 = yield call(getWeb3)
+//     const abi = TOKEN_ABI
+//     const instance = new web3.eth.Contract(abi, tokenAddress)
+
+//     // Get Wallet Account
+//     const accounts = yield call(web3.eth.getAccounts)
+
+//     const allowance = yield call(
+//       getAllowanceAsync,
+//       instance,
+//       accounts[0],
+//       MASTER_VAMPIRE_ADDRESS,
+//     )
+//     callback(allowance)
+//   })
+// }
+
+// export function* getStaked() {
+//   yield takeEvery(actions.GET_STAKED, function* ({ payload }) {
+//     const { pid, callback } = payload
+
+//     const web3 = yield call(getWeb3)
+//     const abi = MASTER_VAMPIRE_ABI
+//     const instance = new web3.eth.Contract(abi, MASTER_VAMPIRE_ADDRESS)
+
+//     // Get Wallet Account
+//     const accounts = yield call(web3.eth.getAccounts)
+
+//     const staked = yield call(getStakedAsync, instance, pid, accounts[0])
+//     callback(staked)
+//   })
+// }
+
+// export function* getPending() {
+//   yield takeEvery(actions.GET_PENDING, function* ({ payload }) {
+//     const { pid, callback } = payload
+
+//     const web3 = yield call(getWeb3)
+//     const abi = MASTER_VAMPIRE_ABI
+//     const instance = new web3.eth.Contract(abi, MASTER_VAMPIRE_ADDRESS)
+
+//     // Get Wallet Account
+//     const accounts = yield call(web3.eth.getAccounts)
+
+//     const pending = yield call(getPendingAsync, instance, pid, accounts[0])
+//     callback(pending)
+//   })
+// }
+
+// export function* approveToken() {
+//   yield takeLatest(actions.APPROVE_TOKEN, function* ({ payload }) {
+//     const { tokenAddress, callback } = payload
+
+//     const web3 = yield call(getWeb3)
+//     const abi = TOKEN_ABI
+//     const instance = new web3.eth.Contract(abi, tokenAddress)
+
+//     // Get Wallet Account
+//     const accounts = yield call(web3.eth.getAccounts)
+
+//     // Check balance
+//     const tokenBalance = yield call(getBalanceAsync, instance, accounts[0])
+//     console.log('tokenBalance - approve token', tokenBalance)
+
+//     // approve with max balance
+//     const approveResult = yield call(
+//       approveAsync,
+//       instance,
+//       web3,
+//       tokenBalance,
+//       accounts[0],
+//       MASTER_VAMPIRE_ADDRESS,
+//     )
+
+//     callback(approveResult.status)
+//   })
+// }
+
+// export function* depositToken() {
+//   yield takeLatest(actions.DEPOSIT_TOKEN, function* ({ payload }) {
+//     const { pid, amount, callback } = payload
+
+//     const web3 = yield call(getWeb3)
+//     const abi = MASTER_VAMPIRE_ABI
+//     const instance = new web3.eth.Contract(abi, MASTER_VAMPIRE_ADDRESS)
+
+//     // Get Wallet Account
+//     const accounts = yield call(web3.eth.getAccounts)
+
+//     const depositResult = yield call(
+//       depositAsync,
+//       instance,
+//       web3,
+//       pid,
+//       amount,
+//       accounts[0],
+//     )
+
+//     callback(depositResult.status)
+//   })
+// }
+
+// export function* withdrawToken() {
+//   yield takeLatest(actions.WITHDRAW_TOKEN, function* ({ payload }) {
+//     const { pid, amount, callback } = payload
+
+//     const web3 = yield call(getWeb3)
+//     const abi = MASTER_VAMPIRE_ABI
+//     const instance = new web3.eth.Contract(abi, MASTER_VAMPIRE_ADDRESS)
+
+//     // Get Wallet Account
+//     const accounts = yield call(web3.eth.getAccounts)
+
+//     const withdrawResult = yield call(
+//       withdrawAsync,
+//       instance,
+//       web3,
+//       pid,
+//       amount,
+//       accounts[0],
+//     )
+
+//     callback(withdrawResult.status)
+//   })
+// }
+
+// export function* harvestToken() {
+//   yield takeLatest(actions.HARVEST_TOKEN, function* ({ payload }) {
+//     const { pid, callback } = payload
+
+//     const web3 = yield call(getWeb3)
+//     const abi = MASTER_VAMPIRE_ABI
+//     const instance = new web3.eth.Contract(abi, MASTER_VAMPIRE_ADDRESS)
+
+//     // Get Wallet Account
+//     const accounts = yield call(web3.eth.getAccounts)
+
+//     // const harvestResult = yield call(
+//     //   harvestAsync,
+//     //   instance,
+//     //   web3,
+//     //   pid,
+//     //   accounts[0],
+//     // )
+
+//     const harvestResult = yield call(
+//       depositAsync,
+//       instance,
+//       web3,
+//       pid,
+//       0,
+//       accounts[0],
+//     )
+
+//     callback(harvestResult.status)
+//   })
+// }
+
+// export function* drainToken() {
+//   yield takeLatest(actions.DRAIN_TOKEN, function* ({ payload }) {
+//     const { pid, callback } = payload
+
+//     const web3 = yield call(getWeb3)
+//     const abi = MASTER_VAMPIRE_ABI
+//     const instance = new web3.eth.Contract(abi, MASTER_VAMPIRE_ADDRESS)
+
+//     // Get Wallet Account
+//     const accounts = yield call(web3.eth.getAccounts)
+
+//     const drainResult = yield call(drainAsync, instance, web3, pid, accounts[0])
+
+//     callback(drainResult.status)
+//   })
+// }
+
+// export function* getEthPrice() {
+//   yield takeLatest(actions.GET_ETH_PRICE, function* () {
+//     let data = yield call(lookUpPrices, ['ethereum'])
+
+//     yield put({
+//       type: actions.GET_ETH_PRICE_SUCCESS,
+//       ethPrice: parseFloat(data.ethereum.usd),
+//     })
+//   })
+// }
+
+// export function* getTvl() {
+//   yield takeEvery(actions.GET_TVL, function* ({ payload }) {
+//     const {
+//       farm,
+//       ethPrice,
+//       nerdlingPrice,
+//       derivedEth0,
+//       decimals0,
+//       derivedEth1,
+//       decimals1,
+//       poolAddress,
+//       adapterAddress,
+//       adapterAbi,
+//       callback,
+//     } = payload
+
+//     const web3 = yield call(getWeb3)
+//     const abi = TOKEN_ABI
+//     const instance = new web3.eth.Contract(abi, farm.tokenAddress)
+
+//     const masterVampireInstance = new web3.eth.Contract(
+//       MASTER_VAMPIRE_ABI,
+//       MASTER_VAMPIRE_ADDRESS,
+//     )
+
+//     const totalSupply = yield call(getTotalSupplyAsync, instance)
+//     const reserves = yield call(getReservesAsync, instance)
+
+//     /*
+//      stakingTokenPrice =
+//         (result.data.pair.token0.derivedETH *
+//           ethPrice *
+//           result.data.pair.reserve0 +
+//           result.data.pair.token1.derivedETH *
+//           ethPrice *
+//           result.data.pair.reserve1) /
+//         (Number(result.data.pair.reserve0) + Number(result.data.pair.reserve1));
+//     */
+//     // const stakingTokenPrice =
+//     //   (derivedEth0 * ethPrice * reserves._reserve0 +
+//     //     derivedEth1 * ethPrice * reserves._reserve1) /
+//     //   (Number(reserves._reserve0) + Number(reserves._reserve1))
+
+//     const decimals = yield call(getDecimalAsync, instance)
+
+//     // Note: totalSupply and reserves are wei unit
+//     const stakingTokenPrice =
+//       (derivedEth0 * ethPrice * (reserves._reserve0 / Math.pow(10, decimals0)) +
+//         derivedEth1 *
+//           ethPrice *
+//           (reserves._reserve1 / Math.pow(10, decimals1))) /
+//       (Number(totalSupply) / Math.pow(10, decimals))
+
+//     let tvl
+//     if (farm._pid === NERDLING_POOL._pid) {
+//       const tokenBalance = yield call(getBalanceAsync, instance, poolAddress)
+//       tvl = (tokenBalance * stakingTokenPrice) / Math.pow(10, decimals)
+//     } else {
+//       const lockedAmount = yield call(
+//         getAdapterLockedAmountAsync,
+//         new web3.eth.Contract(adapterAbi, adapterAddress),
+//         MASTER_VAMPIRE_ADDRESS,
+//         farm._victimPoolId,
+//       )
+//       console.log('-----------------------')
+//       console.log(farm.name, farm._victimPoolId, lockedAmount)
+//       console.log('-----------------------')
+//       tvl = (lockedAmount * stakingTokenPrice) / Math.pow(10, decimals)
+//     }
+
+//     const poolInfo = yield call(
+//       getPoolInfoAsync,
+//       masterVampireInstance,
+//       farm._pid,
+//     )
+
+//     const weeklyReward = (poolInfo.rewardPerBlock / 15) * 604800
+//     // const rewardPerToken = tokenBalance > 0 ? weeklyReward / tokenBalance : 0
+//     const rewardPerToken = weeklyReward / Math.pow(10, 18)
+
+//     // const newApy =
+//     //   stakingTokenPrice > 0
+//     //     ? (poolInfo.rewardPerBlock * 6550 * 365 * nerdlingPrice * 100) /
+//     //       stakingTokenPrice /
+//     //       Math.pow(10, 18)
+//     //     : 0
+
+//     const newApy =
+//       tvl > 0
+//         ? (((poolInfo.rewardPerBlock / Math.pow(10, 18)) *
+//             2336000 *
+//             nerdlingPrice) /
+//             tvl) *
+//           100
+//         : 0
+
+//     // if (pid == 31) {
+//     //   console.log('nerdling price', nerdlingPrice)
+//     //   console.log('stakingTokenPrice', stakingTokenPrice)
+//     //   console.log('derived000', derivedEth0)
+//     //   console.log('derived111', derivedEth1)
+//     //   console.log(
+//     //     'derived0',
+//     //     (derivedEth0 * ethPrice * reserves._reserve0) / 10000,
+//     //   )
+//     //   console.log(
+//     //     'derived1',
+//     //     (derivedEth1 * ethPrice * reserves._reserve1) / 10000,
+//     //   )
+//     //   console.log('totalSupply', totalSupply)
+//     //   console.log('rewardPerToken', rewardPerToken)
+//     //   console.log('reserves', reserves)
+//     //   console.log('poolInfo', poolInfo)
+//     //   console.log('rewardPerToken', rewardPerToken)
+//     // }
+//     const weeklyRoi =
+//       stakingTokenPrice > 0
+//         ? (rewardPerToken * nerdlingPrice * 100) / stakingTokenPrice
+//         : 0
+
+//     const apy = weeklyRoi * 52
+
+//     console.log('*****************************************')
+//     console.log('token', farm._pid, farm.tokenAddress)
+//     console.log('stakingTokenPrice', stakingTokenPrice)
+//     console.log('nerdlingPrice', nerdlingPrice)
+//     console.log('tvl', tvl)
+//     console.log('*****************************************')
+
+//     callback(tvl, newApy)
+//   })
+// }
+
+// export function* getTotalSupply() {
+//   yield takeLatest(actions.GET_TOTAL_SUPPLY, function* ({ payload }) {
+//     const { tokenAddress, callback } = payload
+
+//     const web3 = yield call(getWeb3)
+//     const abi = TOKEN_ABI
+//     const instance = new web3.eth.Contract(abi, tokenAddress)
+
+//     const totalSupply = yield call(getTotalSupplyAsync, instance)
+
+//     callback(totalSupply)
+//   })
+// }
 
 export default function* rootSaga() {
   yield all([
-    fork(getPartnersFilterRequest),
-    fork(getStatisticsFilterRequest),
-    fork(slotDetailRequest),
-    fork(getNotificationRequest),
-    fork(getCurrencyRateRequest),
-    fork(getCurrency),
-    fork(getUserProfile),
-  ]);
+    // fork(approveToken),
+    // fork(getAllowance),
+    // fork(getStaked),
+    // fork(depositToken),
+    // fork(withdrawToken),
+    // fork(harvestToken),
+    // fork(drainToken),
+    // fork(getBalance),
+    // fork(getPending),
+    // fork(getEthPrice),
+    // fork(getTvl),
+    // fork(getTotalSupply),
+  ])
 }

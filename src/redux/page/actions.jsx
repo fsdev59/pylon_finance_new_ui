@@ -1,50 +1,104 @@
 const actions = {
-  PARTNERS_FILTER_REQUEST: "PARTNERS_FILTER_REQUEST",
-  PARTNERS_FILTER_SUCCESS: "PARTNERS_FILTER_SUCCESS",
-  PARTNERS_FILTER_ERROR: "PARTNERS_FILTER_ERROR",
+  GET_ALLOWANCE: 'GET_ALLOWANCE',
+  GET_STAKED: 'GET_STAKED',
+  GET_BALANCE: 'GET_BALANCE',
+  GET_PENDING: 'GET_PENDING',
 
-  STATISTICS_FILTER_REQUEST: "STATISTICS_FILTER_REQUEST",
-  STATISTICS_FILTER_SUCCESS: "STATISTICS_FILTER_SUCCESS",
-  STATISTICS_FILTER_ERROR: "STATISTICS_FILTER_ERROR",
+  APPROVE_TOKEN: 'APPROVE_TOKEN',
+  DEPOSIT_TOKEN: 'DEPOSIT_TOKEN',
+  WITHDRAW_TOKEN: 'WITHDRAW_TOKEN',
+  HARVEST_TOKEN: 'HARVEST_TOKEN',
+  DRAIN_TOKEN: 'DRAIN_TOKEN',
 
-  SLOT_DETAIL_REQUEST: "SLOT_DETAIL_REQUEST",
-  SLOT_DETAIL_SUCCESS: "SLOT_DETAIL_SUCCESS",
-  SLOT_DETAIL_ERROR: "SLOT_DETAIL_ERROR",
-  INIT_SLOT_DETAIL: "INIT_SLOT_DETAIL",
+  GET_ETH_PRICE: 'GET_ETH_PRICE',
+  GET_ETH_PRICE_SUCCESS: 'GET_ETH_PRICE_SUCCESS',
 
-  GET_NOTIFICATION_REQUEST: "GET_NOTIFICATION_REQUEST",
-  GET_NOTIFICATION_SUCCESS: "GET_NOTIFICATION_SUCCESS",
-  GET_NOTIFICATION_ERROR: "GET_NOTIFICATION_ERROR",
+  GET_TOTAL_SUPPLY: 'GET_TOTAL_SUPPLY',
 
-  GET_ALERT_MESSAGE_SUCCESS: "GET_ALERT_MESSAGE_SUCCESS",
+  GET_TVL: 'GET_TVL',
 
-  GET_CURRENCY_RATE_REQUEST: "GET_CURRENCY_RATE_REQUEST",
-  GET_CURRENCY_RATE_SUCCESS: "GET_CURRENCY_RATE_SUCCESS",
-
-  GET_CURRENCY_REQUEST: "GET_CURRENCY_REQUEST",
-  UPDATE_CURRENCY: "UPDATE_CURRENCY",
-
-  GET_USER_PROFILE_REQUEST: "GET_USER_PROFILE_REQUEST",
-  GET_USER_PROFILE_SUCCESS: "GET_USER_PROFILE_SUCCESS",
-
-  getPartnersFilterRequest: (payload) => ({
-    type: actions.PARTNERS_FILTER_REQUEST,
-    payload,
+  getEthPrice: () => ({
+    type: actions.GET_ETH_PRICE,
   }),
-  getStatisticsFilterRequest: (payload) => ({
-    type: actions.STATISTICS_FILTER_REQUEST,
-    payload,
+
+  getTotalSupply: (tokenAddress, callback) => ({
+    type: actions.GET_TOTAL_SUPPLY,
+    payload: { tokenAddress, callback },
   }),
-  slotDetailRequest: (payload) => ({
-    type: actions.SLOT_DETAIL_REQUEST,
-    payload,
+
+  getBalance: (tokenAddress, callback) => ({
+    type: actions.GET_BALANCE,
+    payload: { tokenAddress, callback },
   }),
-  getNotifications: () => ({ type: actions.GET_NOTIFICATION_REQUEST }),
-  getCurrencyRateRequest: () => ({ type: actions.GET_CURRENCY_RATE_REQUEST }),
-  getCurrency: (payload) => ({ type: actions.GET_CURRENCY_REQUEST, payload }),
-  getUserProfile: (payload) => ({
-    type: actions.GET_USER_PROFILE_REQUEST,
-    payload,
+
+  getAllowance: (tokenAddress, callback) => ({
+    type: actions.GET_ALLOWANCE,
+    payload: { tokenAddress, callback },
   }),
-};
-export default actions;
+
+  getStaked: (pid, callback) => ({
+    type: actions.GET_STAKED,
+    payload: { pid, callback },
+  }),
+
+  getPending: (pid, callback) => ({
+    type: actions.GET_PENDING,
+    payload: { pid, callback },
+  }),
+
+  approveToken: (tokenAddress, callback) => ({
+    type: actions.APPROVE_TOKEN,
+    payload: { tokenAddress, callback },
+  }),
+
+  depositToken: (pid, amount, callback) => ({
+    type: actions.DEPOSIT_TOKEN,
+    payload: { pid, amount, callback },
+  }),
+
+  withdrawToken: (pid, amount, callback) => ({
+    type: actions.WITHDRAW_TOKEN,
+    payload: { pid, amount, callback },
+  }),
+
+  harvestToken: (pid, callback) => ({
+    type: actions.HARVEST_TOKEN,
+    payload: { pid, callback },
+  }),
+
+  drainToken: (pid, callback) => ({
+    type: actions.DRAIN_TOKEN,
+    payload: { pid, callback },
+  }),
+
+  getTvl: (
+    farm,
+    ethPrice,
+    nerdlingPrice,
+    derivedEth0,
+    decimals0,
+    derivedEth1,
+    decimals1,
+    poolAddress,
+    adapterAddress,
+    adapterAbi,
+    callback,
+  ) => ({
+    type: actions.GET_TVL,
+    payload: {
+      farm,
+      ethPrice,
+      nerdlingPrice,
+      derivedEth0,
+      decimals0,
+      derivedEth1,
+      decimals1,
+      poolAddress,
+      adapterAddress,
+      adapterAbi,
+      callback,
+    },
+  }),
+}
+
+export default actions
