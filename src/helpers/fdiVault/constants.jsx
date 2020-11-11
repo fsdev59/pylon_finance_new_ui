@@ -16,3 +16,86 @@ export const ADDR_BASED_VAULT       = "0xDa4325e70aC8F7D3c14Bb9882E39abE1920f3DC
 export const ADDR_BASEDPYLON_VAULT  = "0x3Ddbbfb6F2003F670735Bcd44beADd0e0056DF99";
 
 export const ABI_FDI_VAULT          = '[{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"Withdrawn","type":"event"},{"constant":true,"inputs":[],"name":"_rewardCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"_rewards","outputs":[{"internalType":"uint256","name":"time","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"addressIndices","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"owner","type":"address"}],"name":"availableWithdraw","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"balance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"deposit","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"depositAll","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"depositBalances","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"governance","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"reward","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"rewardBalances","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"_governance","type":"address"}],"name":"setGovernance","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"token","outputs":[{"internalType":"contract IERC20","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"totalDeposit","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"withdraw","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"withdrawAll","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"}]';
+
+const FDI_VAULT = [
+    {
+        title: "Compound",
+        tokenName: "COMP",
+        iconName: "token_COMP.png",
+    },
+    {
+        title: "DAI",
+        tokenName: "DAI",
+        iconName: "token_DAI.png",
+    },
+    {
+        title: "ETHLend",
+        tokenName: "LEND",
+        iconName: "token_LEND.png",
+    },
+    {
+        title: "Chainlink",
+        tokenName: "LINK",
+        iconName: "token_LINK.png",
+    },
+    {
+        title: "Synthetix Network",
+        tokenName: "SNX",
+        iconName: "token_SNX.png",
+    },
+    {
+        title: "TrueUSD",
+        tokenName: "TUSD",
+        iconName: "token_TUSD.png",
+    },
+    {
+        title: "Uniswap",
+        tokenName: "UNI",
+        iconName: "token_UNI.png",
+    },
+    {
+        title: "USD Coin",
+        tokenName: "USDC",
+        iconName: "token_USDC.png",
+    },
+    {
+        title: "Tether USD",
+        tokenName: "USDT",
+        iconName: "token_USDT.png",
+    },
+    {
+        title: "Wrapped Bitcoin",
+        tokenName: "WBTC",
+        iconName: "token_WBTC.png",
+    },
+    {
+        title: "WETH",
+        tokenName: "WETH",
+        iconName: "token_WETH.png",
+    },
+    {
+        title: "cDAI/cUSDC",
+        tokenName: "YCRV",
+        iconName: "token_YCRV.png",
+    },
+    {
+        title: "YeFi.finance",
+        tokenName: "YFII",
+        iconName: "token_YFII.png",
+    },
+    {
+        title: "yearn.finance",
+        tokenName: "YFI",
+        iconName: "token_YFI.png",
+    },
+    {
+        title: "BASED",
+        tokenName: "BASED",
+        iconName: "token_BASED.png",
+    },
+    {
+        title: "BASED-PYLON LP",
+        tokenName: "BASED-PYLON",
+        iconName: "token_BASED.png",
+    }
+]
