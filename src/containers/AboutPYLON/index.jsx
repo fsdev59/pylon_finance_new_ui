@@ -33,11 +33,6 @@ export default function AboutPYLON() {
                 </p>
               </TextBlock>
             </div>
-            <img
-              className="about-background"
-              src={require("../../assets/images/about-pylon-bg.png")}
-              alt="Valut/ecosystem Flow Chart"
-            />
           </div>
           <div className="section section-concept">
             <div className="section section-pylon-mine">
