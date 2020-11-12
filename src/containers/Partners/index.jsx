@@ -22,14 +22,6 @@ const ContactUsForm = ({ onValidated }) => {
     });
 
   return (
-    // <div className="subscription-sender-wrapper">
-    //   <input
-    //     ref={node => (email = node)}
-    //     type="text" />
-    //   <div className="subscribe-send" role="button" onClick={submit}>
-    //     <FontAwesomeIcon icon={faPaperPlane}/>
-    //   </div>
-    // </div>
     <div className="contact-us-form">
       <h2>Contact Us</h2>
       <div className="input-text-row">
