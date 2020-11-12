@@ -121,7 +121,7 @@ export default function ({ num, type, item }) {
             </div> */}
             <div className="stake-content-row">
               <div className="title">Mine Earnings</div>
-              <div className="content">25 {item.tokenName}</div>
+              <div className="content">25 PYLON</div>
             </div>
             <div className="stake-content-row">
               <div className="title">
