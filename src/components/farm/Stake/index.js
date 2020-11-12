@@ -102,7 +102,7 @@ export default function ({ type, item }) {
               <div className="content">Your wallet 0.0000 {item.tokenName}</div>
             </div>
             <div className="stake-content-row">
-              <input type="text" />
+              <input type="text" placeholder="Deposit amount" />
             </div>
             <div className="stake-content-row">
               <span className="percent">25%</span>
@@ -111,7 +111,7 @@ export default function ({ type, item }) {
               <span className="percent">100%</span>
             </div>
             <div className="stake-content-row">
-              <button className="blue ml">Deposit</button>
+              <button className="blue">Deposit</button>
             </div>
           </div>
           <div className="stake-content-section right">
@@ -145,7 +145,7 @@ export default function ({ type, item }) {
             {type === "PYLON" && (
               <>
                 <div className="stake-content-row">
-                  <input type="text" />
+                  <input type="text" placeholder="Withdraw amount" />
                 </div>
                 <div className="stake-content-row">
                   <span className="percent">25%</span>
