@@ -38,7 +38,28 @@ export default function Footer() {
       <footer className="footer">
         <hr className="line" />
         <div className="footer-wrapper">
-          <div className="logo-wrapper">
+          <a
+            href="https://discord.gg/m5zSFsA"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img src={require("../../../assets/images/telegram.png")} alt="" />
+          </a>
+          <a
+            href="https://twitter.com/Pylonfinance"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img src={require("../../../assets/images/twitter.png")} alt="" />
+          </a>
+          <a
+            href="https://t.me/pylonfinance"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img src={require("../../../assets/images/discord.png")} alt="" />
+          </a>
+          {/* <div className="logo-wrapper">
             <Link className="footer-logo" to="/staging/home">
               <img
                 className="footer-logo-img"
@@ -90,14 +111,14 @@ export default function Footer() {
                   />
                 )}
               />
-          </div>
+          </div> */}
         </div>
         <div className="social-wrapper"></div>
         <div className="footer-address">
-          <span className="address">
+          {/* <span className="address">
             456 California Street, San Francisco, CA 75395
-          </span>
-          <span>©2020 Pylon Finance, Inc.</span>
+          </span> */}
+          <div>©2020 Pylon Finance, Inc.</div>
         </div>
       </footer>
     </>

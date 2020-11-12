@@ -17,24 +17,27 @@ export default function AboutPYLON() {
             <div className="section section-text">
               <TextBlock title="Who We Are?">
                 <p>
-                  Pylon is a utility token that pays dividends on real world GPU{" "}
+                  Pylon is a utility token that pays dividends on real world GPU
                   <br />
-                  mining farm in the US. We are a 100% community mined token{" "}
+                  mining farm in the US. We are a 100% community mined token
                   <br />
-                  with no presale, no premine, and a low cap supply of 8400.
+                  with no presale, no premine, and a low cap supply of approx
                   <br />
+                  7700.
+                </p>
+                <p>
+                  Backed by the largest USA mining corp, we are able to give
                   <br />
+                  users the opportunity to own a piece of one of the most
                   <br />
-                  We're 100% community mined, owned, and created and have a
+                  essential resources needed to support the blockchain
                   <br />
-                  group of hard working volunteers to get all these things into
-                  <br />
-                  place.
+                  ecosystem.
                 </p>
               </TextBlock>
             </div>
           </div>
-          <div className="section section-concept">
+          {/* <div className="section section-concept">
             <div className="section section-pylon-mine">
               <div className="left">
                 <h2>Pylon's Latest Mine</h2>
@@ -57,9 +60,9 @@ export default function AboutPYLON() {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
 
-          <div className="section section-pylon-value">
+          {/* <div className="section section-pylon-value">
             <div className="left">
               <div className="section mine-open">
                 <h3>NEW MINE OPENS ON</h3>
@@ -103,7 +106,7 @@ export default function AboutPYLON() {
                 width="260"
               />
             </div>
-          </div>
+          </div> */}
         </div>
 
         <div className="content-2">
@@ -128,10 +131,10 @@ export default function AboutPYLON() {
               subContent4=""
               subContent5=""
               subContent6=""
-              share="Share"
-              facebookIcon="icon-facebook"
-              googleIcon="icon-google"
-              twitterIcon="icon-twitter"
+              share="Join Our Community!"
+              telegramIcon="telegram"
+              twitterIcon="twitter"
+              discordIcon="discord"
               mainColor="#fff "
               subColor="#000069"
               padding="10%"
@@ -204,9 +207,9 @@ export default function AboutPYLON() {
               backgroundImage="icon-computer"
               quarterTitle="Main goal in this quarter"
               subContentSpace="- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-              subContent1="Deploy FDI crowdsourcing vault"
-              subContent2="Deploy FDI crowdsourcing vault"
-              subContent3="Deploy FDI crowdsourcing vault"
+              subContent1="TBA"
+              subContent2=""
+              subContent3=""
               subContent4=""
               subContent5=""
               subContent6=""

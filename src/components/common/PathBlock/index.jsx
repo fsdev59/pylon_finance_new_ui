@@ -21,9 +21,9 @@ export default function (props) {
     subContent5,
     subContent6,
     share,
-    facebookIcon,
-    googleIcon,
+    telegramIcon,
     twitterIcon,
+    discordIcon,
     mainColor,
     subColor,
     padding,
@@ -55,10 +55,6 @@ export default function (props) {
     paddingRight: 20,
   };
 
-  const facebookStyle = {
-    background: facebookIcon,
-  };
-
   const mainStyle = {
     background: background,
     paddingLeft: `${padding}`,
@@ -88,26 +84,47 @@ export default function (props) {
         {share !== "" && (
           <div className="header-footer" style={socialStyle}>
             <span style={shareStyle}>{share}</span>
-            {facebookIcon !== "" && (
-              <img
-                style={quarterIcon}
-                src={require(`../../../assets/images/${facebookIcon}.png`)}
-                alt="Valut/ecosystem Flow Chart"
-              />
-            )}
-            {googleIcon !== "" && (
-              <img
-                style={quarterIcon}
-                src={require(`../../../assets/images/${googleIcon}.png`)}
-                alt="Valut/ecosystem Flow Chart"
-              />
+            {telegramIcon !== "" && (
+              <a
+                href="https://discord.gg/m5zSFsA"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  style={quarterIcon}
+                  src={require(`../../../assets/images/${telegramIcon}.png`)}
+                  alt=""
+                  width="40"
+                />
+              </a>
             )}
             {twitterIcon !== "" && (
-              <img
-                style={quarterIcon}
-                src={require(`../../../assets/images/${twitterIcon}.png`)}
-                alt="Valut/ecosystem Flow Chart"
-              />
+              <a
+                href="https://twitter.com/Pylonfinance"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  style={quarterIcon}
+                  src={require(`../../../assets/images/${twitterIcon}.png`)}
+                  alt=""
+                  width="40"
+                />
+              </a>
+            )}
+            {discordIcon !== "" && (
+              <a
+                href="https://t.me/pylonfinance"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  style={quarterIcon}
+                  src={require(`../../../assets/images/${discordIcon}.png`)}
+                  alt=""
+                  width="40"
+                />
+              </a>
             )}
           </div>
         )}
@@ -117,13 +134,10 @@ export default function (props) {
           <span className="header-text">{title}</span>
           <span className="sub-header">{title2}</span>
           <span className="divider"></span>
-          <span className="sub-title">{subTitle}</span>
-          <span className="content">{content}</span>
+          {/* <span className="sub-title">{subTitle}</span>
+          <span className="content">{content}</span> */}
         </div>
-        <div
-          className="main-quater-style"
-          style={mainQuarterStyle}
-        >
+        <div className="main-quater-style" style={mainQuarterStyle}>
           <div className="main-quater-text" style={mainQuarterText}>
             <h2>{quarterTitle}</h2>
             {subContent1 !== "" && (

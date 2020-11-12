@@ -63,13 +63,23 @@ export default function Partners() {
         <div className="content-1">
           <div className="section section-concept">
             <div className="section section-text">
-              <TextBlock title="Be Partner with PYLON">
+              <TextBlock title="Partner with PYLON">
                 <p>
-                  Pylon is a utility token that pays dividends on real world GPU{" "}
+                  Lets work together to help other protocols have access to real
                   <br />
-                  mining farm in the US. We are a 100% community mined token{" "}
+                  world tangible assets! Partnering with PYLON allows other
                   <br />
-                  with no presale, no premine, and a low cap supply of 8400.
+                  users and projects to take advantage of our mining tech and
+                  <br />
+                  real world asset acquisition. By creating a simple fee system
+                  <br />
+                  in ones protocol, you can seed your own GPU mine that
+                  <br />
+                  dividends to your users or community. Reach out to us to find
+                  <br />
+                  out more and see how you can take advantage of this today!
+                  <br />
+                  Below is a chart explaining how it works.
                 </p>
               </TextBlock>
             </div>
@@ -125,6 +135,38 @@ export default function Partners() {
               <h2>Reach Us</h2>
               <div className="reach-us-list">
                 <div className="reach-us-row">
+                  <a
+                    href="https://discord.gg/m5zSFsA"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img
+                      src={require("../../assets/images/telegram.png")}
+                      alt=""
+                    />
+                  </a>
+                  <a
+                    href="https://twitter.com/Pylonfinance"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img
+                      src={require("../../assets/images/twitter.png")}
+                      alt=""
+                    />
+                  </a>
+                  <a
+                    href="https://t.me/pylonfinance"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img
+                      src={require("../../assets/images/discord.png")}
+                      alt=""
+                    />
+                  </a>
+                </div>
+                {/* <div className="reach-us-row">
                   <img
                     className="partners-reach-us-background"
                     src={require("../../assets/images/phone-icon.png")}
@@ -151,7 +193,7 @@ export default function Partners() {
                     <br />
                     &nbsp;&nbsp; Francisco, CA 75395
                   </p>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
