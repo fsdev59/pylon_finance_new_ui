@@ -173,7 +173,7 @@
         .section-how-much-button {
           display: flex;
           flex-direction: row;
-          justify-content: space-between;
+          justify-content: flex-end;
 
           @media screen and (max-width: 520px) {
             flex-direction: column;

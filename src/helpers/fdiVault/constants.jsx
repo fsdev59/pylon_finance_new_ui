@@ -111,7 +111,7 @@ export const FDI_VAULT = [
   //     address: "0xDa4325e70aC8F7D3c14Bb9882E39abE1920f3DC1"
   // },
   {
-    title: "BASED-PYLON LP",
+    title: "BASED-PYLON",
     tokenName: "BASED-PYLON",
     iconName: "token_BASED.png",
     address: "0x3Ddbbfb6F2003F670735Bcd44beADd0e0056DF99",

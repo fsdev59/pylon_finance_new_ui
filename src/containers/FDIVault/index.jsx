@@ -13,12 +13,7 @@ import { FDI_VAULT } from "../../helpers/fdiVault/constants";
 export default function FDIVault() {
   return (
     <>
-      <div className="root ycrv-valut-container">
-        <div className="content-1">
-          {FDI_VAULT.map((item, index) => (
-            <Stake key={item.title} num={index} type={"FDI"} item={item} />
-          ))}
-        </div>
+      <div className="root fdi-valut-container">
         <div className="content-2">
           <TextBlock title="PYLON VAULT" color="orange">
             <p>
@@ -64,6 +59,11 @@ export default function FDIVault() {
             </div>
             <Button color="cyan" caption="CONNECT WALLET" size="lg" />
           </div>
+        </div>
+        <div className="content-1">
+          {FDI_VAULT.map((item, index) => (
+            <Stake key={item.title} num={index} type={"FDI"} item={item} />
+          ))}
         </div>
       </div>
     </>

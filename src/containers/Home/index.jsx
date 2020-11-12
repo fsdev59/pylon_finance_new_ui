@@ -19,30 +19,43 @@ export default function Home() {
             <h2 className="page-sub-title">FINANCE</h2>
           </div>
           <div className="section section-concept">
-            <TextBlock title="Our Concept">
+            <TextBlock title="What Is Pylon?">
               <p>
-                Tassadar's first gift to Terrans. Without Pylon, nothing else
-                exists.
-              </p>
-              <p>
-                Pylon holders enjoy exposure to all other crystals and get lions
-                share of
+                PYLON is the first and largest cryptocurrency token backed by
                 <br />
-                ttGPU mining farm proceeds
+                real-world income-generating assets. While most DeFi tokens have
+                <br />
+                little or zero tangible value, the PYLON price is supported by
+                <br />
+                the largest Ethereum GPU mining operation in the United States.
+                <br />
+                PYLON is a 100% community-mined token with no presale or
+                <br />
+                pre-mine, and fixed supply of approx 7700.
               </p>
             </TextBlock>
           </div>
           <div className="section section-what-is-pylon">
-            <TextBlock title="What is Pylon?">
+            <TextBlock title="How Does It Work?">
               <p>
-                Pylon is a utility token that pays dividends on real world GPU
-                mining farm in <br />
-                the US.
+                First, you stake your PYLON or PYLON-ETH liquidity pool tokens
+                <br />
+                into the PYLON vault. Our GPU mining farms will mine Etherum
+                <br />
+                transactions and earn rewards from gas fees. The rewards (in
+                <br />
+                ETH) are used to market buy PYLON which are then sent to
+                <br />
+                stakers. This constant buying of PYLON from externally generated
+                <br />
+                revenue guarantees your tokens have real value.
               </p>
-              <p className="bold">
-                We are a 100% community minded token with no presale, no
-                premine, and a<br />
-                low cap supply of 8400.
+              <p>
+                Additionally, there are two other vaults which take in fees that{" "}
+                <br />
+                go towards constructing new mining farms to help the Pylon{" "}
+                <br />
+                project grow.
               </p>
             </TextBlock>
           </div>
@@ -61,22 +74,30 @@ export default function Home() {
           </div>
           <div className="section section-how-much">
             <div className="caption">
-              <span>How much</span>can a miner make?
+              <span>How much</span>Can I Make?
             </div>
             <div className="section-how-much-content">
               <div className="section-how-much-left">
                 <p>
-                  Mining units can generate 20~50% APY in a bear market
+                  Based on historic mining revenues from the last 6 years, you
                   <br />
-                  and 160-250%+APY in a bull market.
+                  can expect PYLON to return up to 250% APY in a bull market and
+                  <br />
+                  about 35% APY in a bear market. So even when the
+                  <br />
+                  cryptocurrency markets are bleeding red, PYLON will continue
+                  <br />
+                  to generate weekly returns for it’s holders that are still
+                  <br />
+                  superior to those of banks and other traditional investments.
                 </p>
                 <div className="section-how-much-button">
-                  <Button
+                  {/* <Button
                     className="btn-readme"
                     color="cyan"
                     caption="Read More"
                     size="md"
-                  />
+                  /> */}
                   <RectBlock
                     className="rect-block bull-market"
                     title={`BULL`}
@@ -131,11 +152,28 @@ export default function Home() {
             <div className="left">
               <h2>Pylon's Value</h2>
               <p>
-                We are a 100% community mined project with no ICO,
+                PYLON was created by the owners of the largest Ether mining
                 <br />
-                presale, and low cap supply of 8.4k.
+                operation in the United States. We mine about 1,078,202,625 KH/s
+                <br />
+                (kilohash per second). We have over 6 years of mining experience
+                <br />
+                and have created competitive moats to protect and grow our
+                <br />
+                revenue.
               </p>
-              <div className="section mine-open">
+              <p>
+                In addition to being one of the largest ETH miners in the USA,
+                <br />
+                we’ve successfully launched 9+ DeFi farming projects previous to
+                <br />
+                launching the PYLON vault. So you’ll have total confidence our
+                <br />
+                vault smart contracts are 100% safe and have been tested
+                <br />
+                rigorously.
+              </p>
+              {/* <div className="section mine-open">
                 <h3>NEW MINE OPENS ON</h3>
                 <span>10 Dec (Sunday) 2020, 15 AM</span>
                 <div className="date">
@@ -160,7 +198,7 @@ export default function Home() {
                   </div>
                 </div>
                 <Button color="orange" caption="JOIN NOW" size="lg" />
-              </div>
+              </div> */}
             </div>
             <div className="right">
               <h2 className="caption">Crypto Investment</h2>

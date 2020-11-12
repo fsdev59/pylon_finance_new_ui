@@ -28,7 +28,7 @@ const TextBlock = ({ title, content, align, colorTitle, colorContent }) => {
 };
 
 export default function ({ num, type, item }) {
-  const [open, setOpen] = useState(num === 0);
+  const [open, setOpen] = useState(true);
 
   return (
     <div className="stake-container">
@@ -135,8 +135,14 @@ export default function ({ num, type, item }) {
               </div>
             </div>
             <div className="stake-content-row">
-              <div className="title"></div>
-              <div className="content">Your wallet 0.0000 {item.tokenName}</div>
+              {type === "PYLON" && (
+                <>
+                  <div className="title"></div>
+                  <div className="content">
+                    Available for withdrawal 0.0000 {item.tokenName}
+                  </div>
+                </>
+              )}
             </div>
             {/* <div className="stake-content-row">
               <div className="title"></div>
