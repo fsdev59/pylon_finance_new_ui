@@ -1,16 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import React from "react";
 
 import TextBlock from "../../components/common/TextBlock";
-import Button from "../../components/common/Button";
-import RectBlock from "../../components/common/RectBlock";
-
 import MailchimpSubscribe from "react-mailchimp-subscribe";
 
 import "./styles.scss";
 
 const url = process.env.REACT_APP_MAILCHIMP_URL;
-console.log(url);
+
 const ContactUsForm = ({ onValidated }) => {
   let fname, lname, email, subject, msg;
   const submit = () =>
@@ -22,7 +18,7 @@ const ContactUsForm = ({ onValidated }) => {
     email.value.indexOf("@") > -1 &&
     onValidated({
       EMAIL: email.value,
-      NAME: fname.value + lname.value
+      NAME: fname.value + lname.value,
     });
 
   return (
@@ -39,26 +35,26 @@ const ContactUsForm = ({ onValidated }) => {
       <div className="input-text-row">
         <div className="input-text-left">
           <p>First Name</p>
-          <input ref={node => (fname = node)} type="text"></input>
+          <input ref={(node) => (fname = node)} type="text"></input>
         </div>
         <div className="input-text-right">
           <p>last Name</p>
-          <input ref={node => (lname = node)} type="text"></input>
+          <input ref={(node) => (lname = node)} type="text"></input>
         </div>
       </div>
       <div className="input-text-row">
         <div className="input-text-left">
           <p>Email</p>
-          <input ref={node => (email = node)} type="email"></input>
+          <input ref={(node) => (email = node)} type="email"></input>
         </div>
         <div className="input-text-right">
           <p>Subject</p>
-          <input ref={node => (subject = node)} type="text"></input>
+          <input ref={(node) => (subject = node)} type="text"></input>
         </div>
       </div>
       <div className="input-text-row">
         <p>Message</p>
-        <textarea ref={node => (msg = node)}></textarea>
+        <textarea ref={(node) => (msg = node)}></textarea>
       </div>
       <div className="submit-button">
         <button onClick={submit}>Submit</button>
@@ -77,18 +73,20 @@ export default function Partners() {
             <div className="section section-text">
               <TextBlock title="Be Partner with PYLON">
                 <p>
-                  Pylon is a utility token that pays dividends on real world GPU <br/>
-                  mining farm in the US. We are a 100% community mined token <br/>
-                    with no presale, no premine, and a low cap supply of 8400.
+                  Pylon is a utility token that pays dividends on real world GPU{" "}
+                  <br />
+                  mining farm in the US. We are a 100% community mined token{" "}
+                  <br />
+                  with no presale, no premine, and a low cap supply of 8400.
                 </p>
               </TextBlock>
             </div>
           </div>
           <img
-              className="partners-background"
-              src={require("../../assets/images/partners-back-1.png")}
-              alt="hand shake background image"
-            />
+            className="partners-background"
+            src={require("../../assets/images/partners-back-1.png")}
+            alt="hand shake background"
+          />
         </div>
 
         <div className="content-2">
@@ -107,17 +105,17 @@ export default function Partners() {
               <img
                 className="partners-image"
                 src={require("../../assets/images/partners-yakuza.png")}
-                alt="Yakuza image"
+                alt="Yakuza"
               />
               <img
                 className="partners-image"
                 src={require("../../assets/images/partners-b.png")}
-                alt="B image"
+                alt="B"
               />
               <img
                 className="partners-image"
                 src={require("../../assets/images/partners-clock.png")}
-                alt="Clock image"
+                alt="Clock"
               />
             </div>
           </div>
@@ -127,10 +125,10 @@ export default function Partners() {
               render={({ subscribe, status }) => (
                 <ContactUsForm
                   status={status}
-                  onValidated={formData => subscribe(formData)}
+                  onValidated={(formData) => subscribe(formData)}
                 />
               )}
-              />
+            />
             <div className="reach-us-form">
               <h2>Reach Us</h2>
               <div className="reach-us-list">
@@ -156,8 +154,11 @@ export default function Partners() {
                     src={require("../../assets/images/location-icon.png")}
                     alt="Reach Us location icon"
                   />
-                  <p>&nbsp;&nbsp; 456 California Street, San<br/>
-                     &nbsp;&nbsp; Francisco, CA 75395</p>
+                  <p>
+                    &nbsp;&nbsp; 456 California Street, San
+                    <br />
+                    &nbsp;&nbsp; Francisco, CA 75395
+                  </p>
                 </div>
               </div>
             </div>
