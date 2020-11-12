@@ -33,6 +33,8 @@
     @media screen and (max-width: 768px) {
       padding-left: 30px;
       padding-right: 30px;
+      padding-top: 80px;
+      padding-bottom: 50px;
     }
   }
 
@@ -168,6 +170,13 @@
           padding-top: 50px;
           color: #fff;
           line-height: 1.3rem;
+
+          @media screen and (max-width: 580px) {
+            padding-top: 20px;
+            br {
+              display: none;
+            }
+          }
         }
 
         .section-how-much-button {
@@ -320,6 +329,10 @@
       @media screen and (max-width: 1024px) {
         margin-top: 20px;
         margin-left: 0px;
+      }
+
+      @media screen and (max-width: 580px) {
+        // width: 400px;
       }
 
       .caption {

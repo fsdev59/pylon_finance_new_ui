@@ -18,6 +18,11 @@
     flex-direction: row;
     width: 100%;
     align-items: flex-start;
+
+    @media screen and (max-width: 580px) {
+      flex-direction: column;
+      align-items: center;
+    }
   }
   &__logo {
     margin-right: 20px;
@@ -40,6 +45,10 @@
 
       @media screen and (max-width: 768px) {
         flex-flow: row wrap;
+      }
+
+      @media screen and (max-width: 580px) {
+        justify-content: center;
       }
 
       li {
