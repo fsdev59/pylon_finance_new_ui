@@ -27,8 +27,8 @@ const TextBlock = ({ title, content, align, colorTitle, colorContent }) => {
   );
 };
 
-export default function ({ type, item }) {
-  const [open, setOpen] = useState(true);
+export default function ({ num, type, item }) {
+  const [open, setOpen] = useState(num === 0);
 
   return (
     <div className="stake-container">

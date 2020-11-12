@@ -15,8 +15,8 @@ export default function FDIVault() {
     <>
       <div className="root ycrv-valut-container">
         <div className="content-1">
-          {FDI_VAULT.map((item) => (
-            <Stake key={item.title} type={"FDI"} item={item} />
+          {FDI_VAULT.map((item, index) => (
+            <Stake key={item.title} num={index} type={"FDI"} item={item} />
           ))}
         </div>
         <div className="content-2">

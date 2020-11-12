@@ -15,8 +15,8 @@ export default function PYLONVault() {
     <>
       <div className="root ycrv-valut-container">
         <div className="content-1">
-          {PYLON_VAULT.map((item) => (
-            <Stake key={item.title} type="PYLON" item={item} />
+          {PYLON_VAULT.map((item, index) => (
+            <Stake key={item.title} num={index} type="PYLON" item={item} />
           ))}
         </div>
         <div className="content-2">
