@@ -49,8 +49,8 @@ export default function ({ type, item }) {
           </div>
           <div className="stake-header-section">
             <TextBlock
-              title="26.82% APY + 46% VALUE"
-              content="Yearly Growth"
+              title="46%"
+              content="Mining Seed APY"
               colorTitle="#fd8300"
               colorContent="#00b9ea"
             />
@@ -91,7 +91,7 @@ export default function ({ type, item }) {
               <div className="content">19,958,14 {item.tokenName}</div>
             </div>
             <div className="stake-content-row">
-              <div className="title">Max cap</div>
+              <div className="title">TVL</div>
               <div className="content">20,000 {item.tokenName}</div>
             </div>
             {/* <div className="stake-content-row">
@@ -120,7 +120,7 @@ export default function ({ type, item }) {
               <div className="content">75%</div>
             </div> */}
             <div className="stake-content-row">
-              <div className="title">Net Earning</div>
+              <div className="title">Mine Earnings</div>
               <div className="content">25%</div>
             </div>
             <div className="stake-content-row">
@@ -142,20 +142,26 @@ export default function ({ type, item }) {
               <div className="title"></div>
               <div className="content">Your wallet 0.0000 {item.tokenName}</div>
             </div> */}
-            <div className="stake-content-row">
-              <input type="text" />
-            </div>
-            <div className="stake-content-row">
-              <span className="percent">25%</span>
-              <span className="percent">50%</span>
-              <span className="percent">75%</span>
-              <span className="percent">100%</span>
-            </div>
+            {type === "PYLON" && (
+              <>
+                <div className="stake-content-row">
+                  <input type="text" />
+                </div>
+                <div className="stake-content-row">
+                  <span className="percent">25%</span>
+                  <span className="percent">50%</span>
+                  <span className="percent">75%</span>
+                  <span className="percent">100%</span>
+                </div>
+              </>
+            )}
             <div className="stake-content-row">
               {type === "PYLON" && (
                 <button className="cyan mr">Withdraw</button>
               )}
-              <button className="blue-out ml">Claim Rewards</button>
+              <button className={cx("blue-out", "ml", { mtt: type === "FDI" })}>
+                Claim Rewards
+              </button>
             </div>
           </div>
         </div>

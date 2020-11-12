@@ -133,10 +133,25 @@
 
           &.ml {
             margin-left: 5px;
+
+            @media screen and (max-width: 768px) {
+              margin-left: 0px;
+            }
           }
 
           &.mr {
             margin-right: 5px;
+            @media screen and (max-width: 768px) {
+              margin-right: 0px;
+            }
+          }
+
+          &.mtt {
+            margin-top: 80px;
+
+            @media screen and (max-width: 768px) {
+              margin-top: 0px;
+            }
           }
         }
       }
