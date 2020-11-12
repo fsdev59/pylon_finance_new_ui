@@ -145,12 +145,12 @@ export const FDI_VAULT = [
     token0: "0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9",
     token1: "0xD7B7d3C0bdA57723Fb54ab95Fd8F9EA033AF37f2",
   },
-  {
-    title: "Ethereum",
-    tokenName: "ETH",
-    iconName: "token_ETH.png",
-    address: "",
-    token0: "",
-    token1: "",
-  }
+  // {
+  //   title: "Ethereum",
+  //   tokenName: "ETH",
+  //   iconName: "token_ETH.png",
+  //   address: "",
+  //   token0: "",
+  //   token1: "",
+  // }
 ];

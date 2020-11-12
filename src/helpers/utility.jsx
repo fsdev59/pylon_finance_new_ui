@@ -111,3 +111,5 @@ export function getUserAddress(param) {
     return ret;
   }
 }
+
+export const convertBalance = (val, f = 2) => val.toFixed(f);

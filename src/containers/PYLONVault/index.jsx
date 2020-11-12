@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import React from "react";
 
 import TextBlock from "../../components/common/TextBlock";
 import Button from "../../components/common/Button";
-import RectBlock from "../../components/common/RectBlock";
-import Stake from "../../components/farm/Stake";
+import Farm from "../../components/farm";
 
 import "./styles.scss";
 
@@ -15,9 +13,7 @@ export default function PYLONVault() {
     <>
       <div className="root ycrv-valut-container">
         <div className="content-1">
-          {PYLON_VAULT.map((item, index) => (
-            <Stake key={item.title} num={index} type="PYLON" item={item} />
-          ))}
+          <Farm data={PYLON_VAULT} type="PYLON" />
         </div>
         <div className="content-2">
           <TextBlock title="PYLON VAULT" color="orange">

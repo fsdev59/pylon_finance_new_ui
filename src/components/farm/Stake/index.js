@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons";
+
+import { convertBalance } from "../../../helpers/utility";
 
 import "./styles.scss";
 import cx from "classnames";
@@ -27,8 +29,61 @@ const TextBlock = ({ title, content, align, colorTitle, colorContent }) => {
   );
 };
 
-export default function ({ num, type, item }) {
+export default function ({
+  type,
+  item,
+  loading,
+  onDeposit,
+  onWithdraw,
+  onClaimReward,
+  getBalance,
+  getDepositedAmount,
+  getTotalDepositedAmount,
+  getTvl,
+  getMiningEarning,
+}) {
   const [open, setOpen] = useState(true);
+
+  const [balance, setBalance] = useState(0);
+  const [depositedAmount, setDepositedAmount] = useState(0);
+  const [totalDepositedAmount, setTotalDepositedAmount] = useState(0);
+  const [tvl, setTvl] = useState(0);
+  const [miningEarning, setMiningEarning] = useState(0);
+
+  // Inputed deposit & withdraw amount
+  const [deposit, setDeposit] = useState(0);
+  const [withdraw, setWithdraw] = useState(0);
+
+  const init = useCallback(() => {
+    getBalance(item, (ret) => setBalance(ret));
+    getDepositedAmount(item, (ret) => setDepositedAmount(ret));
+    getTotalDepositedAmount(item, (ret) => setTotalDepositedAmount(ret));
+    getTvl(item, (ret) => setTvl(ret));
+    getMiningEarning(item, (ret) => setMiningEarning(ret));
+  }, [
+    getBalance,
+    getDepositedAmount,
+    getTotalDepositedAmount,
+    getTvl,
+    getMiningEarning,
+    item,
+  ]);
+
+  useEffect(() => {
+    init();
+  }, [init]);
+
+  const handleDeposit = () => {
+    onDeposit(item, deposit, handleCallback);
+  };
+
+  const handleWithdraw = () => {
+    onWithdraw(item, withdraw, handleCallback);
+  };
+
+  const handleCallback = () => {
+    init();
+  };
 
   return (
     <div className="stake-container">
@@ -57,13 +112,13 @@ export default function ({ num, type, item }) {
           </div>
           <div className="stake-header-section">
             <TextBlock
-              title={`0.00 ${item.tokenName}`}
+              title={`${convertBalance(balance)} ${item.tokenName}`}
               content="Available to deposit"
               colorTitle="#182373"
               colorContent="#182373"
             />
             <TextBlock
-              title={`0.00 ${item.tokenName}`}
+              title={`${convertBalance(depositedAmount)} ${item.tokenName}`}
               content="Deposited"
               colorTitle="#182373"
               colorContent="#182373"
@@ -88,18 +143,24 @@ export default function ({ num, type, item }) {
           <div className="stake-content-section left">
             <div className="stake-content-row">
               <div className="title">{item.tokenName} deposited in VAULT</div>
-              <div className="content">19,958,14 {item.tokenName}</div>
+              <div className="content">
+                {convertBalance(totalDepositedAmount)} {item.tokenName}
+              </div>
             </div>
             <div className="stake-content-row">
               <div className="title">TVL</div>
-              <div className="content">20,000 {item.tokenName}</div>
+              <div className="content">
+                {convertBalance(tvl)} {item.tokenName}
+              </div>
             </div>
             {/* <div className="stake-content-row">
               <div className="title">View {item.tokenName} VAULT contract</div>
             </div> */}
             <div className="stake-content-row">
               <div className="title"></div>
-              <div className="content">Your wallet 0.0000 {item.tokenName}</div>
+              <div className="content">
+                Your wallet {convertBalance(balance, 4)} {item.tokenName}
+              </div>
             </div>
             <div className="stake-content-row">
               <input type="text" placeholder="Deposit amount" />
@@ -111,7 +172,9 @@ export default function ({ num, type, item }) {
               <span className="percent">100%</span>
             </div>
             <div className="stake-content-row">
-              <button className="blue">Deposit</button>
+              <button onClick={(e) => handleDeposit()} className="blue">
+                Deposit
+              </button>
             </div>
           </div>
           <div className="stake-content-section right">
@@ -121,7 +184,9 @@ export default function ({ num, type, item }) {
             </div> */}
             <div className="stake-content-row">
               <div className="title">Mine Earnings</div>
-              <div className="content">25 PYLON</div>
+              <div className="content">
+                {convertBalance(miningEarning, 0)} PYLON
+              </div>
             </div>
             <div className="stake-content-row">
               <div className="title">
@@ -139,7 +204,8 @@ export default function ({ num, type, item }) {
                 <>
                   <div className="title"></div>
                   <div className="content">
-                    Available for withdrawal 0.0000 {item.tokenName}
+                    Available for withdrawal{" "}
+                    {convertBalance(depositedAmount, 4)} {item.tokenName}
                   </div>
                 </>
               )}
@@ -163,9 +229,14 @@ export default function ({ num, type, item }) {
             )}
             <div className="stake-content-row">
               {type === "PYLON" && (
-                <button className="cyan mr">Withdraw</button>
+                <button onClick={(e) => handleWithdraw()} className="cyan mr">
+                  Withdraw
+                </button>
               )}
-              <button className={cx("blue-out", "ml", { mtt: type === "FDI" })}>
+              <button
+                onClick={(e) => onClaimReward(item, handleCallback)}
+                className={cx("blue-out", "ml", { mtt: type === "FDI" })}
+              >
                 Claim Rewards
               </button>
             </div>

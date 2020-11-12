@@ -4,8 +4,6 @@ import { ConnectedRouter } from "connected-react-router";
 
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
-import Login from "./containers/Auth/Login";
-import Signup from "./containers/Auth/Signup";
 import Home from "./containers/Home";
 import AboutPYLON from "./containers/AboutPYLON";
 import Partners from "./containers/Partners";
@@ -20,9 +18,6 @@ const PublicRoutes = ({ history }) => {
       <Switch>
         <Route exact path="/staging/home" component={Home} />
         <Route exact path="/staging" component={Home} />
-        {/* <Route exact path="/login" component={Login} />
-        <Route exact path="/register" component={Signup} />
-        <Route path="/register/i/:handle" component={Signup} /> */}
         <Route exact path="/staging/about-pylon" component={AboutPYLON} />
         <Route exact path="/staging/ycrv-vault" component={YCRVVault} />
         <Route exact path="/staging/fdi-vault" component={FDIVault} />

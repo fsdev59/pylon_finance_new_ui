@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import React from "react";
 
 import TextBlock from "../../components/common/TextBlock";
 import Button from "../../components/common/Button";
-import RectBlock from "../../components/common/RectBlock";
-import Stake from "../../components/farm/Stake";
-
-import "./styles.scss";
+import Farm from "../../components/farm";
 
 import { FDI_VAULT } from "../../helpers/fdiVault/constants";
+
+import "./styles.scss";
 
 export default function FDIVault() {
   return (
@@ -61,9 +59,7 @@ export default function FDIVault() {
           </div>
         </div>
         <div className="content-1">
-          {FDI_VAULT.map((item, index) => (
-            <Stake key={item.title} num={index} type={"FDI"} item={item} />
-          ))}
+          <Farm data={FDI_VAULT} type="FDI" />
         </div>
       </div>
     </>
