@@ -13,22 +13,32 @@ export default function FDIVault() {
     <>
       <div className="root fdi-valut-container">
         <div className="content-2">
-          <TextBlock title="PYLON VAULT" color="orange">
+          <TextBlock title="FDI VAULT" color="orange">
             <p>
-              PYLON VAULT is a cryptocurrency storage and wallet
+              Foreign Direct Investments Vaults allow you to own a GPU mining
               <br />
-              management system designed to fullfil business
+              farm with a click of a button. This allows anyone from anywhere in
               <br />
-              accounts requirements, providing at the same time a <br />
-              top notch protection levels to secure your digital assets.
+              the world the opportunity to take advantage of investments that
+              <br />
+              only large hedge funds and investors can access. PYLON gives
+              <br />
+              access to GPU mining hardware investment backed by the largest USA
+              <br />
+              GPU mine. KYC free solution to have a real world asset backed by
+              <br />
+              land, real estate and computer hardware.
+            </p>
+            <p>Our process is as follows for the FDI VAULT:</p>
+            <p>
+              1. Deposit in Vault. <br />
+              2. Funds Deployed. <br />
+              3. Mine built for Vault.
+              <br />
+              4. Dividends to user based on % of their share in vault.{" "}
             </p>
             <p>
-              Our digital wallet manager and vault provides business
-              <br />
-              owners and digital asset managers the ideal tool to
-              <br />
-              manage different wallets, and to perform steamlined <br />
-              blockchain transactions in a secure way.
+              Dividends paid within 7 days or less after user deposits in vault.
             </p>
           </TextBlock>
           <div className="section mine-open">

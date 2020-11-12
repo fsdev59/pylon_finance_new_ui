@@ -16,25 +16,26 @@ export default function PYLONVault() {
           <Farm data={PYLON_VAULT} type="PYLON" />
         </div>
         <div className="content-2">
-          <TextBlock title="PYLON VAULT" color="orange">
+          <TextBlock title="PYLON GPU VAULT" color="orange">
             <p>
-              PYLON VAULT is a cryptocurrency storage and wallet
+              The promise. The journey. The company you take with you. The first
               <br />
-              management system designed to fullfil business
+              real world Tether. This is what defines PYLON. PYLON GPU VAULT is
               <br />
-              accounts requirements, providing at the same time a <br />
-              top notch protection levels to secure your digital assets.
-            </p>
-            <p>
-              Our digital wallet manager and vault provides business
+              now here, seeded with $1,000,000 raised to dividend to users.
               <br />
-              owners and digital asset managers the ideal tool to
+              Rewards begin immediately upon stake and APY is updated every 7
               <br />
-              manage different wallets, and to perform steamlined <br />
-              blockchain transactions in a secure way.
+              days at ETH current price along with current hashrate
+              <br />
+              difficulties. You may choose to stake PYLON only as well as enjoy
+              <br />
+              fees generated with trades by staking the PYLON/ETH Uniswap LP
+              <br />
+              token in addition to your mining income. Long Live the Reaper!
             </p>
           </TextBlock>
-          <div className="section mine-open">
+          {/* <div className="section mine-open">
             <h3>JOIN PYLON VAULT TODAY</h3>
             <span>10 Dec (Sunday) 2020, 15 AM</span>
             <div className="date">
@@ -59,7 +60,7 @@ export default function PYLONVault() {
               </div>
             </div>
             <Button color="cyan" caption="CONNECT WALLET" size="lg" />
-          </div>
+          </div> */}
         </div>
       </div>
     </>
