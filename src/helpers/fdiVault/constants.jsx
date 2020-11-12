@@ -116,4 +116,16 @@ export const FDI_VAULT = [
     iconName: "token_BASED.png",
     address: "0x3Ddbbfb6F2003F670735Bcd44beADd0e0056DF99",
   },
+  {
+    title: "Aave",
+    tokenName: "AAVE",
+    iconName: "token_AAVE.png",
+    address: "",
+  },
+  {
+    title: "Ethereum",
+    tokenName: "ETH",
+    iconName: "token_ETH.png",
+    address: "",
+  }
 ];
