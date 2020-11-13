@@ -12,9 +12,6 @@ export default function PYLONVault() {
   return (
     <>
       <div className="root ycrv-valut-container">
-        <div className="content-1">
-          <Farm data={PYLON_VAULT} type="PYLON" />
-        </div>
         <div className="content-2">
           <TextBlock title="PYLON GPU VAULT" color="orange">
             <p>
@@ -35,6 +32,9 @@ export default function PYLONVault() {
               token in addition to your mining income. Long Live the Reaper!
             </p>
           </TextBlock>
+          <div className="section connect-wallet">
+            <Button color="cyan" caption="CONNECT WALLET" size="lg" />
+          </div>
           {/* <div className="section mine-open">
             <h3>JOIN PYLON VAULT TODAY</h3>
             <span>10 Dec (Sunday) 2020, 15 AM</span>
@@ -61,6 +61,9 @@ export default function PYLONVault() {
             </div>
             <Button color="cyan" caption="CONNECT WALLET" size="lg" />
           </div> */}
+        </div>
+        <div className="content-1">
+          <Farm data={PYLON_VAULT} type="PYLON" />
         </div>
       </div>
     </>

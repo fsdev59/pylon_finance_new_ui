@@ -41,7 +41,7 @@ export default function FDIVault() {
               Dividends paid within 7 days or less after user deposits in vault.
             </p>
           </TextBlock>
-          <div className="section mine-open">
+          {/* <div className="section mine-open">
             <h3>JOIN PYLON VAULT TODAY</h3>
             <span>10 Dec (Sunday) 2020, 15 AM</span>
             <div className="date">
@@ -65,6 +65,9 @@ export default function FDIVault() {
                 <span className="desc">SEC</span>
               </div>
             </div>
+            <Button color="cyan" caption="CONNECT WALLET" size="lg" />
+          </div> */}
+          <div className="section connect-wallet">
             <Button color="cyan" caption="CONNECT WALLET" size="lg" />
           </div>
         </div>

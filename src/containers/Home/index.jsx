@@ -236,7 +236,7 @@ export default function Home() {
         </div>
         <div className="content-3">
           <div className="section valut-ecosystem">
-            <TextBlock title="Valut/ecosystem Flow Chart" color="orange">
+            <TextBlock title="Vault/ecosystem Flow Chart" color="orange">
               <div className="value-ecosystem-content">
                 <div className="content">
                   <div className="description">

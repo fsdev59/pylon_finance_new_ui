@@ -39,7 +39,7 @@ export default function Footer() {
         <hr className="line" />
         <div className="footer-wrapper">
           <a
-            href="https://discord.gg/m5zSFsA"
+            href="https://t.me/pylonfinance"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -53,7 +53,7 @@ export default function Footer() {
             <img src={require("../../../assets/images/twitter.png")} alt="" />
           </a>
           <a
-            href="https://t.me/pylonfinance"
+            href="https://discord.gg/m5zSFsA"
             target="_blank"
             rel="noopener noreferrer"
           >

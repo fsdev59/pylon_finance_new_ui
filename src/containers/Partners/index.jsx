@@ -136,7 +136,7 @@ export default function Partners() {
               <div className="reach-us-list">
                 <div className="reach-us-row">
                   <a
-                    href="https://discord.gg/m5zSFsA"
+                    href="https://t.me/pylonfinance"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -156,7 +156,7 @@ export default function Partners() {
                     />
                   </a>
                   <a
-                    href="https://t.me/pylonfinance"
+                    href="https://discord.gg/m5zSFsA"
                     target="_blank"
                     rel="noopener noreferrer"
                   >

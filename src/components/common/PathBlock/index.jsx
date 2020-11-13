@@ -86,7 +86,7 @@ export default function (props) {
             <span style={shareStyle}>{share}</span>
             {telegramIcon !== "" && (
               <a
-                href="https://discord.gg/m5zSFsA"
+                href="https://t.me/pylonfinance"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -114,7 +114,7 @@ export default function (props) {
             )}
             {discordIcon !== "" && (
               <a
-                href="https://t.me/pylonfinance"
+                href="https://discord.gg/m5zSFsA"
                 target="_blank"
                 rel="noopener noreferrer"
               >
