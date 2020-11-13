@@ -62,7 +62,7 @@ const Farm = ({ data, type }) => {
     <>
       {data.map((item) => (
         <Stake
-          connected={false}
+          connected={true}
           loading={loading}
           key={item.title}
           type={type}
