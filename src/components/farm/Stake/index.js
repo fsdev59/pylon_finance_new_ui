@@ -190,7 +190,7 @@ export default function ({
               <input
                 type="text"
                 placeholder="Deposit amount"
-                value={deposit > 0 ? deposit : ""}
+                value={deposit >= 0 ? deposit : ""}
                 onChange={(e) => setDeposit(e.target.value)}
               />
             </div>
@@ -272,7 +272,7 @@ export default function ({
                   <input
                     type="text"
                     placeholder="Withdraw amount"
-                    value={withdraw > 0 ? withdraw : ""}
+                    value={withdraw >= 0 ? withdraw : ""}
                     onChange={(e) => setWithdraw(e.target.value)}
                   />
                 </div>
