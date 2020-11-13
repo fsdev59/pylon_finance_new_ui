@@ -67,9 +67,9 @@ export default function FDIVault() {
             </div>
             <Button color="cyan" caption="CONNECT WALLET" size="lg" />
           </div> */}
-          <div className="section connect-wallet">
+          {/* <div className="section connect-wallet">
             <Button color="cyan" caption="CONNECT WALLET" size="lg" />
-          </div>
+          </div> */}
         </div>
         <div className="content-1">
           <Farm data={FDI_VAULT} type="FDI" />

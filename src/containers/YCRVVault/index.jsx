@@ -60,7 +60,7 @@ export default function YCRVVault() {
                 <span className="desc">SEC</span>
               </div>
             </div>
-            <Button color="cyan" caption="CONNECT WALLET" size="lg" />
+            {/* <Button color="cyan" caption="CONNECT WALLET" size="lg" /> */}
           </div>
         </div>
       </div>
