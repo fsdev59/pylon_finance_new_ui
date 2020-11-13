@@ -81,13 +81,24 @@ export default function ({
   }, [init]);
 
   const handleDeposit = () => {
-    if (deposit > 0)
+    if (deposit > 0 && deposit <= balance)
       onDeposit(item, deposit, handleCallback);
+    else
+      alert("No deposit")
   };
 
   const handleWithdraw = () => {
-    if (withdraw > 0)
+    if (withdraw > 0 && withdraw <= depositedAmount)
       onWithdraw(item, withdraw, handleCallback);
+    else
+      alert("No withdraw")
+  };
+
+  const handleClaimReward = () => {
+    if (miningEarning > 0)
+      onClaimReward(item, handleCallback);
+    else
+      alert("No reward")
   };
 
   const handleCallback = () => {
@@ -172,13 +183,13 @@ export default function ({
               </div>
             </div>
             <div className="stake-content-row">
-              <input type="text" placeholder="Deposit amount" value={deposit>0?deposit:""} onChange={e => setDeposit(e.target.value)} />
+              <input type="text" placeholder="Deposit amount" value={deposit>=0?deposit:""} onChange={e => setDeposit(e.target.value)} />
             </div>
             <div className="stake-content-row">
-              <span className="percent">25%</span>
-              <span className="percent">50%</span>
-              <span className="percent">75%</span>
-              <span className="percent">100%</span>
+              <span className="percent" onClick={(e) => {setDeposit(convertBalance(balance / 4, 4))}}>25%</span>
+              <span className="percent" onClick={(e) => {setDeposit(convertBalance(balance / 2, 4))}}>50%</span>
+              <span className="percent" onClick={(e) => {setDeposit(convertBalance(balance * 3 / 4, 4))}}>75%</span>
+              <span className="percent" onClick={(e) => {setDeposit(convertBalance(balance, 4))}}>100%</span>
             </div>
             <div className="stake-content-row">
               {allowance > 0 ? <button onClick={(e) => {handleDeposit()}} className="blue">
@@ -211,6 +222,13 @@ export default function ({
                   View {item.tokenName} VAULT contract
                 </a>
               </div>
+              {/* <div className="content">
+                <a
+                  href={`https://etherscan.io/address/${item.address}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >{item.address}</a>
+              </div> */}
             </div>
             <div className="stake-content-row">
               {type === "PYLON" && (
@@ -230,13 +248,13 @@ export default function ({
             {type === "PYLON" && (
               <>
                 <div className="stake-content-row">
-                  <input type="text" placeholder="Withdraw amount" value={withdraw>0?withdraw:""} onChange={e => setWithdraw(e.target.value)} />
+                  <input type="text" placeholder="Withdraw amount" value={withdraw>=0?withdraw:""} onChange={e => setWithdraw(e.target.value)} />
                 </div>
                 <div className="stake-content-row">
-                  <span className="percent">25%</span>
-                  <span className="percent">50%</span>
-                  <span className="percent">75%</span>
-                  <span className="percent">100%</span>
+                  <span className="percent" onClick={(e) => {setWithdraw(convertBalance(depositedAmount / 4, 4))}}>25%</span>
+                  <span className="percent" onClick={(e) => {setWithdraw(convertBalance(depositedAmount / 4, 4))}}>50%</span>
+                  <span className="percent" onClick={(e) => {setWithdraw(convertBalance(depositedAmount / 4, 4))}}>75%</span>
+                  <span className="percent" onClick={(e) => {setWithdraw(convertBalance(depositedAmount / 4, 4))}}>100%</span>
                 </div>
               </>
             )}
@@ -247,7 +265,7 @@ export default function ({
                 </button>
               )}
               <button
-                onClick={(e) => onClaimReward(item, handleCallback)}
+                onClick={(e) => handleClaimReward()}
                 className={cx("blue-out", "ml", { mtt: type === "FDI" })}
               >
                 Claim Rewards

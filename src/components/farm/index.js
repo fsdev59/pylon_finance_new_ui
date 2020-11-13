@@ -20,7 +20,9 @@ const Farm = ({ data, type }) => {
     dispatch(pageActions.withdrawToken(vault.address, amount, callback));
   };
 
-  const handleClaimReward = (vault, callback) => {};
+  const handleClaimReward = (vault, callback) => {
+    dispatch(pageActions.claimRewardAll(vault.address, callback));
+  };
 
   const handleApprove = (vault, callback) => {
     console.log("handleApprove", vault, callback)

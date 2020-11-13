@@ -438,6 +438,7 @@ const claimRewardAllAsync = async (instance, web3, address) => {
     .claimRewardAll()
     .estimateGas({ from: address })
 
+  console.log("gasLimit", gasLimit)
   return await instance.methods
     .claimRewardAll()
     .send({
