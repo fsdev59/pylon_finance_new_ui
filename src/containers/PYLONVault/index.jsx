@@ -32,9 +32,9 @@ export default function PYLONVault() {
               token in addition to your mining income. Long Live the Reaper!
             </p>
           </TextBlock>
-          <div className="section connect-wallet">
+          {/* <div className="section connect-wallet">
             <Button color="cyan" caption="CONNECT WALLET" size="lg" />
-          </div>
+          </div> */}
           {/* <div className="section mine-open">
             <h3>JOIN PYLON VAULT TODAY</h3>
             <span>10 Dec (Sunday) 2020, 15 AM</span>

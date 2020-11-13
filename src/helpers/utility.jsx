@@ -112,4 +112,4 @@ export function getUserAddress(param) {
   }
 }
 
-export const convertBalance = (val, f = 2) => val.toFixed(f);
+export const convertBalance = (val, f = 2) => Number(val).toFixed(f);

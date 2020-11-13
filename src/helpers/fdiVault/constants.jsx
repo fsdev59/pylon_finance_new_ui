@@ -14,7 +14,7 @@ export const ADDR_YFII_VAULT = "0x6EE4d72d3d17A05Dd7F0449E095670119b7D5829";
 export const ADDR_YFI_VAULT = "0xFfc666465c1628B61cD1c119eBcCbF965f6D35a9";
 export const ADDR_BASEDPYLON_VAULT = "0xFA149C8a9230a506FD09b63fe66f1F055e80E89B";
 export const ADDR_AAVE_VAULT = "0xbB2c91C764fC1CF07d5C02671e4EBA4d829A957F";
-export const ADDR_ETH_VAULT = "";
+export const ADDR_ETH_VAULT = "0x8e535E02920A9741848Fa94A72d3C9e6aae0E5d7";
 
 export const FDI_VAULT = [
   {
@@ -149,8 +149,8 @@ export const FDI_VAULT = [
   //   title: "Ethereum",
   //   tokenName: "ETH",
   //   iconName: "token_ETH.png",
-  //   address: "",
+  //   address: "0x8e535E02920A9741848Fa94A72d3C9e6aae0E5d7",
   //   token0: "",
-  //   token1: "",
+  //   token1: "0xD7B7d3C0bdA57723Fb54ab95Fd8F9EA033AF37f2",
   // }
 ];

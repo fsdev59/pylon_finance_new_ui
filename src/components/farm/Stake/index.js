@@ -7,6 +7,7 @@ import { convertBalance } from "../../../helpers/utility";
 
 import "./styles.scss";
 import cx from "classnames";
+import { getAllowance } from "../../../redux/page/saga";
 
 const TextBlock = ({ title, content, align, colorTitle, colorContent }) => {
   const textAlign = align ? align : "left";
@@ -36,20 +37,24 @@ export default function ({
   onDeposit,
   onWithdraw,
   onClaimReward,
+  onApprove,
   getBalance,
   getDepositedAmount,
   getTotalDepositedAmount,
   getTvl,
   getMiningEarning,
+  getAllowance,
 }) {
   const [open, setOpen] = useState(true);
 
   const [balance, setBalance] = useState(0);
+  console.log("BALANCE", balance, typeof balance);
   const [depositedAmount, setDepositedAmount] = useState(0);
   const [totalDepositedAmount, setTotalDepositedAmount] = useState(0);
   const [tvl, setTvl] = useState(0);
   const [miningEarning, setMiningEarning] = useState(0);
-
+  const [allowance, setAllowance] = useState(0);
+  
   // Inputed deposit & withdraw amount
   const [deposit, setDeposit] = useState(0);
   const [withdraw, setWithdraw] = useState(0);
@@ -60,6 +65,7 @@ export default function ({
     getTotalDepositedAmount(item, (ret) => setTotalDepositedAmount(ret));
     getTvl(item, (ret) => setTvl(ret));
     getMiningEarning(item, (ret) => setMiningEarning(ret));
+    getAllowance(item, (ret) => setAllowance(ret));
   }, [
     getBalance,
     getDepositedAmount,
@@ -67,6 +73,7 @@ export default function ({
     getTvl,
     getMiningEarning,
     item,
+    getAllowance,
   ]);
 
   useEffect(() => {
@@ -74,11 +81,13 @@ export default function ({
   }, [init]);
 
   const handleDeposit = () => {
-    onDeposit(item, deposit, handleCallback);
+    if (deposit > 0)
+      onDeposit(item, deposit, handleCallback);
   };
 
   const handleWithdraw = () => {
-    onWithdraw(item, withdraw, handleCallback);
+    if (withdraw > 0)
+      onWithdraw(item, withdraw, handleCallback);
   };
 
   const handleCallback = () => {
@@ -144,13 +153,13 @@ export default function ({
             <div className="stake-content-row">
               <div className="title">{item.tokenName} deposited in VAULT</div>
               <div className="content">
-                {convertBalance(totalDepositedAmount)} {item.tokenName}
+                {convertBalance(depositedAmount)} {item.tokenName}
               </div>
             </div>
             <div className="stake-content-row">
               <div className="title">TVL</div>
               <div className="content">
-                {convertBalance(tvl)} {item.tokenName}
+                {convertBalance(totalDepositedAmount)} {item.tokenName}
               </div>
             </div>
             {/* <div className="stake-content-row">
@@ -163,7 +172,7 @@ export default function ({
               </div>
             </div>
             <div className="stake-content-row">
-              <input type="text" placeholder="Deposit amount" />
+              <input type="text" placeholder="Deposit amount" value={deposit>0?deposit:""} onChange={e => setDeposit(e.target.value)} />
             </div>
             <div className="stake-content-row">
               <span className="percent">25%</span>
@@ -172,9 +181,13 @@ export default function ({
               <span className="percent">100%</span>
             </div>
             <div className="stake-content-row">
-              <button onClick={(e) => handleDeposit()} className="blue">
+              {allowance > 0 ? <button onClick={(e) => {handleDeposit()}} className="blue">
                 Deposit
-              </button>
+              </button> :
+              <button onClick={(e) => {onApprove(item, handleCallback)}} className="blue">
+                Approve
+              </button>}
+
             </div>
           </div>
           <div className="stake-content-section right">
@@ -217,7 +230,7 @@ export default function ({
             {type === "PYLON" && (
               <>
                 <div className="stake-content-row">
-                  <input type="text" placeholder="Withdraw amount" />
+                  <input type="text" placeholder="Withdraw amount" value={withdraw>0?withdraw:""} onChange={e => setWithdraw(e.target.value)} />
                 </div>
                 <div className="stake-content-row">
                   <span className="percent">25%</span>

@@ -460,32 +460,44 @@ export function* getBalance() {
     const web3 = yield call(getWeb3)
     const abi = TOKEN_ABI
     const instance = new web3.eth.Contract(abi, tokenAddress)
-
+    // const instance = new web3.eth.Contract(abi, "0x201850680b79bbeff4e00684248b237a77bded0c")
     // Get Wallet Account
     const accounts = yield call(web3.eth.getAccounts)
 
     const balance = yield call(getBalanceAsync, instance, accounts[0])
-    callback(balance)
+    const decimal = yield call(getDecimalAsync, instance)
+    console.log(balance)
+    const bal = balance / Math.pow(10, decimal)
+
+    callback(bal)
   })
 }
 
 export function* getAllowance() {
   yield takeEvery(actions.GET_ALLOWANCE, function* ({ payload }) {
     const { vaultAddress, tokenAddress, callback } = payload
-
+    console.log(1);
     const web3 = yield call(getWeb3)
+    console.log(2)
     const abi = TOKEN_ABI
     const instance = new web3.eth.Contract(abi, tokenAddress)
+    // const instance = new web3.eth.Contract(abi, "0x201850680b79bbeff4e00684248b237a77bded0c")
 
     // Get Wallet Account
     const accounts = yield call(web3.eth.getAccounts)
-
+    console.log("Accounts", accounts)
     const allowance = yield call(
       getAllowanceAsync,
       instance,
       accounts[0],
       vaultAddress,
     )
+
+    console.log("Allowance Value", allowance)
+
+    // const decimal = yield call(getDecimalAsync, instance)
+    // const allowanceVal = allowance / Math.pow(10, decimal)
+    // console.log("Allowance Value in display", allowanceVal)
     callback(allowance)
   })
 }
@@ -502,7 +514,10 @@ export function* getAvailableRewardAmount() {
     const accounts = yield call(web3.eth.getAccounts)
 
     const availableRewardAmount = yield call(getAvailableRewardAmountAsync, instance, accounts[0])
-    callback(availableRewardAmount)
+    const decimal = yield call(getDecimalAsync, instance)
+    const availableRewardAmountVal = availableRewardAmount / Math.pow(10, decimal)
+    
+    callback(availableRewardAmountVal)
   })
 }
 
@@ -518,7 +533,10 @@ export function* getDepositBalances() {
     const accounts = yield call(web3.eth.getAccounts)
 
     const depositBalances = yield call(getDepositBalancesAsync, instance, accounts[0])
-    callback(depositBalances)
+    const decimal = yield call(getDecimalAsync, instance)
+    const depositBalancesVal = depositBalances / Math.pow(10, decimal)
+
+    callback(depositBalancesVal)
   })
 }
 
@@ -534,7 +552,10 @@ export function* getRewardBalances() {
     const accounts = yield call(web3.eth.getAccounts)
 
     const rewardBalances = yield call(getRewardBalancesAsync, instance, accounts[0])
-    callback(rewardBalances)
+    const decimal = yield call(getDecimalAsync, instance)
+    const rewardBalancesVal = rewardBalances / Math.pow(10, decimal)
+
+    callback(rewardBalancesVal)
   })
 }
 
@@ -550,7 +571,10 @@ export function* getTotalDeposit() {
     const accounts = yield call(web3.eth.getAccounts)
 
     const totalDepositAmount = yield call(getTotalDepositAsync, instance)
-    callback(totalDepositAmount)
+    const decimal = yield call(getDecimalAsync, instance)
+    const totalDepositAmountVal = totalDepositAmount / Math.pow(10, decimal)
+
+    callback(totalDepositAmountVal)
   })
 }
 
@@ -558,13 +582,16 @@ export function* approveToken() {
   yield takeLatest(actions.APPROVE_TOKEN, function* ({ payload }) {
     const { tokenAddress, vaultAddress, callback } = payload
 
+    console.log("before web3")
     const web3 = yield call(getWeb3)
     const abi = TOKEN_ABI
     const instance = new web3.eth.Contract(abi, tokenAddress)
+    console.log("after instance web3")
+    // const instance = new web3.eth.Contract(abi, "0x201850680b79bbeff4e00684248b237a77bded0c")
 
     // Get Wallet Account
     const accounts = yield call(web3.eth.getAccounts)
-
+    console.log("aaccount", accounts)
     // Check balance
     const tokenBalance = yield call(getBalanceAsync, instance, accounts[0])
     console.log('tokenBalance - approve token', tokenBalance)
@@ -586,11 +613,12 @@ export function* approveToken() {
 export function* depositToken() {
   yield takeLatest(actions.DEPOSIT_TOKEN, function* ({ payload }) {
     const { vaultAddress, amount, callback } = payload
-
+    console.log('test', payload)
     const web3 = yield call(getWeb3)
     const abi = ABI_VAULT
+    
     const instance = new web3.eth.Contract(abi, vaultAddress)
-
+    console.log('instance', instance)
     // Get Wallet Account
     const accounts = yield call(web3.eth.getAccounts)
 
@@ -752,152 +780,22 @@ export function* getEthPrice() {
   })
 }
 
-// export function* getTvl() {
-//   yield takeEvery(actions.GET_TVL, function* ({ payload }) {
-//     const {
-//       farm,
-//       ethPrice,
-//       nerdlingPrice,
-//       derivedEth0,
-//       decimals0,
-//       derivedEth1,
-//       decimals1,
-//       poolAddress,
-//       adapterAddress,
-//       adapterAbi,
-//       callback,
-//     } = payload
-
-//     const web3 = yield call(getWeb3)
-//     const abi = TOKEN_ABI
-//     const instance = new web3.eth.Contract(abi, farm.tokenAddress)
-
-//     const masterVampireInstance = new web3.eth.Contract(
-//       MASTER_VAMPIRE_ABI,
-//       MASTER_VAMPIRE_ADDRESS,
-//     )
-
-//     const totalSupply = yield call(getTotalSupplyAsync, instance)
-//     const reserves = yield call(getReservesAsync, instance)
-
-//     /*
-//      stakingTokenPrice =
-//         (result.data.pair.token0.derivedETH *
-//           ethPrice *
-//           result.data.pair.reserve0 +
-//           result.data.pair.token1.derivedETH *
-//           ethPrice *
-//           result.data.pair.reserve1) /
-//         (Number(result.data.pair.reserve0) + Number(result.data.pair.reserve1));
-//     */
-//     // const stakingTokenPrice =
-//     //   (derivedEth0 * ethPrice * reserves._reserve0 +
-//     //     derivedEth1 * ethPrice * reserves._reserve1) /
-//     //   (Number(reserves._reserve0) + Number(reserves._reserve1))
-
-//     const decimals = yield call(getDecimalAsync, instance)
-
-//     // Note: totalSupply and reserves are wei unit
-//     const stakingTokenPrice =
-//       (derivedEth0 * ethPrice * (reserves._reserve0 / Math.pow(10, decimals0)) +
-//         derivedEth1 *
-//           ethPrice *
-//           (reserves._reserve1 / Math.pow(10, decimals1))) /
-//       (Number(totalSupply) / Math.pow(10, decimals))
-
-//     let tvl
-//     if (farm._pid === NERDLING_POOL._pid) {
-//       const tokenBalance = yield call(getBalanceAsync, instance, poolAddress)
-//       tvl = (tokenBalance * stakingTokenPrice) / Math.pow(10, decimals)
-//     } else {
-//       const lockedAmount = yield call(
-//         getAdapterLockedAmountAsync,
-//         new web3.eth.Contract(adapterAbi, adapterAddress),
-//         MASTER_VAMPIRE_ADDRESS,
-//         farm._victimPoolId,
-//       )
-//       console.log('-----------------------')
-//       console.log(farm.name, farm._victimPoolId, lockedAmount)
-//       console.log('-----------------------')
-//       tvl = (lockedAmount * stakingTokenPrice) / Math.pow(10, decimals)
-//     }
-
-//     const poolInfo = yield call(
-//       getPoolInfoAsync,
-//       masterVampireInstance,
-//       farm._pid,
-//     )
-
-//     const weeklyReward = (poolInfo.rewardPerBlock / 15) * 604800
-//     // const rewardPerToken = tokenBalance > 0 ? weeklyReward / tokenBalance : 0
-//     const rewardPerToken = weeklyReward / Math.pow(10, 18)
-
-//     // const newApy =
-//     //   stakingTokenPrice > 0
-//     //     ? (poolInfo.rewardPerBlock * 6550 * 365 * nerdlingPrice * 100) /
-//     //       stakingTokenPrice /
-//     //       Math.pow(10, 18)
-//     //     : 0
-
-//     const newApy =
-//       tvl > 0
-//         ? (((poolInfo.rewardPerBlock / Math.pow(10, 18)) *
-//             2336000 *
-//             nerdlingPrice) /
-//             tvl) *
-//           100
-//         : 0
-
-//     // if (pid == 31) {
-//     //   console.log('nerdling price', nerdlingPrice)
-//     //   console.log('stakingTokenPrice', stakingTokenPrice)
-//     //   console.log('derived000', derivedEth0)
-//     //   console.log('derived111', derivedEth1)
-//     //   console.log(
-//     //     'derived0',
-//     //     (derivedEth0 * ethPrice * reserves._reserve0) / 10000,
-//     //   )
-//     //   console.log(
-//     //     'derived1',
-//     //     (derivedEth1 * ethPrice * reserves._reserve1) / 10000,
-//     //   )
-//     //   console.log('totalSupply', totalSupply)
-//     //   console.log('rewardPerToken', rewardPerToken)
-//     //   console.log('reserves', reserves)
-//     //   console.log('poolInfo', poolInfo)
-//     //   console.log('rewardPerToken', rewardPerToken)
-//     // }
-//     const weeklyRoi =
-//       stakingTokenPrice > 0
-//         ? (rewardPerToken * nerdlingPrice * 100) / stakingTokenPrice
-//         : 0
-
-//     const apy = weeklyRoi * 52
-
-//     console.log('*****************************************')
-//     console.log('token', farm._pid, farm.tokenAddress)
-//     console.log('stakingTokenPrice', stakingTokenPrice)
-//     console.log('nerdlingPrice', nerdlingPrice)
-//     console.log('tvl', tvl)
-//     console.log('*****************************************')
-
-//     callback(tvl, newApy)
-//   })
-// }
-
 export default function* rootSaga() {
   yield all([
-    // fork(approveToken),
-    // fork(getAllowance),
-    // fork(getStaked),
-    // fork(depositToken),
-    // fork(withdrawToken),
-    // fork(harvestToken),
-    // fork(drainToken),
     fork(getBalance),
-    // fork(getPending),
-    // fork(getEthPrice),
-    // fork(getTvl),
-    // fork(getTotalSupply),
+    fork(getAllowance),
+    fork(getAvailableRewardAmount),
+    fork(getDepositBalances),
+    fork(getRewardBalances),
+    fork(getTotalDeposit),
+    fork(approveToken),
+    fork(depositToken),
+    fork(depositAllToken),
+    fork(withdrawToken),
+    fork(withdrawAllToken),
+    fork(claimReward),
+    fork(claimRewardAll),
+    fork(sendRewardAmount),
+    fork(getEthPrice),
   ])
 }
