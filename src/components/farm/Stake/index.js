@@ -7,7 +7,9 @@ import { convertBalance } from "../../../helpers/utility";
 
 import "./styles.scss";
 import cx from "classnames";
-import { getAllowance } from "../../../redux/page/saga";
+// import { getAllowance } from "../../../redux/page/saga";
+
+import { toast } from 'react-toastify';
 
 const TextBlock = ({ title, content, align, colorTitle, colorContent }) => {
   const textAlign = align ? align : "left";
@@ -88,21 +90,21 @@ export default function ({
     if (deposit > 0 && deposit <= balance)
       onDeposit(item, deposit, handleCallback);
     else
-      alert("No deposit")
+      toast.error("Deposit is not available now.")
   };
 
   const handleWithdraw = () => {
     if (withdraw > 0 && withdraw <= depositedAmount)
       onWithdraw(item, withdraw, handleCallback);
     else
-      alert("No withdraw")
+      toast.error("Withdraw is not available now.")
   };
 
   const handleClaimReward = () => {
     if (miningEarning > 0)
       onClaimReward(item, handleCallback);
     else
-      alert("No reward")
+      toast.error("There isn't any reward amount yet.")
   };
 
   const handleCallback = () => {
@@ -111,6 +113,7 @@ export default function ({
 
   return (
     <div className="stake-container">
+      
       <div className="stake-header">
         <div className="stake-header-wrapper">
           <div className="stake-header-section">
