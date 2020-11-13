@@ -31,6 +31,7 @@ const TextBlock = ({ title, content, align, colorTitle, colorContent }) => {
 };
 
 export default function ({
+  connected,
   type,
   item,
   loading,
@@ -54,18 +55,20 @@ export default function ({
   const [tvl, setTvl] = useState(0);
   const [miningEarning, setMiningEarning] = useState(0);
   const [allowance, setAllowance] = useState(0);
-  
+
   // Inputed deposit & withdraw amount
   const [deposit, setDeposit] = useState(0);
   const [withdraw, setWithdraw] = useState(0);
 
   const init = useCallback(() => {
-    getBalance(item, (ret) => setBalance(ret));
-    getDepositedAmount(item, (ret) => setDepositedAmount(ret));
-    getTotalDepositedAmount(item, (ret) => setTotalDepositedAmount(ret));
-    getTvl(item, (ret) => setTvl(ret));
-    getMiningEarning(item, (ret) => setMiningEarning(ret));
-    getAllowance(item, (ret) => setAllowance(ret));
+    if (connected) {
+      getBalance(item, (ret) => setBalance(ret));
+      getDepositedAmount(item, (ret) => setDepositedAmount(ret));
+      getTotalDepositedAmount(item, (ret) => setTotalDepositedAmount(ret));
+      getTvl(item, (ret) => setTvl(ret));
+      getMiningEarning(item, (ret) => setMiningEarning(ret));
+      getAllowance(item, (ret) => setAllowance(ret));
+    }
   }, [
     getBalance,
     getDepositedAmount,
@@ -74,6 +77,7 @@ export default function ({
     getMiningEarning,
     item,
     getAllowance,
+    connected,
   ]);
 
   useEffect(() => {
@@ -81,13 +85,11 @@ export default function ({
   }, [init]);
 
   const handleDeposit = () => {
-    if (deposit > 0)
-      onDeposit(item, deposit, handleCallback);
+    if (deposit > 0) onDeposit(item, deposit, handleCallback);
   };
 
   const handleWithdraw = () => {
-    if (withdraw > 0)
-      onWithdraw(item, withdraw, handleCallback);
+    if (withdraw > 0) onWithdraw(item, withdraw, handleCallback);
   };
 
   const handleCallback = () => {
@@ -172,7 +174,12 @@ export default function ({
               </div>
             </div>
             <div className="stake-content-row">
-              <input type="text" placeholder="Deposit amount" value={deposit>0?deposit:""} onChange={e => setDeposit(e.target.value)} />
+              <input
+                type="text"
+                placeholder="Deposit amount"
+                value={deposit > 0 ? deposit : ""}
+                onChange={(e) => setDeposit(e.target.value)}
+              />
             </div>
             <div className="stake-content-row">
               <span className="percent">25%</span>
@@ -181,13 +188,25 @@ export default function ({
               <span className="percent">100%</span>
             </div>
             <div className="stake-content-row">
-              {allowance > 0 ? <button onClick={(e) => {handleDeposit()}} className="blue">
-                Deposit
-              </button> :
-              <button onClick={(e) => {onApprove(item, handleCallback)}} className="blue">
-                Approve
-              </button>}
-
+              {allowance > 0 ? (
+                <button
+                  onClick={(e) => {
+                    handleDeposit();
+                  }}
+                  className="blue"
+                >
+                  Deposit
+                </button>
+              ) : (
+                <button
+                  onClick={(e) => {
+                    onApprove(item, handleCallback);
+                  }}
+                  className="blue"
+                >
+                  Approve
+                </button>
+              )}
             </div>
           </div>
           <div className="stake-content-section right">
@@ -230,7 +249,12 @@ export default function ({
             {type === "PYLON" && (
               <>
                 <div className="stake-content-row">
-                  <input type="text" placeholder="Withdraw amount" value={withdraw>0?withdraw:""} onChange={e => setWithdraw(e.target.value)} />
+                  <input
+                    type="text"
+                    placeholder="Withdraw amount"
+                    value={withdraw > 0 ? withdraw : ""}
+                    onChange={(e) => setWithdraw(e.target.value)}
+                  />
                 </div>
                 <div className="stake-content-row">
                   <span className="percent">25%</span>

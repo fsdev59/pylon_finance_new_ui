@@ -23,7 +23,7 @@ const Farm = ({ data, type }) => {
   const handleClaimReward = (vault, callback) => {};
 
   const handleApprove = (vault, callback) => {
-    console.log("handleApprove", vault, callback)
+    console.log("handleApprove", vault, callback);
     dispatch(pageActions.approveToken(vault.token0, vault.address, callback));
   };
 
@@ -60,6 +60,7 @@ const Farm = ({ data, type }) => {
     <>
       {data.map((item) => (
         <Stake
+          connected={false}
           loading={loading}
           key={item.title}
           type={type}
@@ -80,4 +81,4 @@ const Farm = ({ data, type }) => {
   );
 };
 
-export default Farm
+export default Farm;
