@@ -136,13 +136,13 @@ export default function ({
           </div>
           <div className="stake-header-section">
             <TextBlock
-              title={`${convertBalance(balance)} ${item.tokenName}`}
+              title={`${convertBalance(balance, 4)} ${item.tokenName}`}
               content="Available to deposit"
               colorTitle="#182373"
               colorContent="#182373"
             />
             <TextBlock
-              title={`${convertBalance(depositedAmount)} ${item.tokenName}`}
+              title={`${convertBalance(depositedAmount, 4)} ${item.tokenName}`}
               content="Deposited"
               colorTitle="#182373"
               colorContent="#182373"
@@ -168,13 +168,13 @@ export default function ({
             <div className="stake-content-row">
               <div className="title">{item.tokenName} deposited in VAULT</div>
               <div className="content">
-                {convertBalance(depositedAmount)} {item.tokenName}
+                {convertBalance(depositedAmount, 4)} {item.tokenName}
               </div>
             </div>
             <div className="stake-content-row">
               <div className="title">TVL</div>
               <div className="content">
-                {convertBalance(totalDepositedAmount)} {item.tokenName}
+                {convertBalance(totalDepositedAmount, 4)} {item.tokenName}
               </div>
             </div>
             {/* <div className="stake-content-row">
@@ -183,7 +183,7 @@ export default function ({
             <div className="stake-content-row">
               <div className="title"></div>
               <div className="content">
-                Your wallet {convertBalance(balance, 4)} {item.tokenName}
+                Your wallet {balance} {item.tokenName}
               </div>
             </div>
             <div className="stake-content-row">
@@ -198,10 +198,10 @@ export default function ({
               <span className="percent" onClick={(e) => {setDeposit(convertBalance(balance / 4, 4))}}>25%</span>
               <span className="percent" onClick={(e) => {setDeposit(convertBalance(balance / 2, 4))}}>50%</span>
               <span className="percent" onClick={(e) => {setDeposit(convertBalance(balance * 3 / 4, 4))}}>75%</span>
-              <span className="percent" onClick={(e) => {setDeposit(convertBalance(balance, 4))}}>100%</span>
+              <span className="percent" onClick={(e) => {setDeposit(balance)}}>100%</span>
             </div>
             <div className="stake-content-row">
-              {allowance > 0 ? (
+              { item.tokenName != "ETH" ? (allowance > 0 ? (
                 <button
                   onClick={(e) => {
                     handleDeposit();
@@ -219,6 +219,15 @@ export default function ({
                 >
                   Approve
                 </button>
+              )) : (
+                <button
+                  onClick={(e) => {
+                    handleDeposit();
+                  }}
+                  className="blue"
+                >
+                  Deposit
+                </button>
               )}
             </div>
           </div>
@@ -230,7 +239,7 @@ export default function ({
             <div className="stake-content-row">
               <div className="title">Mine Earnings</div>
               <div className="content">
-                {convertBalance(miningEarning, 0)} PYLON
+                {convertBalance(miningEarning, 4)} PYLON
               </div>
             </div>
             <div className="stake-content-row">
@@ -278,9 +287,9 @@ export default function ({
                 </div>
                 <div className="stake-content-row">
                   <span className="percent" onClick={(e) => {setWithdraw(convertBalance(depositedAmount / 4, 4))}}>25%</span>
-                  <span className="percent" onClick={(e) => {setWithdraw(convertBalance(depositedAmount / 4, 4))}}>50%</span>
-                  <span className="percent" onClick={(e) => {setWithdraw(convertBalance(depositedAmount / 4, 4))}}>75%</span>
-                  <span className="percent" onClick={(e) => {setWithdraw(convertBalance(depositedAmount / 4, 4))}}>100%</span>
+                  <span className="percent" onClick={(e) => {setWithdraw(convertBalance(depositedAmount / 2, 4))}}>50%</span>
+                  <span className="percent" onClick={(e) => {setWithdraw(convertBalance(depositedAmount * 3 / 4, 4))}}>75%</span>
+                  <span className="percent" onClick={(e) => {setWithdraw(depositedAmount)}}>100%</span>
                 </div>
               </>
             )}

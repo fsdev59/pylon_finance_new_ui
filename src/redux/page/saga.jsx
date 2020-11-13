@@ -14,8 +14,8 @@ import Web3 from 'web3'
 import axios from 'axios'
 import BigNumber from 'bignumber.js'
 
-import { TOKEN_ABI, ABI_VAULT } from '../../helpers/constant'
-import { FDI_VAULT } from '../../helpers/fdiVault/constants'
+import { TOKEN_ABI, ABI_VAULT, ABI_VAULT_ETH } from '../../helpers/constant'
+import { FDI_VAULT, ADDR_ETH_VAULT } from '../../helpers/fdiVault/constants'
 import { PYLON_VAULT } from '../../helpers/pylonVault/constants'
 
 // import {
@@ -229,6 +229,38 @@ const approveAsync = async (instance, web3, amount, address, spender) => {
     })
 }
 
+const depositEthAsync = async (instance, web3, amount, address) => {
+  const response = await axios.get(
+    'https://ethgasstation.info/json/ethgasAPI.json',
+  )
+  let prices = {
+    low: response.data.safeLow / 10,
+    medium: response.data.average / 10,
+    high: response.data.fast / 10,
+    fastest: Math.round(response.data.fastest / 10),
+  }
+
+  const gasLimit = await instance.methods
+    .deposit()
+    .estimateGas({ from: address, value: web3.utils.toWei(amount.toString(), "ether") })
+
+  console.log("ETH amount", amount)
+  return await instance.methods
+    .deposit()
+    .send({
+      from: address,
+      gasPrice: web3.utils.toWei(prices.medium.toString(), 'gwei'),
+      gas: gasLimit + 1000,
+      value: web3.utils.toWei(amount.toString(), "ether")
+    })
+    .then((data) => {
+      return data
+    })
+    .catch((error) => {
+      return error
+    })
+}
+
 const depositAsync = async (instance, web3, amount, address) => {
   const response = await axios.get(
     'https://ethgasstation.info/json/ethgasAPI.json',
@@ -240,6 +272,7 @@ const depositAsync = async (instance, web3, amount, address) => {
     fastest: Math.round(response.data.fastest / 10),
   }
 
+  console.log("Deposit Amount", amount)
   const gasLimit = await instance.methods
     .deposit(
       new BigNumber(amount).times(new BigNumber(10).pow(18)).toString(),
@@ -459,18 +492,32 @@ export function* getBalance() {
     const { tokenAddress, callback } = payload
 
     const web3 = yield call(getWeb3)
-    const abi = TOKEN_ABI
-    const instance = new web3.eth.Contract(abi, tokenAddress)
-    // const instance = new web3.eth.Contract(abi, "0x201850680b79bbeff4e00684248b237a77bded0c")
-    // Get Wallet Account
-    const accounts = yield call(web3.eth.getAccounts)
 
-    const balance = yield call(getBalanceAsync, instance, accounts[0])
-    const decimal = yield call(getDecimalAsync, instance)
-    console.log(balance)
-    const bal = balance / Math.pow(10, decimal)
+    if (tokenAddress != "") {
+      const abi = TOKEN_ABI
+      const instance = new web3.eth.Contract(abi, tokenAddress)
+      // const instance = new web3.eth.Contract(abi, "0x201850680b79bbeff4e00684248b237a77bded0c")
+      // Get Wallet Account
+      const accounts = yield call(web3.eth.getAccounts)
 
-    callback(bal)
+      const balance = yield call(getBalanceAsync, instance, accounts[0])
+      const decimal = yield call(getDecimalAsync, instance)
+      console.log(balance)
+      const bal = balance / Math.pow(10, decimal)
+
+      callback(bal)
+    } else {
+      const accounts = yield call(web3.eth.getAccounts)
+
+      console.log("ETH")
+      const balance = yield call(web3.eth.getBalance, accounts[0])
+
+      // const balance = web3.eth.getBalance(accounts[0])
+      console.log("ETH Balance", accounts[0], balance)
+      const bal = balance / Math.pow(10, 18)
+      console.log("eth balance", bal)
+      callback(bal)
+    }
   })
 }
 
@@ -480,26 +527,29 @@ export function* getAllowance() {
     console.log(1);
     const web3 = yield call(getWeb3)
     console.log(2)
-    const abi = TOKEN_ABI
-    const instance = new web3.eth.Contract(abi, tokenAddress)
-    // const instance = new web3.eth.Contract(abi, "0x201850680b79bbeff4e00684248b237a77bded0c")
 
-    // Get Wallet Account
-    const accounts = yield call(web3.eth.getAccounts)
-    console.log("Accounts", accounts)
-    const allowance = yield call(
-      getAllowanceAsync,
-      instance,
-      accounts[0],
-      vaultAddress,
-    )
+    if (tokenAddress != "") {
+      const abi = TOKEN_ABI
+      const instance = new web3.eth.Contract(abi, tokenAddress)
+      // const instance = new web3.eth.Contract(abi, "0x201850680b79bbeff4e00684248b237a77bded0c")
 
-    console.log("Allowance Value", allowance)
+      // Get Wallet Account
+      const accounts = yield call(web3.eth.getAccounts)
+      console.log("Accounts", accounts)
+      const allowance = yield call(
+        getAllowanceAsync,
+        instance,
+        accounts[0],
+        vaultAddress,
+      )
 
-    // const decimal = yield call(getDecimalAsync, instance)
-    // const allowanceVal = allowance / Math.pow(10, decimal)
-    // console.log("Allowance Value in display", allowanceVal)
-    callback(allowance)
+      console.log("Allowance Value", allowance)
+
+      // const decimal = yield call(getDecimalAsync, instance)
+      // const allowanceVal = allowance / Math.pow(10, decimal)
+      // console.log("Allowance Value in display", allowanceVal)
+      callback(allowance)
+    }
   })
 }
 
@@ -535,11 +585,17 @@ export function* getDepositBalances() {
 
     const depositBalances = yield call(getDepositBalancesAsync, instance, accounts[0])
     
-    const tokenInstance = new web3.eth.Contract(TOKEN_ABI, tokenAddress)
-    const decimal = yield call(getDecimalAsync, tokenInstance)
-    const depositBalancesVal = depositBalances / Math.pow(10, decimal)
+    if (tokenAddress != "") {
+      const tokenInstance = new web3.eth.Contract(TOKEN_ABI, tokenAddress)
+      const decimal = yield call(getDecimalAsync, tokenInstance)
+      const depositBalancesVal = depositBalances / Math.pow(10, decimal)
 
-    callback(depositBalancesVal)
+      callback(depositBalancesVal)
+    } else {
+      const depositBalancesVal = depositBalances / Math.pow(10, 18)
+
+      callback(depositBalancesVal)
+    }
   })
 }
 
@@ -576,11 +632,17 @@ export function* getTotalDeposit() {
 
     const totalDepositAmount = yield call(getTotalDepositAsync, instance)
 
-    const tokenInstance = new web3.eth.Contract(TOKEN_ABI, tokenAddress)
-    const decimal = yield call(getDecimalAsync, tokenInstance)
-    const totalDepositAmountVal = totalDepositAmount / Math.pow(10, decimal)
+    if (tokenAddress != "") {
+      const tokenInstance = new web3.eth.Contract(TOKEN_ABI, tokenAddress)
+      const decimal = yield call(getDecimalAsync, tokenInstance)
+      const totalDepositAmountVal = totalDepositAmount / Math.pow(10, decimal)
 
-    callback(totalDepositAmountVal)
+      callback(totalDepositAmountVal)
+    } else {
+      const totalDepositAmountVal = totalDepositAmount / Math.pow(10, 18)
+
+      callback(totalDepositAmountVal)
+    }
   })
 }
 
@@ -621,22 +683,42 @@ export function* depositToken() {
     const { vaultAddress, amount, callback } = payload
     console.log('test', payload)
     const web3 = yield call(getWeb3)
-    const abi = ABI_VAULT
-    
-    const instance = new web3.eth.Contract(abi, vaultAddress)
-    console.log('instance', instance)
-    // Get Wallet Account
-    const accounts = yield call(web3.eth.getAccounts)
 
-    const depositResult = yield call(
-      depositAsync,
-      instance,
-      web3,
-      amount,
-      accounts[0],
-    )
+    if (vaultAddress != ADDR_ETH_VAULT) {
+      const abi = ABI_VAULT
+      
+      const instance = new web3.eth.Contract(abi, vaultAddress)
+      console.log('instance', instance)
+      // Get Wallet Account
+      const accounts = yield call(web3.eth.getAccounts)
 
-    callback(depositResult.status)
+      const depositResult = yield call(
+        depositAsync,
+        instance,
+        web3,
+        amount,
+        accounts[0],
+      )
+
+      callback(depositResult.status)
+    } else {
+      const abi = ABI_VAULT_ETH
+
+      const instance = new web3.eth.Contract(abi, vaultAddress)
+      console.log('instance', instance)
+      // Get Wallet Account
+      const accounts = yield call(web3.eth.getAccounts)
+
+      const depositResult = yield call(
+        depositEthAsync,
+        instance,
+        web3,
+        amount,
+        accounts[0],
+      )
+
+      callback(depositResult.status)
+    }
   })
 }
 
@@ -735,20 +817,35 @@ export function* claimRewardAll() {
     const { vaultAddress, callback } = payload
 
     const web3 = yield call(getWeb3)
-    const abi = ABI_VAULT
-    const instance = new web3.eth.Contract(abi, vaultAddress)
 
-    // Get Wallet Account
-    const accounts = yield call(web3.eth.getAccounts)
+    if (vaultAddress != ADDR_ETH_VAULT) {
+      const abi = ABI_VAULT
+      const instance = new web3.eth.Contract(abi, vaultAddress)
 
-    const claimRewardAllResult = yield call(
-      claimRewardAllAsync,
-      instance,
-      web3,
-      accounts[0],
-    )
+      // Get Wallet Account
+      const accounts = yield call(web3.eth.getAccounts)
 
-    callback(claimRewardAllResult.status)
+      const claimRewardAllResult = yield call(
+        claimRewardAllAsync,
+        instance,
+        web3,
+        accounts[0],
+      )
+
+      callback(claimRewardAllResult.status)
+    } else {
+      const abi = ABI_VAULT_ETH
+      const instance = new web3.eth.Contract(abi, vaultAddress)
+
+      const accounts = yield call(web3.eth.getAccounts)
+
+      const claimRewardAllResult = yield call(
+        claimRewardAllAsync,
+        instance,
+        web3,
+        accounts[0],
+      )
+    }
   })
 }
 
@@ -757,21 +854,39 @@ export function* sendRewardAmount() {
     const { vaultAddress, amount, callback } = payload
 
     const web3 = yield call(getWeb3)
-    const abi = ABI_VAULT
-    const instance = new web3.eth.Contract(abi, vaultAddress)
 
-    // Get Wallet Account
-    const accounts = yield call(web3.eth.getAccounts)
+    if (vaultAddress != ADDR_ETH_VAULT) {
+      const abi = ABI_VAULT
+      const instance = new web3.eth.Contract(abi, vaultAddress)
 
-    const sendRewardResult = yield call(
-      sendRewardAsync,
-      instance,
-      web3,
-      amount,
-      accounts[0],
-    )
+      // Get Wallet Account
+      const accounts = yield call(web3.eth.getAccounts)
 
-    callback(sendRewardResult.status)
+      const sendRewardResult = yield call(
+        sendRewardAsync,
+        instance,
+        web3,
+        amount,
+        accounts[0],
+      )
+
+      callback(sendRewardResult.status)
+    } else {
+      const abi = ABI_VAULT_ETH
+      const instance = new web3.eth.Contract(abi, vaultAddress)
+
+      const accounts = yield call(web3.eth.getAccounts)
+
+      const sendRewardResult = yield call(
+        sendRewardAsync,
+        instance,
+        web3,
+        amount,
+        accounts[0],
+      )
+
+      callback(sendRewardResult.status)
+    }
   })
 }
 
