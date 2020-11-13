@@ -435,13 +435,13 @@ const sendRewardAsync = async (instance, web3, amount, address) => {
 
   const gasLimit = await instance.methods
     .sendReward(
-      new BigNumber(amount).times(new BigNumber(10).pow(18)).toString(),
+      new BigNumber(Number(amount)).times(new BigNumber(10).pow(18)).toString(),
     )
     .estimateGas({ from: address })
 
   return await instance.methods
     .sendReward(
-      new BigNumber(amount).times(new BigNumber(10).pow(18)).toString(),
+      new BigNumber(Number(amount)).times(new BigNumber(10).pow(18)).toString(),
     )
     .send({
       from: address,

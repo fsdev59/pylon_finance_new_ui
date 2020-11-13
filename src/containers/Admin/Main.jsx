@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import pageActions from "../../redux/page/actions";
 
 import { toast } from "react-toastify";
 
@@ -10,12 +12,60 @@ import cx from "classnames";
 
 const Main = () => {
   const vaultList = [...FDI_VAULT, ...PYLON_VAULT];
-  const [idx, setIdx] = useState(0);
+  const [idx, setIdx] = useState(-1);
   const [amount, setAmount] = useState(0);
+  const [allowance, setAllowance] = useState(0);
+  const dispatch = useDispatch();
+  const handleSelectToken = (idx) => {
+    setIdx(idx);
+    setAllowance(0);
+    console.log(idx);
+    dispatch(
+      pageActions.getAllowance(
+        vaultList[idx].address,
+        vaultList[idx].token1,
+        (allowance) => setAllowance(allowance)
+      )
+    );
+  };
+  const handleApprove = () => {
+    dispatch(
+      pageActions.approveToken(vaultList[idx].token1, vaultList[idx].address, callbackApprove)
+    )
+  };
+  const handleSend = () => {
+    if (idx === -1) {
+      toast.error("Select a vault");
+      return;
+    }
 
-  const handleSend = () => {};
+    if (amount > 0)
+      dispatch(
+        pageActions.sendReward(vaultList[idx].address, amount, callbackSend)
+      );
+    else toast.error("Invaild amount");
+  };
 
-  const callbackSend = (status) => {};
+  const callbackApprove = (status) => {
+    if (status) {
+      dispatch(
+        pageActions.getAllowance(
+          vaultList[idx].address,
+          vaultList[idx].token1,
+          (allowance) => setAllowance(allowance)
+        )
+      );
+    } else {
+      toast.error("Approve token failed");
+    }
+  }
+  const callbackSend = (status) => {
+    if (status) {
+      toast.success("Success");
+    } else {
+      toast.error("Failed");
+    }
+  };
 
   return (
     <div className="main-container">
@@ -23,9 +73,10 @@ const Main = () => {
         <div className="vault-selector">
           {vaultList.map((item, index) => (
             <div
+              key={item.tokenName}
               role="button"
               className={cx("vault-item", { active: index === idx })}
-              onClick={(e) => setIdx(index)}
+              onClick={(e) => handleSelectToken(index)}
             >
               <img
                 src={require(`../../assets/images/icons/${item.iconName}`)}
@@ -36,25 +87,33 @@ const Main = () => {
               <div className="title">{item.title}</div>
             </div>
           ))}
-        </div>
-        <div className="reward-section">
-          <div className="vault-item">
-            <img
-              src={require(`../../assets/images/icons/${vaultList[idx].iconName}`)}
-              width="30"
-              alt=""
+        </div>{" "}
+        {idx >= 0 && (
+          <div className="reward-section">
+            <div className="vault-item">
+              <img
+                src={require(`../../assets/images/icons/${vaultList[idx].iconName}`)}
+                width="30"
+                alt=""
+              />
+              {` `}
+              <div className="title">{vaultList[idx].title}</div>
+            </div>
+
+            <input
+              type="text"
+              value={amount}
+              placeholder="Amount"
+              onChange={(e) => setAmount(e.target.value)}
             />
-            {` `}
-            <div className="title">{vaultList[idx].title}</div>
+            {allowance == 0 && vaultList[idx].token0 != "" ? (
+              <button onClick={(e) => handleApprove()}>Approve</button>
+            ) : (
+              <button onClick={(e) => handleSend()}>Send</button>
+            )}
           </div>
-          <input
-            type="text"
-            value={amount}
-            placeholder="Amount"
-            onChange={(e) => setAmount(e.target.value)}
-          />
-          <button onClick={(e) => handleSend()}>Send</button>
-        </div>
+        )}
+        {idx == -1 && (<h2>Hi Ali, select token first. hehe @_~  (from Dmitry). Smile~~~</h2>)}
       </div>
     </div>
   );
