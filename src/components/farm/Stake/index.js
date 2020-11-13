@@ -107,7 +107,12 @@ export default function ({
       toast.error("There isn't any reward amount yet.")
   };
 
-  const handleCallback = () => {
+  const handleCallback = (status) => {
+    if (status) {
+      toast.success("Success")  
+    } else {
+      toast.error("Error")
+    }
     init();
   };
 
