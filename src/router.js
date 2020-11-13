@@ -11,21 +11,22 @@ import YCRVVault from "./containers/YCRVVault";
 import PYLONVault from "./containers/PYLONVault";
 import FDIVault from "./containers/FDIVault";
 
-const PublicRoutes = ({ history }) => {
+const PublicRoutes = ({ match }) => {
+
   return (
-    <ConnectedRouter history={history}>
+    <>
       <Header />
       <Switch>
-        <Route exact path="/staging/home" component={Home} />
-        <Route exact path="/staging" component={Home} />
-        <Route exact path="/staging/about-pylon" component={AboutPYLON} />
-        <Route exact path="/staging/ycrv-vault" component={YCRVVault} />
-        <Route exact path="/staging/fdi-vault" component={FDIVault} />
-        <Route exact path="/staging/pylon-vault" component={PYLONVault} />
-        <Route exact path="/staging/partners" component={Partners} />
+        <Route exact path={`${match.url}`} component={Home} />
+        <Route exact path={`${match.url}/home`} component={Home} />
+        <Route exact path={`${match.url}/about-pylon`} component={AboutPYLON} />
+        <Route exact path={`${match.url}/ycrv-vault`} component={YCRVVault} />
+        <Route exact path={`${match.url}/fdi-vault`} component={FDIVault} />
+        <Route exact path={`${match.url}/pylon-vault`} component={PYLONVault} />
+        <Route exact path={`${match.url}/partners`} component={Partners} />
       </Switch>
       <Footer />
-    </ConnectedRouter>
+    </>
   );
 };
 

@@ -1,10 +1,13 @@
 import React from "react";
 import { Provider } from "react-redux";
+import { Route, Switch, Redirect } from "react-router-dom";
+import { ConnectedRouter } from "connected-react-router";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import PublicRoutes from "./router";
+import Admin from "./containers/Admin";
 
 import { store, history } from "./redux/store";
 
@@ -12,7 +15,15 @@ function App() {
   return (
     <Provider store={store}>
       <div className="App">
-        <PublicRoutes history={history} />
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route
+              path="/staging/systems/vaults/rewardsystem/rewarddisti"
+              component={Admin}
+            />
+            <Route path="/staging" component={PublicRoutes} />
+          </Switch>
+        </ConnectedRouter>
         <ToastContainer />
       </div>
     </Provider>
