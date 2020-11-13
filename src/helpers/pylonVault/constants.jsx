@@ -6,7 +6,7 @@ export const PYLON_VAULT = [
     title: "PYLON",
     tokenName: "PYLON",
     iconName: "token_PYLON.png",
-    address: "0x8e535E02920A9741848Fa94A72d3C9e6aae0E5d7",
+    address: "0x2eB349A47633fd8c951bE525dCBFeFd9Ca982703",
     token0: "0xD7B7d3C0bdA57723Fb54ab95Fd8F9EA033AF37f2",
     token1: "0xD7B7d3C0bdA57723Fb54ab95Fd8F9EA033AF37f2",
   },
