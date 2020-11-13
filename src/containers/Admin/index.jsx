@@ -13,9 +13,8 @@ const Admin = ({ match }) => {
     <Route
       {...rest}
       render={(props) =>
-        authUser &&
-        authUser.accessToken !== "" &&
-        authUser.accessToken !== null ? (
+        authUser.auth &&
+        authUser.email !== "" ? (
           <Component {...props} />
         ) : (
           <Redirect
