@@ -8,29 +8,29 @@ import MailchimpSubscribe from "react-mailchimp-subscribe";
 
 import "./styles.scss";
 
-const url = process.env.REACT_APP_MAILCHIMP_URL;
-console.log(url);
-const CustomForm = ({ onValidated }) => {
-  let email;
-  const submit = () =>
-    email &&
-    email.value.indexOf("@") > -1 &&
-    onValidated({
-      EMAIL: email.value
-    });
+// const url = process.env.REACT_APP_MAILCHIMP_URL;
 
-  return (
-    <div className="subscription-sender-wrapper">
-      <input
-        ref={node => (email = node)}
-        type="text" />
-      <div className="subscribe-send" role="button" onClick={submit}>
-        <FontAwesomeIcon icon={faPaperPlane}/>
-      </div>
-      {/* {status === "success" && (<p>Success!</p>)} */}
-    </div>
-  );
-};
+// const CustomForm = ({ onValidated }) => {
+//   let email;
+//   const submit = () =>
+//     email &&
+//     email.value.indexOf("@") > -1 &&
+//     onValidated({
+//       EMAIL: email.value
+//     });
+
+//   return (
+//     <div className="subscription-sender-wrapper">
+//       <input
+//         ref={node => (email = node)}
+//         type="text" />
+//       <div className="subscribe-send" role="button" onClick={submit}>
+//         <FontAwesomeIcon icon={faPaperPlane}/>
+//       </div>
+//       {/* {status === "success" && (<p>Success!</p>)} */}
+//     </div>
+//   );
+// };
 
 export default function Footer() {
   return (
