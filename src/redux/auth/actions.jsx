@@ -3,9 +3,9 @@ const actions = {
   LOGIN_SUCCESS: "LOGIN_SUCCESS",
   LOGOUT: "LOGOUT",
 
-  login: (email, password) => ({
+  login: (email, password, callback) => ({
     type: actions.LOGIN_REQUEST,
-    payload: { email, password },
+    payload: { email, password, callback },
   }),
   logout: (callback) => ({
     type: actions.LOGOUT,

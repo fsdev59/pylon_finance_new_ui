@@ -1,20 +1,16 @@
 import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { connect } from "react-redux";
 
 import Auth from "./Auth";
 import Main from "./Main";
 
-const Admin = ({ match }) => {
-  const email = useSelector((state) => state.Auth.email);
-  const auth = useSelector((state) => state.Auth.auth);
-
+const Admin = ({ match, email, auth }) => {
   const InitialPath = ({ component: Component, authUser, ...rest }) => (
     <Route
       {...rest}
       render={(props) =>
-        authUser.auth &&
-        authUser.email !== "" ? (
+        authUser.auth && authUser.email !== "" ? (
           <Component {...props} />
         ) : (
           <Redirect
@@ -37,9 +33,13 @@ const Admin = ({ match }) => {
         component={Main}
       />
       <Route exact path={`${match.url}/login`} component={Auth} />
-      <Redirect to={`${match.url}/login`} component={Auth} />
+      <Redirect to={`${match.url}/main`} component={Auth} />
     </Switch>
   );
 };
 
-export default Admin;
+function mapStateToProps(state) {
+  const { email, auth } = state.Auth;
+  return { email, auth };
+}
+export default connect(mapStateToProps)(Admin);

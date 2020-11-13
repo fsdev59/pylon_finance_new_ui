@@ -6,11 +6,11 @@ import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faKey } from "@fortawesome/free-solid-svg-icons";
 
-// import authActions from "../../redux/auth";
+import authActions from "../../redux/auth/actions";
 
 import "./auth.scss";
 
-const Auth = () => {
+const Auth = ({ match, history }) => {
   const dispatch = useDispatch();
 
   const [email, setEmail] = useState("");
@@ -25,6 +25,16 @@ const Auth = () => {
     if (password.trim() === "") {
       toast.error("Password is required");
       return;
+    }
+
+    dispatch(authActions.login(email, password, callbackLogin));
+  };
+
+  const callbackLogin = (status) => {
+    if (status) {
+      history.push("./main");
+    } else {
+      toast.error("Invalid password");
     }
   };
 
@@ -46,7 +56,7 @@ const Auth = () => {
           <FontAwesomeIcon className="icon" icon={faKey} />
           <input
             className="input"
-            type="text"
+            type="password"
             placeholder="******"
             value={password}
             required

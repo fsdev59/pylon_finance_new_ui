@@ -10,12 +10,29 @@ import {
 import axios from "axios";
 import actions from "./actions";
 
-// export function* loginRequest() {
-//   yield takeLatest(actions.LOGIN_REQUEST, function* ({ payload }) {
-//     return;
-//   });
-// }
+import { USER } from "../../helpers/constant";
+
+export function* login() {
+  yield takeLatest(actions.LOGIN_REQUEST, function* ({ payload }) {
+    const { email, password, callback } = payload;
+
+    if (email === USER.email && password === USER.password) {
+      localStorage.setItem("email", email);
+      localStorage.setItem("auth", true);
+
+      yield put({
+        type: actions.LOGIN_SUCCESS,
+        email: email,
+        auth: true,
+      });
+
+      callback(true);
+    } else {
+      callback(false);
+    }
+  });
+}
 
 export default function* rootSaga() {
-  yield all([]);
+  yield all([fork(login)]);
 }
