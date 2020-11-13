@@ -36,12 +36,12 @@ const Farm = ({ data, type }) => {
 
   const getVaultDepositedAmount = (vault, callback) => {
     // console.log("", callback("3"));
-    // dispatch(pageActions.getDepositBalaces(vault.address, callback));
+    dispatch(pageActions.getDepositBalaces(vault.address, vault.token0, callback));
   };
 
   const getTotalDepositedAmount = (vault, callback) => {
     // console.log("", callback("4"));
-    // dispatch(pageActions.getTotalDeposit(vault.address, callback));
+    dispatch(pageActions.getTotalDeposit(vault.address, vault.token0, callback));
   };
 
   const getVaultTvl = (vault, callback) => {
@@ -50,7 +50,7 @@ const Farm = ({ data, type }) => {
 
   const getVaultMiningEarning = (vault, callback) => {
     // console.log("", callback("6"));
-    // dispatch(pageActions.getRewardBalances(vault.address, callback));
+    dispatch(pageActions.getRewardBalances(vault.address, callback));
   };
 
   const getAllowance = (vault, callback) => {

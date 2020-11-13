@@ -41,9 +41,9 @@ const actions = {
     payload: { vaultAddress, callback },
   }),
 
-  getDepositBalaces: (vaultAddress, callback) => ({
+  getDepositBalaces: (vaultAddress, tokenAddress, callback) => ({
     type: actions.GET_DEPOSIT_BALANCE,
-    payload: { vaultAddress, callback },
+    payload: { vaultAddress, tokenAddress, callback },
   }),
 
   getRewardBalances: (vaultAddress, callback) => ({
@@ -51,9 +51,9 @@ const actions = {
     payload: { vaultAddress, callback },
   }),
 
-  getTotalDeposit: (vaultAddress, callback) => ({
+  getTotalDeposit: (vaultAddress, tokenAddress, callback) => ({
     type: actions.GET_TOTAL_DEPOSIT,
-    payload: { vaultAddress, callback },
+    payload: { vaultAddress, tokenAddress, callback },
   }),
 
   getBalance: (tokenAddress, callback) => ({

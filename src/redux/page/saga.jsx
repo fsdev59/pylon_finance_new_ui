@@ -525,7 +525,7 @@ export function* getAvailableRewardAmount() {
 export function* getDepositBalances() {
   yield takeEvery(actions.GET_DEPOSIT_BALANCE, function* ({ payload }) {
     
-    const { vaultAddress, callback } = payload
+    const { vaultAddress, tokenAddress, callback } = payload
 
     const web3 = yield call(getWeb3)
     const abi = ABI_VAULT
@@ -534,7 +534,9 @@ export function* getDepositBalances() {
     const accounts = yield call(web3.eth.getAccounts)
 
     const depositBalances = yield call(getDepositBalancesAsync, instance, accounts[0])
-    const decimal = yield call(getDecimalAsync, instance)
+    
+    const tokenInstance = new web3.eth.Contract(TOKEN_ABI, tokenAddress)
+    const decimal = yield call(getDecimalAsync, tokenInstance)
     const depositBalancesVal = depositBalances / Math.pow(10, decimal)
 
     callback(depositBalancesVal)
@@ -553,8 +555,9 @@ export function* getRewardBalances() {
     const accounts = yield call(web3.eth.getAccounts)
 
     const rewardBalances = yield call(getRewardBalancesAsync, instance, accounts[0])
-    const decimal = yield call(getDecimalAsync, instance)
-    const rewardBalancesVal = rewardBalances / Math.pow(10, decimal)
+
+    // const decimal = yield call(getDecimalAsync, instance)
+    const rewardBalancesVal = rewardBalances / Math.pow(10, 18)
 
     callback(rewardBalancesVal)
   })
@@ -563,16 +566,18 @@ export function* getRewardBalances() {
 export function* getTotalDeposit() {
   yield takeEvery(actions.GET_TOTAL_DEPOSIT, function* ({ payload }) {
 
-    const { vaultAddress, callback } = payload
+    const { vaultAddress, tokenAddress, callback } = payload
 
     const web3 = yield call(getWeb3)
     const abi = ABI_VAULT
     const instance = new web3.eth.Contract(abi, vaultAddress)
 
-    const accounts = yield call(web3.eth.getAccounts)
+    // const accounts = yield call(web3.eth.getAccounts)
 
     const totalDepositAmount = yield call(getTotalDepositAsync, instance)
-    const decimal = yield call(getDecimalAsync, instance)
+
+    const tokenInstance = new web3.eth.Contract(TOKEN_ABI, tokenAddress)
+    const decimal = yield call(getDecimalAsync, tokenInstance)
     const totalDepositAmountVal = totalDepositAmount / Math.pow(10, decimal)
 
     callback(totalDepositAmountVal)
