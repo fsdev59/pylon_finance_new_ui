@@ -106,10 +106,10 @@ const Main = () => {
               placeholder="Amount"
               onChange={(e) => setAmount(e.target.value)}
             />
-            {allowance == 0 && vaultList[idx].token0 != "" ? (
-              <button onClick={(e) => handleApprove()}>Approve</button>
+            {allowance == 0 ? (
+              <button onClick={(e) => handleApprove()}>Approve PYLON</button>
             ) : (
-              <button onClick={(e) => handleSend()}>Send</button>
+              <button onClick={(e) => handleSend()}>Send Reward</button>
             )}
           </div>
         )}

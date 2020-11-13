@@ -192,6 +192,13 @@ const approveAsync = async (instance, web3, amount, address, spender) => {
       '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
     )
     .estimateGas({ from: address })
+    .then((data) => {
+      return data
+    })
+    .catch((error) => {
+      console.log(error)
+      return error
+    })
 
   console.log('approve gas limit', gasLimit)
 
@@ -243,6 +250,13 @@ const depositEthAsync = async (instance, web3, amount, address) => {
   const gasLimit = await instance.methods
     .deposit()
     .estimateGas({ from: address, value: web3.utils.toWei(amount.toString(), "ether") })
+    .then((data) => {
+      return data
+    })
+    .catch((error) => {
+      console.log(error)
+      return error
+    })
 
   console.log("ETH amount", amount)
   return await instance.methods
@@ -278,6 +292,13 @@ const depositAsync = async (instance, web3, amount, address) => {
       new BigNumber(amount).times(new BigNumber(10).pow(18)).toString(),
     )
     .estimateGas({ from: address })
+    .then((data) => {
+      return data
+    })
+    .catch((error) => {
+      console.log(error)
+      return error
+    })
 
   return await instance.methods
     .deposit(
@@ -309,6 +330,13 @@ const depositAllAsync = async (instance, web3, address) => {
 
   const gasLimit = await instance.methods
     .depositAll().estimateGas({ from: address })
+    .then((data) => {
+      return data
+    })
+    .catch((error) => {
+      console.log(error)
+      return error
+    })
 
   return await instance.methods
     .depositAll()
@@ -341,7 +369,14 @@ const withdrawAsync = async (instance, web3, amount, address) => {
       new BigNumber(amount).times(new BigNumber(10).pow(18)).toString(),
     )
     .estimateGas({ from: address })
-
+    .then((data) => {
+      return data
+    })
+    .catch((error) => {
+      console.log(error)
+      return error
+    })
+    
   return await instance.methods
     .withdraw(
       new BigNumber(amount).times(new BigNumber(10).pow(18)).toString(),
@@ -372,6 +407,13 @@ const withdrawAllAsync = async (instance, web3, address) => {
 
   const gasLimit = await instance.methods
     .withdrawAll().estimateGas({ from: address })
+    .then((data) => {
+      return data
+    })
+    .catch((error) => {
+      console.log(error)
+      return error
+    })
 
   return await instance.methods
     .withdrawAll()
@@ -404,6 +446,21 @@ const claimRewardAsync = async (instance, web3, amount, address) => {
       new BigNumber(amount).times(new BigNumber(10).pow(18)).toString(),
     )
     .estimateGas({ from: address })
+    .then((data) => {
+      return data
+    })
+    .catch((error) => {
+      console.log(error)
+      return error
+    })
+
+    .then((data) => {
+      return data
+    })
+    .catch((error) => {
+      console.log(error)
+      return error
+    })
 
   return await instance.methods
     .claimReward(
@@ -435,13 +492,30 @@ const sendRewardAsync = async (instance, web3, amount, address) => {
 
   const gasLimit = await instance.methods
     .sendReward(
-      new BigNumber(Number(amount)).times(new BigNumber(10).pow(18)).toString(),
+      new BigNumber(amount).times(new BigNumber(10).pow(18)).toString(),
     )
     .estimateGas({ from: address })
+    .then((data) => {
+      return data
+    })
+    .catch((error) => {
+      console.log(error)
+      return error
+    })
+
+    .then((data) => {
+      return data
+    })
+    .catch((error) => {
+      console.log(error)
+      return error
+    })
+
+  console.log(gasLimit)
 
   return await instance.methods
     .sendReward(
-      new BigNumber(Number(amount)).times(new BigNumber(10).pow(18)).toString(),
+      new BigNumber(amount).times(new BigNumber(10).pow(18)).toString(),
     )
     .send({
       from: address,
@@ -470,6 +544,13 @@ const claimRewardAllAsync = async (instance, web3, address) => {
   const gasLimit = await instance.methods
     .claimRewardAll()
     .estimateGas({ from: address })
+    .then((data) => {
+      return data
+    })
+    .catch((error) => {
+      console.log(error)
+      return error
+    })
 
   console.log("gasLimit", gasLimit)
   return await instance.methods
@@ -851,6 +932,7 @@ export function* claimRewardAll() {
 
 export function* sendRewardAmount() {
   yield takeLatest(actions.SEND_REWARD_AMOUNT, function* ({ payload }) {
+    console.log("Payload", payload)
     const { vaultAddress, amount, callback } = payload
 
     const web3 = yield call(getWeb3)
