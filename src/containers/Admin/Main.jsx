@@ -113,7 +113,7 @@ const Main = () => {
             )}
           </div>
         )}
-        {idx == -1 && (<h2>Hi Ali, select token first. hehe @_~  (from Dmitry). Smile~~~</h2>)}
+        {idx == -1 && (<h2>Hi Ali, select token first. hehe @_~  (from Dmitry). Smile~~~   *** you can send reward if totaldeposit is bigger than 0</h2>)}
       </div>
     </div>
   );
