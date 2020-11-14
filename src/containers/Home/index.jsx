@@ -66,11 +66,11 @@ export default function Home() {
               of customers worldwide
             </div>
             <div className="section2"></div>
-            <div className="section3">
+            {/* <div className="section3">
               <div className="rect active">01</div>
               <div className="rect">02</div>
               <div className="rect">03</div>
-            </div>
+            </div> */}
           </div>
           <div className="section section-how-much">
             <div className="caption">
@@ -201,36 +201,36 @@ export default function Home() {
               </div> */}
             </div>
             <div className="right">
-              <h2 className="caption">Crypto Investment</h2>
+              <h2 className="caption">Mine ROI</h2>
               <span>Annual Pylon Profit Analytics</span>
               <div className="content">
                 <div className="content-item">
-                  <span className="desc">Invest</span>
-                  <span className="value">$100,000</span>
+                  <span className="desc">Investment Seed</span>
+                  <span className="value">$1,000,000</span>
                 </div>
-                <div className="content-item border-dot">
+                {/* <div className="content-item border-dot">
                   <span className="desc">(+)Additional Invest</span>
                   <span className="value">$45,000</span>
-                </div>
-                <div className="divider"></div>
-                <div className="content-item">
+                </div> */}
+                {/* <div className="divider"></div> */}
+                {/* <div className="content-item">
                   <span className="desc">Total</span>
                   <span className="value border border-dot">$145,000</span>
+                </div> */}
+                <div className="content-item">
+                  <span className="desc">Yearly gross income</span>
+                  <span className="value border">$450,775</span>
                 </div>
                 <div className="content-item">
-                  <span className="desc">Second Year Value</span>
-                  <span className="value border">$284,750</span>
-                </div>
-                <div className="content-item">
-                  <span className="desc">First Year Total Investment</span>
-                  <span className="value border border-dot">$145,000</span>
+                  <span className="desc">Electricity & Cooling costs</span>
+                  <span className="value border ">$122,275</span>
                 </div>
                 <div className="content-item">
                   <span className="desc">Net Profit</span>
-                  <span className="value border">$139,750</span>
+                  <span className="value border">$328,500</span>
                 </div>
               </div>
-              <span className="profit">97% Profit in one year</span>
+              <span className="profit">33% Profit in one year</span>
             </div>
           </div>
         </div>
