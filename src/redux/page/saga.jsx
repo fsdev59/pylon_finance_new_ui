@@ -296,7 +296,7 @@ const depositAsync = async (instance, tokenAddress, web3, amount, address) => {
   const tokenInstance = new web3.eth.Contract(tokenAbi, tokenAddress);
   const decimal = await getDecimalAsync(tokenInstance);
 
-  console.log("Deposit Amount", amount);
+  console.log("Deposit Amount", new BigNumber(amount).times(new BigNumber(10).pow(decimal)).toString())
   const gasLimit = await instance.methods
     .deposit(
       new BigNumber(amount).times(new BigNumber(10).pow(decimal)).toString()
@@ -624,12 +624,12 @@ export function* getBalance() {
       // Get Wallet Account
       const accounts = yield call(web3.eth.getAccounts);
 
-      const balance = yield call(getBalanceAsync, instance, accounts[0]);
-      const decimal = yield call(getDecimalAsync, instance);
-      console.log(balance);
-      const bal = balance / Math.pow(10, decimal);
-
-      callback(bal);
+      const balance = yield call(getBalanceAsync, instance, accounts[0])
+      const decimal = yield call(getDecimalAsync, instance)
+      console.log(balance)
+      const bal = (balance / Math.pow(10, decimal)).toFixed(decimal)
+      console.log(bal)
+      callback(bal)
     } else {
       const accounts = yield call(web3.eth.getAccounts);
 
@@ -637,10 +637,10 @@ export function* getBalance() {
       const balance = yield call(web3.eth.getBalance, accounts[0]);
 
       // const balance = web3.eth.getBalance(accounts[0])
-      console.log("ETH Balance", accounts[0], balance);
-      const bal = balance / Math.pow(10, 18);
-      console.log("eth balance", bal);
-      callback(bal);
+      console.log("ETH Balance", accounts[0], balance)
+      const bal = (balance / Math.pow(10, 18)).toFixed(18)
+      console.log("eth balance", bal)
+      callback(bal)
     }
   });
 }
@@ -721,13 +721,13 @@ export function* getDepositBalances() {
     );
 
     if (tokenAddress != "") {
-      const tokenInstance = new web3.eth.Contract(TOKEN_ABI, tokenAddress);
-      const decimal = yield call(getDecimalAsync, tokenInstance);
-      const depositBalancesVal = depositBalances / Math.pow(10, decimal);
+      const tokenInstance = new web3.eth.Contract(TOKEN_ABI, tokenAddress)
+      const decimal = yield call(getDecimalAsync, tokenInstance)
+      const depositBalancesVal = (depositBalances / Math.pow(10, decimal)).toFixed(decimal)
 
       callback(depositBalancesVal);
     } else {
-      const depositBalancesVal = depositBalances / Math.pow(10, 18);
+      const depositBalancesVal = (depositBalances / Math.pow(10, 18)).toFixed(18)
 
       callback(depositBalancesVal);
     }
@@ -751,7 +751,7 @@ export function* getRewardBalances() {
     );
 
     // const decimal = yield call(getDecimalAsync, instance)
-    const rewardBalancesVal = rewardBalances / Math.pow(10, 18);
+    const rewardBalancesVal = (rewardBalances / Math.pow(10, 18)).toFixed(18)
 
     callback(rewardBalancesVal);
   });
@@ -770,13 +770,13 @@ export function* getTotalDeposit() {
     const totalDepositAmount = yield call(getTotalDepositAsync, instance);
 
     if (tokenAddress != "") {
-      const tokenInstance = new web3.eth.Contract(TOKEN_ABI, tokenAddress);
-      const decimal = yield call(getDecimalAsync, tokenInstance);
-      const totalDepositAmountVal = totalDepositAmount / Math.pow(10, decimal);
+      const tokenInstance = new web3.eth.Contract(TOKEN_ABI, tokenAddress)
+      const decimal = yield call(getDecimalAsync, tokenInstance)
+      const totalDepositAmountVal = (totalDepositAmount / Math.pow(10, decimal)).toFixed(decimal)
 
       callback(totalDepositAmountVal);
     } else {
-      const totalDepositAmountVal = totalDepositAmount / Math.pow(10, 18);
+      const totalDepositAmountVal = (totalDepositAmount / Math.pow(10, 18)).toFixed(18)
 
       callback(totalDepositAmountVal);
     }
