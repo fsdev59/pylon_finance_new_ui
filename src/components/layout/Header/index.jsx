@@ -9,11 +9,11 @@ const Header = ({ location }) => {
   const [menuName, setMenuName] = useState("home");
 
   useEffect(() => {
-    if (location.pathname.indexOf("/home") > 0) setMenuName("home");
-    if (location.pathname.indexOf("/about-pylon") > 0)
+    if (location.pathname.indexOf("home") > 0) setMenuName("home");
+    if (location.pathname.indexOf("about-pylon") > 0)
       setMenuName("about-pylon");
-    if (location.pathname.indexOf("/fdi-vault") > 0) setMenuName("fdi-vault");
-    if (location.pathname.indexOf("/ycrv-vault") > 0) setMenuName("ycrv-vault");
+    if (location.pathname.indexOf("fdi-vault") > 0) setMenuName("fdi-vault");
+    if (location.pathname.indexOf("ycrv-vault") > 0) setMenuName("ycrv-vault");
     if (location.pathname.indexOf("pylon-vault") > 0)
       setMenuName("pylon-vault");
     if (location.pathname.indexOf("partners") > 0) setMenuName("partners");
@@ -23,7 +23,7 @@ const Header = ({ location }) => {
     <>
       <header className="header">
         <div className="header__wrapper">
-          <Link className="header__logo" to="/staging/home">
+          <Link className="header__logo" to="/home">
             <img
               className="header__logo__img"
               src={require("../../../assets/images/pylon.png")}
@@ -33,36 +33,36 @@ const Header = ({ location }) => {
           <nav className="header__nav">
             <ul>
               <li className={cx("menu-link", { active: menuName === "home" })}>
-                <Link to="/staging/home">HOME</Link>
+                <Link to="/home">HOME</Link>
               </li>
               <li
                 className={cx("menu-link", {
                   active: menuName === "about-pylon",
                 })}
               >
-                <Link to="/staging/about-pylon">ABOUT PYLON</Link>
+                <Link to="/about-pylon">ABOUT PYLON</Link>
               </li>
               {/* <li className={cx("menu-link", { active: menuName === "ycrv-vault" })}>
-                <Link to="/staging/ycrv-vault">YCRV VAULT</Link>
+                <Link to="/ycrv-vault">YCRV VAULT</Link>
               </li> */}
               <li
                 className={cx("menu-link", {
                   active: menuName === "fdi-vault",
                 })}
               >
-                <Link to="/staging/fdi-vault">FDI VAULT</Link>
+                <Link to="/fdi-vault">FDI VAULT</Link>
               </li>
               <li
                 className={cx("menu-link", {
                   active: menuName === "pylon-vault",
                 })}
               >
-                <Link to="/staging/pylon-vault">PYLON GPU VAULT</Link>
+                <Link to="/pylon-vault">PYLON GPU VAULT</Link>
               </li>
               <li
                 className={cx("menu-link", { active: menuName === "partners" })}
               >
-                <Link to="/staging/partners">PARTNERS</Link>
+                <Link to="/partners">PARTNERS</Link>
               </li>
             </ul>
           </nav>

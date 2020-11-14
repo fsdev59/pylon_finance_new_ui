@@ -18,10 +18,10 @@ function App() {
         <ConnectedRouter history={history}>
           <Switch>
             <Route
-              path="/staging/systems/vaults/rewardsystem/rewarddisti"
+              path="/systems/vaults/rewardsystem/rewarddisti"
               component={Admin}
             />
-            <Route path="/staging" component={PublicRoutes} />
+            <Route path="/" component={PublicRoutes} />
           </Switch>
         </ConnectedRouter>
         <ToastContainer />

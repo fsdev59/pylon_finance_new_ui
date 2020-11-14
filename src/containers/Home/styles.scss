@@ -335,6 +335,15 @@
         // width: 400px;
       }
 
+      @media screen and (max-width: 425px) {
+        width: 370px;
+      }
+
+      @media screen and (max-width: 325px) {
+        width: 260px;
+      }
+
+
       .caption {
         font-size: 2rem;
         padding-bottom: 24px;

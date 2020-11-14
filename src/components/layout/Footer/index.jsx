@@ -60,7 +60,7 @@ export default function Footer() {
             <img src={require("../../../assets/images/discord.png")} alt="" />
           </a>
           {/* <div className="logo-wrapper">
-            <Link className="footer-logo" to="/staging/home">
+            <Link className="footer-logo" to="/home">
               <img
                 className="footer-logo-img"
                 src={require("../../../assets/images/pylon.png")}
