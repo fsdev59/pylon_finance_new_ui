@@ -107,13 +107,20 @@ export default function ({
       toast.error("There isn't any reward amount yet.")
   };
 
-  const handleCallback = (status) => {
+  const handleCallback = (status = false) => {
     if (status) {
-      toast.success("Success")  
+      toast.success("The transaction has been succeed")  
     } else {
-      toast.error("Error")
+      toast.error("The transaction has been failed")
     }
-    init();
+    if (connected) {
+      getBalance(item, (ret) => setBalance(ret));
+      getDepositedAmount(item, (ret) => setDepositedAmount(ret));
+      getTotalDepositedAmount(item, (ret) => setTotalDepositedAmount(ret));
+      getTvl(item, (ret) => setTvl(ret));
+      getMiningEarning(item, (ret) => setMiningEarning(ret));
+      getAllowance(item, (ret) => setAllowance(ret));
+    }
   };
 
   return (
@@ -247,7 +254,7 @@ export default function ({
             <div className="stake-content-row">
               <div className="title">Mine Earnings</div>
               <div className="content">
-                {convertBalance(miningEarning, 4)} PYLON
+                {miningEarning} PYLON
               </div>
             </div>
             <div className="stake-content-row">

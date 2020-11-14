@@ -275,7 +275,7 @@ const depositEthAsync = async (instance, web3, amount, address) => {
     })
 }
 
-const depositAsync = async (instance, web3, amount, address) => {
+const depositAsync = async (instance, tokenAddress, web3, amount, address) => {
   const response = await axios.get(
     'https://ethgasstation.info/json/ethgasAPI.json',
   )
@@ -286,10 +286,14 @@ const depositAsync = async (instance, web3, amount, address) => {
     fastest: Math.round(response.data.fastest / 10),
   }
 
+  const tokenAbi = TOKEN_ABI
+  const tokenInstance = new web3.eth.Contract(tokenAbi, tokenAddress)
+  const decimal = await getDecimalAsync(tokenInstance)
+  
   console.log("Deposit Amount", amount)
   const gasLimit = await instance.methods
     .deposit(
-      new BigNumber(amount).times(new BigNumber(10).pow(18)).toString(),
+      new BigNumber(amount).times(new BigNumber(10).pow(decimal)).toString(),
     )
     .estimateGas({ from: address })
     .then((data) => {
@@ -302,7 +306,7 @@ const depositAsync = async (instance, web3, amount, address) => {
 
   return await instance.methods
     .deposit(
-      new BigNumber(amount).times(new BigNumber(10).pow(18)).toString(),
+      new BigNumber(amount).times(new BigNumber(10).pow(decimal)).toString(),
     )
     .send({
       from: address,
@@ -353,7 +357,7 @@ const depositAllAsync = async (instance, web3, address) => {
     })
 }
 
-const withdrawAsync = async (instance, web3, amount, address) => {
+const withdrawAsync = async (instance, tokenAddress, web3, amount, address) => {
   const response = await axios.get(
     'https://ethgasstation.info/json/ethgasAPI.json',
   )
@@ -364,9 +368,13 @@ const withdrawAsync = async (instance, web3, amount, address) => {
     fastest: Math.round(response.data.fastest / 10),
   }
 
+  const tokenAbi = TOKEN_ABI
+  const tokenInstance = new web3.eth.Contract(tokenAbi, tokenAddress)
+  const decimal = await getDecimalAsync(tokenInstance)
+
   const gasLimit = await instance.methods
     .withdraw(
-      new BigNumber(amount).times(new BigNumber(10).pow(18)).toString(),
+      new BigNumber(amount).times(new BigNumber(10).pow(decimal)).toString(),
     )
     .estimateGas({ from: address })
     .then((data) => {
@@ -376,10 +384,10 @@ const withdrawAsync = async (instance, web3, amount, address) => {
       console.log(error)
       return error
     })
-    
+
   return await instance.methods
     .withdraw(
-      new BigNumber(amount).times(new BigNumber(10).pow(18)).toString(),
+      new BigNumber(amount).times(new BigNumber(10).pow(decimal)).toString(),
     )
     .send({
       from: address,
@@ -637,7 +645,7 @@ export function* getAllowance() {
 export function* getAvailableRewardAmount() {
   yield takeEvery(actions.GET_AVAILABLE_REWARD_AMOUNT, function* ({ payload }) {
 
-    const { vaultAddress, callback } = payload
+    const { vaultAddress, tokenAddress, callback } = payload
 
     const web3 = yield call(getWeb3)
     const abi = ABI_VAULT
@@ -646,10 +654,14 @@ export function* getAvailableRewardAmount() {
     const accounts = yield call(web3.eth.getAccounts)
 
     const availableRewardAmount = yield call(getAvailableRewardAmountAsync, instance, accounts[0])
-    const decimal = yield call(getDecimalAsync, instance)
+    
+    const tokenAbi = TOKEN_ABI
+    const tokenInstance = new web3.eth.Contract(tokenAbi, tokenAddress)
+    const decimal = yield call(getDecimalAsync, tokenInstance)
+
     const availableRewardAmountVal = availableRewardAmount / Math.pow(10, decimal)
     
-    callback(availableRewardAmountVal)
+    callback(availableRewardAmountVal.toFixed(18))
   })
 }
 
@@ -754,14 +766,14 @@ export function* approveToken() {
       accounts[0],
       vaultAddress,
     )
-
+    console.log(approveResult)
     callback(approveResult.status)
   })
 }
 
 export function* depositToken() {
   yield takeLatest(actions.DEPOSIT_TOKEN, function* ({ payload }) {
-    const { vaultAddress, amount, callback } = payload
+    const { vaultAddress, tokenAddress, amount, callback } = payload
     console.log('test', payload)
     const web3 = yield call(getWeb3)
 
@@ -776,11 +788,13 @@ export function* depositToken() {
       const depositResult = yield call(
         depositAsync,
         instance,
+        tokenAddress,
         web3,
         amount,
         accounts[0],
       )
 
+      console.log("DepositResult ", depositResult)
       callback(depositResult.status)
     } else {
       const abi = ABI_VAULT_ETH
@@ -797,7 +811,7 @@ export function* depositToken() {
         amount,
         accounts[0],
       )
-
+      console.log("DepositResultEth ", depositResult)
       callback(depositResult.status)
     }
   })
@@ -820,14 +834,14 @@ export function* depositAllToken() {
       web3,
       accounts[0],
     )
-
+    console.log(depositAllResult)
     callback(depositAllResult.status)
   })
 }
 
 export function* withdrawToken() {
   yield takeLatest(actions.WITHDRAW_TOKEN, function* ({ payload }) {
-    const { vaultAddress, amount, callback } = payload
+    const { vaultAddress, tokenAddress, amount, callback } = payload
 
     const web3 = yield call(getWeb3)
     const abi = ABI_VAULT
@@ -839,11 +853,12 @@ export function* withdrawToken() {
     const withdrawResult = yield call(
       withdrawAsync,
       instance,
+      tokenAddress,
       web3,
       amount,
       accounts[0],
     )
-
+    console.log(withdrawResult)
     callback(withdrawResult.status)
   })
 }
@@ -865,7 +880,7 @@ export function* withdrawAllToken() {
       web3,
       accounts[0],
     )
-
+    console.log(withdrawAllResult)
     callback(withdrawAllResult.status)
   })
 }
@@ -889,6 +904,7 @@ export function* claimReward() {
       accounts[0],
     )
 
+    console.log(claimRewardResult)
     callback(claimRewardResult.status)
   })
 }
@@ -912,7 +928,7 @@ export function* claimRewardAll() {
         web3,
         accounts[0],
       )
-
+      console.log(claimRewardAllResult)
       callback(claimRewardAllResult.status)
     } else {
       const abi = ABI_VAULT_ETH
@@ -926,6 +942,8 @@ export function* claimRewardAll() {
         web3,
         accounts[0],
       )
+      console.log(claimRewardAllResult)
+      callback(claimRewardAllResult.status)
     }
   })
 }
@@ -951,7 +969,7 @@ export function* sendRewardAmount() {
         amount,
         accounts[0],
       )
-
+      console.log(sendRewardResult)
       callback(sendRewardResult.status)
     } else {
       const abi = ABI_VAULT_ETH
@@ -966,7 +984,7 @@ export function* sendRewardAmount() {
         amount,
         accounts[0],
       )
-
+      console.log(sendRewardResult)
       callback(sendRewardResult.status)
     }
   })

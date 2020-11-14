@@ -36,9 +36,9 @@ const actions = {
     payload: { tokenAddress, callback },
   }),
 
-  getAvailableRewardAmount: (vaultAddress, callback) => ({
+  getAvailableRewardAmount: (vaultAddress, tokenAddress, callback) => ({
     type: actions.GET_AVAILABLE_REWARD_AMOUNT,
-    payload: { vaultAddress, callback },
+    payload: { vaultAddress, tokenAddress, callback },
   }),
 
   getDepositBalaces: (vaultAddress, tokenAddress, callback) => ({
@@ -81,9 +81,9 @@ const actions = {
     payload: { tokenAddress, vaultAddress, callback },
   }),
 
-  depositToken: (vaultAddress, amount, callback) => ({
+  depositToken: (vaultAddress, tokenAddress, amount, callback) => ({
     type: actions.DEPOSIT_TOKEN,
-    payload: { vaultAddress, amount, callback },
+    payload: { vaultAddress, tokenAddress, amount, callback },
   }),
 
   depositAllToken: (vaultAddress, callback) => ({
@@ -91,9 +91,9 @@ const actions = {
     payload: { vaultAddress, callback },
   }),
 
-  withdrawToken: (vaultAddress, amount, callback) => ({
+  withdrawToken: (vaultAddress, tokenAddress, amount, callback) => ({
     type: actions.WITHDRAW_TOKEN,
-    payload: { vaultAddress, amount, callback },
+    payload: { vaultAddress, tokenAddress, amount, callback },
   }),
 
   withdrawAllToken: (vaultAddress, callback) => ({

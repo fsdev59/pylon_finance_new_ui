@@ -13,11 +13,11 @@ const Farm = ({ data, type }) => {
 
   const handleDeposit = (vault, amount, callback) => {
     console.log(vault, amount);
-    dispatch(pageActions.depositToken(vault.address, amount, callback));
+    dispatch(pageActions.depositToken(vault.address, vault.token0, amount, callback));
   };
 
   const handleWithdraw = (vault, amount, callback) => {
-    dispatch(pageActions.withdrawToken(vault.address, amount, callback));
+    dispatch(pageActions.withdrawToken(vault.address, vault.token0, amount, callback));
   };
 
   const handleClaimReward = (vault, callback) => {
@@ -50,7 +50,7 @@ const Farm = ({ data, type }) => {
 
   const getVaultMiningEarning = (vault, callback) => {
     // console.log("", callback("6"));
-    dispatch(pageActions.getRewardBalances(vault.address, callback));
+    dispatch(pageActions.getAvailableRewardAmount(vault.address, vault.token1, callback));
   };
 
   const getAllowance = (vault, callback) => {
