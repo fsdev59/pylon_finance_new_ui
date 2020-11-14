@@ -144,6 +144,7 @@ export default function Partners() {
                       src={require("../../assets/images/telegram.png")}
                       alt=""
                     />
+                    <span>Telegram@pylonfinance</span>
                   </a>
                   <a
                     href="https://twitter.com/Pylonfinance"
@@ -154,6 +155,7 @@ export default function Partners() {
                       src={require("../../assets/images/twitter.png")}
                       alt=""
                     />
+                    <span>Twitter@pylonfinance</span>
                   </a>
                   <a
                     href="https://discord.gg/m5zSFsA"
@@ -164,6 +166,7 @@ export default function Partners() {
                       src={require("../../assets/images/discord.png")}
                       alt=""
                     />
+                    <span>discord.gg/m5zSFsA</span>
                   </a>
                 </div>
                 {/* <div className="reach-us-row">
