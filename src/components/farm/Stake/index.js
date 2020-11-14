@@ -90,7 +90,7 @@ export default function ({
     if (deposit > 0 && deposit <= balance)
       onDeposit(item, deposit, handleCallback);
     else
-      toast.error("Deposit is not available now.")
+      toast.error("Must enter correct deposit amount")
   };
 
   const handleWithdraw = () => {
