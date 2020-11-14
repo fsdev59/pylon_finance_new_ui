@@ -185,12 +185,13 @@
     .reach-us-form {
       background: url("../../assets/images/reach-us-background.png");
       background-repeat: no-repeat;
-      background-size: cover;
+      background-size: contain;
       background-position: right bottom;
+      background-color: #1a2275;
 
-      width: 40%;
-      padding-top: 17%;
-      padding-bottom: 10%;
+      width: 100%;
+      padding-top:30px;
+      padding-bottom: 30px;
       padding-left: 6%;
 
       @media screen and (max-width: 840px) {

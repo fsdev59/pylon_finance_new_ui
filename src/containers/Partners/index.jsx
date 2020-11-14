@@ -7,54 +7,54 @@ import "./styles.scss";
 
 const url = process.env.REACT_APP_MAILCHIMP_URL;
 
-const ContactUsForm = ({ onValidated }) => {
-  let fname, lname, email, subject, msg;
-  const submit = () =>
-    fname &&
-    lname &&
-    email &&
-    subject &&
-    msg &&
-    email.value.indexOf("@") > -1 &&
-    onValidated({
-      EMAIL: email.value,
-      NAME: fname.value + lname.value,
-    });
+// const ContactUsForm = ({ onValidated }) => {
+//   let fname, lname, email, subject, msg;
+//   const submit = () =>
+//     fname &&
+//     lname &&
+//     email &&
+//     subject &&
+//     msg &&
+//     email.value.indexOf("@") > -1 &&
+//     onValidated({
+//       EMAIL: email.value,
+//       NAME: fname.value + lname.value,
+//     });
 
-  return (
-    <div className="contact-us-form">
-      <h2>Contact Us</h2>
-      <div className="input-text-row">
-        <div className="input-text-left">
-          <p>First Name</p>
-          <input ref={(node) => (fname = node)} type="text"></input>
-        </div>
-        <div className="input-text-right">
-          <p>last Name</p>
-          <input ref={(node) => (lname = node)} type="text"></input>
-        </div>
-      </div>
-      <div className="input-text-row">
-        <div className="input-text-left">
-          <p>Email</p>
-          <input ref={(node) => (email = node)} type="email"></input>
-        </div>
-        <div className="input-text-right">
-          <p>Subject</p>
-          <input ref={(node) => (subject = node)} type="text"></input>
-        </div>
-      </div>
-      <div className="input-text-row">
-        <p>Message</p>
-        <textarea ref={(node) => (msg = node)}></textarea>
-      </div>
-      <div className="submit-button">
-        <button onClick={submit}>Submit</button>
-      </div>
-      {/* {status === "success" && (<p>Success!</p>)} */}
-    </div>
-  );
-};
+//   return (
+//     <div className="contact-us-form">
+//       <h2>Contact Us</h2>
+//       <div className="input-text-row">
+//         <div className="input-text-left">
+//           <p>First Name</p>
+//           <input ref={(node) => (fname = node)} type="text"></input>
+//         </div>
+//         <div className="input-text-right">
+//           <p>last Name</p>
+//           <input ref={(node) => (lname = node)} type="text"></input>
+//         </div>
+//       </div>
+//       <div className="input-text-row">
+//         <div className="input-text-left">
+//           <p>Email</p>
+//           <input ref={(node) => (email = node)} type="email"></input>
+//         </div>
+//         <div className="input-text-right">
+//           <p>Subject</p>
+//           <input ref={(node) => (subject = node)} type="text"></input>
+//         </div>
+//       </div>
+//       <div className="input-text-row">
+//         <p>Message</p>
+//         <textarea ref={(node) => (msg = node)}></textarea>
+//       </div>
+//       <div className="submit-button">
+//         <button onClick={submit}>Submit</button>
+//       </div>
+//       {/* {status === "success" && (<p>Success!</p>)} */}
+//     </div>
+//   );
+// };
 
 export default function Partners() {
   return (
@@ -92,7 +92,7 @@ export default function Partners() {
         </div>
 
         <div className="content-2">
-          <div className="section section-pylon-value">
+          {/* <div className="section section-pylon-value">
             <div className="left">
               <h2>Our Partners</h2>
               <p>
@@ -120,9 +120,9 @@ export default function Partners() {
                 alt="Clock"
               />
             </div>
-          </div>
+          </div> */}
           <div className="section contact-us">
-            <MailchimpSubscribe
+            {/* <MailchimpSubscribe
               url={url}
               render={({ subscribe, status }) => (
                 <ContactUsForm
@@ -130,7 +130,7 @@ export default function Partners() {
                   onValidated={(formData) => subscribe(formData)}
                 />
               )}
-            />
+            /> */}
             <div className="reach-us-form">
               <h2>Reach Us</h2>
               <div className="reach-us-list">
