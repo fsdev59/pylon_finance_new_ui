@@ -293,7 +293,7 @@ const depositAsync = async (instance, tokenAddress, web3, amount, address) => {
   console.log("Deposit Amount", amount)
   const gasLimit = await instance.methods
     .deposit(
-      new BigNumber(amount).times(new BigNumber(10).pow(decimal)).toFixed().toString(),
+      new BigNumber(amount).times(new BigNumber(10).pow(decimal)).toString(),
     )
     .estimateGas({ from: address })
     .then((data) => {
@@ -306,7 +306,7 @@ const depositAsync = async (instance, tokenAddress, web3, amount, address) => {
 
   return await instance.methods
     .deposit(
-      new BigNumber(amount).times(new BigNumber(10).pow(decimal)).toFixed().toString(),
+      new BigNumber(amount).times(new BigNumber(10).pow(decimal)).toString(),
     )
     .send({
       from: address,

@@ -109,7 +109,7 @@ export default function ({
 
   const handleCallback = (status = false) => {
     if (status) {
-      toast.success("The transaction has been succeed")  
+      toast.success("The transaction has been successful")  
     } else {
       toast.error("The transaction has been failed")
     }
