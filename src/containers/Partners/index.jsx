@@ -155,7 +155,7 @@ export default function Partners() {
                       src={require("../../assets/images/twitter.png")}
                       alt=""
                     />
-                    <span>Twitter@pylonfinance</span>
+                    <span>Twitter@Pylonfinance</span>
                   </a>
                   <a
                     href="https://discord.gg/m5zSFsA"

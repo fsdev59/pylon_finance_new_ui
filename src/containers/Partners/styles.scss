@@ -12,6 +12,10 @@
     // padding-top: 90px;
     // padding-bottom: 150px;
 
+    // background: url("../../assets/images/reach-us-background-1.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: right center;
     background-color: #e7e6ec;
 
     @media screen and (max-width: 1320px) {
@@ -183,12 +187,6 @@
       }
     }
     .reach-us-form {
-      // background: url("../../assets/images/reach-us-background.png");
-      background-repeat: no-repeat;
-      background-size: contain;
-      background-position: right bottom;
-      background-color: #e7e6ec;
-
       width: 100%;
       padding-top: 30px;
       padding-bottom: 30px;
@@ -197,7 +195,7 @@
       @media screen and (max-width: 840px) {
         width: 100%;
         background-size: 50%;
-        background-color: #e7e6ec;
+        // background-color: #e7e6ec;
         padding-top: 8%;
         padding-bottom: 8%;
         padding-left: 8%;
