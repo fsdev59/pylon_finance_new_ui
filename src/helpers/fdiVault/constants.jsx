@@ -122,7 +122,7 @@ export const FDI_VAULT = [
     token1: "0xD7B7d3C0bdA57723Fb54ab95Fd8F9EA033AF37f2",
   },
   {
-    title: "YeFi.finance",
+    title: "DFI.money",
     tokenName: "YFII",
     iconName: "token_YFII.png",
     address: "0x6EE4d72d3d17A05Dd7F0449E095670119b7D5829",
