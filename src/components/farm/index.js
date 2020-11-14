@@ -11,6 +11,11 @@ const Farm = ({ data, type }) => {
 
   const [loading, setLoading] = useState(false);
 
+  const handleGetWeb3 = (callback) => {
+    dispatch(
+      pageActions.getWeb3Instance(callback)
+    );
+  }
   const handleDeposit = (vault, amount, callback) => {
     console.log(vault, amount);
     dispatch(pageActions.depositToken(vault.address, vault.token0, amount, callback));
@@ -77,6 +82,7 @@ const Farm = ({ data, type }) => {
           getTvl={getVaultTvl}
           getMiningEarning={getVaultMiningEarning}
           getAllowance={getAllowance}
+          getWeb3Instance={handleGetWeb3}
         />
       ))}
     </>

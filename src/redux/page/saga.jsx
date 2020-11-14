@@ -6,17 +6,17 @@ import {
   put,
   fork,
   select,
-} from 'redux-saga/effects'
+} from "redux-saga/effects";
 
-import actions from './actions'
-import Web3 from 'web3'
+import actions from "./actions";
+import Web3 from "web3";
 
-import axios from 'axios'
-import BigNumber from 'bignumber.js'
+import axios from "axios";
+import BigNumber from "bignumber.js";
 
-import { TOKEN_ABI, ABI_VAULT, ABI_VAULT_ETH } from '../../helpers/constant'
-import { FDI_VAULT, ADDR_ETH_VAULT } from '../../helpers/fdiVault/constants'
-import { PYLON_VAULT } from '../../helpers/pylonVault/constants'
+import { TOKEN_ABI, ABI_VAULT, ABI_VAULT_ETH } from "../../helpers/constant";
+import { FDI_VAULT, ADDR_ETH_VAULT } from "../../helpers/fdiVault/constants";
+import { PYLON_VAULT } from "../../helpers/pylonVault/constants";
 
 // import {
 //   MASTER_VAMPIRE_ADDRESS,
@@ -32,42 +32,42 @@ import { PYLON_VAULT } from '../../helpers/pylonVault/constants'
 const getWeb3 = () =>
   new Promise(async (resolve, reject) => {
     if (window.ethereum) {
-      const web3 = new Web3(window.ethereum)
+      const web3 = new Web3(window.ethereum);
       try {
         // Request account access if needed
-        await window.ethereum.enable()
+        await window.ethereum.enable();
         // Acccounts now exposed
-        resolve(web3)
+        resolve(web3);
       } catch (error) {
-        reject(error)
+        reject(error);
       }
     }
     // Legacy dapp browsers...
     else if (window.web3) {
       // Use Mist/MetaMask's provider.
-      const web3 = window.web3
+      const web3 = window.web3;
       // console.log("Injected web3 detected.");
-      resolve(web3)
+      resolve(web3);
     }
     // Fallback to localhost; use dev console port by default...
     else {
-      const provider = new Web3.providers.HttpProvider('http://127.0.0.1:8545')
-      const web3 = new Web3(provider)
+      const provider = new Web3.providers.HttpProvider("http://127.0.0.1:8545");
+      const web3 = new Web3(provider);
       // console.log("No web3 instance injected, using Local web3.");
-      resolve(web3)
+      resolve(web3);
     }
-  })
+  });
 
 // Helpers *********************************************************************************
 const lookUpPrices = async function (id_array) {
-  let ids = id_array.join('%2C')
+  let ids = id_array.join("%2C");
   let res = await fetch(
-    'https://api.coingecko.com/api/v3/simple/price?ids=' +
+    "https://api.coingecko.com/api/v3/simple/price?ids=" +
       ids +
-      '&vs_currencies=usd',
-  )
-  return res.json()
-}
+      "&vs_currencies=usd"
+  );
+  return res.json();
+};
 
 const getBalanceAsync = async (instance, address) => {
   return await instance.methods
@@ -76,24 +76,24 @@ const getBalanceAsync = async (instance, address) => {
     .call()
     .then((data) => {
       // console.log('balance data', address, data)
-      return data
+      return data;
     })
     .catch((error) => {
-      return error
-    })
-}
+      return error;
+    });
+};
 
 const getDecimalAsync = async (instance) => {
   return await instance.methods
     .decimals()
     .call()
     .then((data) => {
-      return data
+      return data;
     })
     .catch((error) => {
-      return error
-    })
-}
+      return error;
+    });
+};
 
 const getAllowanceAsync = async (instance, owner, sender) => {
   return await instance.methods
@@ -102,12 +102,12 @@ const getAllowanceAsync = async (instance, owner, sender) => {
     .call()
     .then((data) => {
       // console.log('allowance', data);
-      return data
+      return data;
     })
     .catch((error) => {
-      return error
-    })
-}
+      return error;
+    });
+};
 
 const getTotalSupplyAsync = async (instance) => {
   return await instance.methods
@@ -115,12 +115,12 @@ const getTotalSupplyAsync = async (instance) => {
     .call()
     .then((data) => {
       // console.log('total supply async', data);
-      return data
+      return data;
     })
     .catch((error) => {
-      return error
-    })
-}
+      return error;
+    });
+};
 
 const getReservesAsync = async (instance) => {
   return await instance.methods
@@ -128,89 +128,92 @@ const getReservesAsync = async (instance) => {
     .call()
     .then((data) => {
       // console.log('reserves async', data)
-      return data
+      return data;
     })
     .catch((error) => {
-      return error
-    })
-}
+      return error;
+    });
+};
 
 const getAvailableRewardAmountAsync = async (instance, address) => {
   return await instance.methods
     .availableRewardAmount(address)
     .call()
     .then((data) => {
-      return data
+      return data;
     })
     .catch((error) => {
-      return error
-    })
-}
+      return error;
+    });
+};
 
 const getDepositBalancesAsync = async (instance, address) => {
   return await instance.methods
     .depositBalances(address)
     .call()
     .then((data) => {
-      return data
+      return data;
     })
     .catch((error) => {
-      return error
-    })
-}
+      return error;
+    });
+};
 
 const getRewardBalancesAsync = async (instance, address) => {
   return await instance.methods
     .rewardBalances(address)
     .call()
     .then((data) => {
-      return data
+      return data;
     })
     .catch((error) => {
-      return error
-    })
-}
+      return error;
+    });
+};
 
 const getTotalDepositAsync = async (instance) => {
   return await instance.methods
     .totalDeposit()
     .call()
     .then((data) => {
-      return data
+      return data;
     })
     .catch((error) => {
-      return error
-    })
-}
+      return error;
+    });
+};
 
 const approveAsync = async (instance, web3, amount, address, spender) => {
-  console.log('before approve gas amount', new BigNumber(amount).toFixed().toString())
-  console.log('before approve gas instance', instance)
+  console.log(
+    "before approve gas amount",
+    new BigNumber(amount).toFixed().toString()
+  );
+  console.log("before approve gas instance", instance);
   const gasLimit = await instance.methods
     .approve(
       spender,
-      '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
+      "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
     )
     .estimateGas({ from: address })
     .then((data) => {
-      return data
+      return data;
     })
     .catch((error) => {
-      console.log(error)
-      return error
-    })
+      console.log(error);
+      return error;
+    });
 
-  console.log('approve gas limit', gasLimit)
+  console.log("approve gas limit", gasLimit);
 
   const response = await axios.get(
-    'https://ethgasstation.info/json/ethgasAPI.json',
-  )
+    "https://ethgasstation.info/json/ethgasAPI.json"
+  );
   let prices = {
     low: response.data.safeLow / 10,
     medium: response.data.average / 10,
     high: response.data.fast / 10,
     fastest: Math.round(response.data.fastest / 10),
-  }
+  };
 
   // console.log('approve**********************')
   // console.log('instance', instance)
@@ -221,533 +224,582 @@ const approveAsync = async (instance, web3, amount, address, spender) => {
   return await instance.methods
     .approve(
       spender,
-      '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
+      "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
     )
     .send({
       from: address,
-      gasPrice: web3.utils.toWei(prices.medium.toString(), 'gwei'),
+      gasPrice: web3.utils.toWei(prices.medium.toString(), "gwei"),
       gas: gasLimit * 2,
     })
     .then((data) => {
-      return data
+      return data;
     })
     .catch((error) => {
-      return error
-    })
-}
+      return error;
+    });
+};
 
 const depositEthAsync = async (instance, web3, amount, address) => {
   const response = await axios.get(
-    'https://ethgasstation.info/json/ethgasAPI.json',
-  )
+    "https://ethgasstation.info/json/ethgasAPI.json"
+  );
   let prices = {
     low: response.data.safeLow / 10,
     medium: response.data.average / 10,
     high: response.data.fast / 10,
     fastest: Math.round(response.data.fastest / 10),
-  }
+  };
 
   const gasLimit = await instance.methods
     .deposit()
-    .estimateGas({ from: address, value: web3.utils.toWei(amount.toString(), "ether") })
+    .estimateGas({
+      from: address,
+      value: web3.utils.toWei(amount.toString(), "ether"),
+    })
     .then((data) => {
-      return data
+      return data;
     })
     .catch((error) => {
-      console.log(error)
-      return error
-    })
+      console.log(error);
+      return error;
+    });
 
-  console.log("ETH amount", amount)
+  console.log("ETH amount", amount);
   return await instance.methods
     .deposit()
     .send({
       from: address,
-      gasPrice: web3.utils.toWei(prices.medium.toString(), 'gwei'),
+      gasPrice: web3.utils.toWei(prices.medium.toString(), "gwei"),
       gas: gasLimit + 1000,
-      value: web3.utils.toWei(amount.toString(), "ether")
+      value: web3.utils.toWei(amount.toString(), "ether"),
     })
     .then((data) => {
-      return data
+      return data;
     })
     .catch((error) => {
-      return error
-    })
-}
+      return error;
+    });
+};
 
 const depositAsync = async (instance, tokenAddress, web3, amount, address) => {
   const response = await axios.get(
-    'https://ethgasstation.info/json/ethgasAPI.json',
-  )
+    "https://ethgasstation.info/json/ethgasAPI.json"
+  );
   let prices = {
     low: response.data.safeLow / 10,
     medium: response.data.average / 10,
     high: response.data.fast / 10,
     fastest: Math.round(response.data.fastest / 10),
-  }
+  };
 
-  const tokenAbi = TOKEN_ABI
-  const tokenInstance = new web3.eth.Contract(tokenAbi, tokenAddress)
-  const decimal = await getDecimalAsync(tokenInstance)
-  
-  console.log("Deposit Amount", amount)
+  const tokenAbi = TOKEN_ABI;
+  const tokenInstance = new web3.eth.Contract(tokenAbi, tokenAddress);
+  const decimal = await getDecimalAsync(tokenInstance);
+
+  console.log("Deposit Amount", amount);
   const gasLimit = await instance.methods
     .deposit(
-      new BigNumber(amount).times(new BigNumber(10).pow(decimal)).toString(),
+      new BigNumber(amount).times(new BigNumber(10).pow(decimal)).toString()
     )
     .estimateGas({ from: address })
     .then((data) => {
-      return data
+      return data;
     })
     .catch((error) => {
-      console.log(error)
-      return error
-    })
+      console.log(error);
+      return error;
+    });
 
   return await instance.methods
     .deposit(
-      new BigNumber(amount).times(new BigNumber(10).pow(decimal)).toString(),
+      new BigNumber(amount).times(new BigNumber(10).pow(decimal)).toString()
     )
     .send({
       from: address,
-      gasPrice: web3.utils.toWei(prices.medium.toString(), 'gwei'),
+      gasPrice: web3.utils.toWei(prices.medium.toString(), "gwei"),
       gas: gasLimit * 2,
     })
     .then((data) => {
-      return data
+      return data;
     })
     .catch((error) => {
-      return error
-    })
-}
+      return error;
+    });
+};
 
 const depositAllAsync = async (instance, web3, address) => {
   const response = await axios.get(
-    'https://ethgasstation.info/json/ethgasAPI.json',
-  )
+    "https://ethgasstation.info/json/ethgasAPI.json"
+  );
   let prices = {
     low: response.data.safeLow / 10,
     medium: response.data.average / 10,
     high: response.data.fast / 10,
     fastest: Math.round(response.data.fastest / 10),
-  }
+  };
 
   const gasLimit = await instance.methods
-    .depositAll().estimateGas({ from: address })
+    .depositAll()
+    .estimateGas({ from: address })
     .then((data) => {
-      return data
+      return data;
     })
     .catch((error) => {
-      console.log(error)
-      return error
-    })
+      console.log(error);
+      return error;
+    });
 
   return await instance.methods
     .depositAll()
     .send({
       from: address,
-      gasPrice: web3.utils.toWei(prices.medium.toString(), 'gwei'),
+      gasPrice: web3.utils.toWei(prices.medium.toString(), "gwei"),
       gas: gasLimit * 2,
     })
     .then((data) => {
-      return data
+      return data;
     })
     .catch((error) => {
-      return error
-    })
-}
+      return error;
+    });
+};
 
 const withdrawAsync = async (instance, tokenAddress, web3, amount, address) => {
   const response = await axios.get(
-    'https://ethgasstation.info/json/ethgasAPI.json',
-  )
+    "https://ethgasstation.info/json/ethgasAPI.json"
+  );
   let prices = {
     low: response.data.safeLow / 10,
     medium: response.data.average / 10,
     high: response.data.fast / 10,
     fastest: Math.round(response.data.fastest / 10),
-  }
+  };
 
-  const tokenAbi = TOKEN_ABI
-  const tokenInstance = new web3.eth.Contract(tokenAbi, tokenAddress)
-  const decimal = await getDecimalAsync(tokenInstance)
+  const tokenAbi = TOKEN_ABI;
+  const tokenInstance = new web3.eth.Contract(tokenAbi, tokenAddress);
+  const decimal = await getDecimalAsync(tokenInstance);
 
   const gasLimit = await instance.methods
     .withdraw(
-      new BigNumber(amount).times(new BigNumber(10).pow(decimal)).toFixed().toString(),
+      new BigNumber(amount)
+        .times(new BigNumber(10).pow(decimal))
+        .toFixed()
+        .toString()
     )
     .estimateGas({ from: address })
     .then((data) => {
-      return data
+      return data;
     })
     .catch((error) => {
-      console.log(error)
-      return error
-    })
+      console.log(error);
+      return error;
+    });
 
   return await instance.methods
     .withdraw(
-      new BigNumber(amount).times(new BigNumber(10).pow(decimal)).toFixed().toString(),
+      new BigNumber(amount)
+        .times(new BigNumber(10).pow(decimal))
+        .toFixed()
+        .toString()
     )
     .send({
       from: address,
-      gasPrice: web3.utils.toWei(prices.medium.toString(), 'gwei'),
+      gasPrice: web3.utils.toWei(prices.medium.toString(), "gwei"),
       gas: gasLimit * 2,
     })
     .then((data) => {
-      return data
+      return data;
     })
     .catch((error) => {
-      return error
-    })
-}
+      return error;
+    });
+};
 
 const withdrawAllAsync = async (instance, web3, address) => {
   const response = await axios.get(
-    'https://ethgasstation.info/json/ethgasAPI.json',
-  )
+    "https://ethgasstation.info/json/ethgasAPI.json"
+  );
   let prices = {
     low: response.data.safeLow / 10,
     medium: response.data.average / 10,
     high: response.data.fast / 10,
     fastest: Math.round(response.data.fastest / 10),
-  }
+  };
 
   const gasLimit = await instance.methods
-    .withdrawAll().estimateGas({ from: address })
+    .withdrawAll()
+    .estimateGas({ from: address })
     .then((data) => {
-      return data
+      return data;
     })
     .catch((error) => {
-      console.log(error)
-      return error
-    })
+      console.log(error);
+      return error;
+    });
 
   return await instance.methods
     .withdrawAll()
     .send({
       from: address,
-      gasPrice: web3.utils.toWei(prices.medium.toString(), 'gwei'),
+      gasPrice: web3.utils.toWei(prices.medium.toString(), "gwei"),
       gas: gasLimit * 2,
     })
     .then((data) => {
-      return data
+      return data;
     })
     .catch((error) => {
-      return error
-    })
-}
+      return error;
+    });
+};
 
 const claimRewardAsync = async (instance, web3, amount, address) => {
   const response = await axios.get(
-    'https://ethgasstation.info/json/ethgasAPI.json',
-  )
+    "https://ethgasstation.info/json/ethgasAPI.json"
+  );
   let prices = {
     low: response.data.safeLow / 10,
     medium: response.data.average / 10,
     high: response.data.fast / 10,
     fastest: Math.round(response.data.fastest / 10),
-  }
+  };
 
   const gasLimit = await instance.methods
     .claimReward(
-      new BigNumber(amount).times(new BigNumber(10).pow(18)).toFixed().toString(),
+      new BigNumber(amount)
+        .times(new BigNumber(10).pow(18))
+        .toFixed()
+        .toString()
     )
     .estimateGas({ from: address })
     .then((data) => {
-      return data
+      return data;
     })
     .catch((error) => {
-      console.log(error)
-      return error
+      console.log(error);
+      return error;
     })
 
     .then((data) => {
-      return data
+      return data;
     })
     .catch((error) => {
-      console.log(error)
-      return error
-    })
+      console.log(error);
+      return error;
+    });
 
   return await instance.methods
     .claimReward(
-      new BigNumber(amount).times(new BigNumber(10).pow(18)).toFixed().toString(),
+      new BigNumber(amount)
+        .times(new BigNumber(10).pow(18))
+        .toFixed()
+        .toString()
     )
     .send({
       from: address,
-      gasPrice: web3.utils.toWei(prices.medium.toString(), 'gwei'),
+      gasPrice: web3.utils.toWei(prices.medium.toString(), "gwei"),
       gas: gasLimit * 2,
     })
     .then((data) => {
-      return data
+      return data;
     })
     .catch((error) => {
-      return error
-    })
-}
+      return error;
+    });
+};
 
 const sendRewardAsync = async (instance, web3, amount, address) => {
   const response = await axios.get(
-    'https://ethgasstation.info/json/ethgasAPI.json',
-  )
+    "https://ethgasstation.info/json/ethgasAPI.json"
+  );
   let prices = {
     low: response.data.safeLow / 10,
     medium: response.data.average / 10,
     high: response.data.fast / 10,
     fastest: Math.round(response.data.fastest / 10),
-  }
+  };
 
   const gasLimit = await instance.methods
     .sendReward(
-      new BigNumber(amount).times(new BigNumber(10).pow(18)).toFixed().toString(),
+      new BigNumber(amount)
+        .times(new BigNumber(10).pow(18))
+        .toFixed()
+        .toString()
     )
     .estimateGas({ from: address })
     .then((data) => {
-      return data
+      return data;
     })
     .catch((error) => {
-      console.log(error)
-      return error
-    })
+      console.log(error);
+      return error;
+    });
 
-  console.log(new BigNumber(amount).times(new BigNumber(10).pow(18)).toFixed().toString())
+  console.log(
+    new BigNumber(amount).times(new BigNumber(10).pow(18)).toFixed().toString()
+  );
 
   return await instance.methods
     .sendReward(
-      new BigNumber(amount).times(new BigNumber(10).pow(18)).toFixed().toString(),
+      new BigNumber(amount)
+        .times(new BigNumber(10).pow(18))
+        .toFixed()
+        .toString()
     )
     .send({
       from: address,
-      gasPrice: web3.utils.toWei(prices.medium.toString(), 'gwei'),
+      gasPrice: web3.utils.toWei(prices.medium.toString(), "gwei"),
       gas: gasLimit * 2,
     })
     .then((data) => {
-      return data
+      return data;
     })
     .catch((error) => {
-      return error
-    })
-}
+      return error;
+    });
+};
 
 const claimRewardAllAsync = async (instance, web3, address) => {
   const response = await axios.get(
-    'https://ethgasstation.info/json/ethgasAPI.json',
-  )
+    "https://ethgasstation.info/json/ethgasAPI.json"
+  );
   let prices = {
     low: response.data.safeLow / 10,
     medium: response.data.average / 10,
     high: response.data.fast / 10,
     fastest: Math.round(response.data.fastest / 10),
-  }
+  };
 
   const gasLimit = await instance.methods
     .claimRewardAll()
     .estimateGas({ from: address })
     .then((data) => {
-      return data
+      return data;
     })
     .catch((error) => {
-      console.log(error)
-      return error
-    })
+      console.log(error);
+      return error;
+    });
 
-  console.log("gasLimit", gasLimit)
+  console.log("gasLimit", gasLimit);
   return await instance.methods
     .claimRewardAll()
     .send({
       from: address,
-      gasPrice: web3.utils.toWei(prices.medium.toString(), 'gwei'),
+      gasPrice: web3.utils.toWei(prices.medium.toString(), "gwei"),
       gas: gasLimit * 2,
     })
     .then((data) => {
-      return data
+      return data;
     })
     .catch((error) => {
-      return error
-    })
+      return error;
+    });
+};
+
+export function* getWeb3Instance() {
+  yield takeEvery(actions.GET_WEB3_INSTANCE, function* ({ payload }) {
+    const { callback } = payload;
+    console.log("web3", "web3");
+    try {
+      const web3 = yield call(getWeb3);
+      if (web3) {
+        callback(true);
+      }
+    } catch (e) {
+      callback(false);
+    }
+  });
 }
 
 export function* getBalance() {
   yield takeEvery(actions.GET_BALANCE, function* ({ payload }) {
-    const { tokenAddress, callback } = payload
+    const { tokenAddress, callback } = payload;
 
-    const web3 = yield call(getWeb3)
+    const web3 = yield call(getWeb3);
 
     if (tokenAddress != "") {
-      const abi = TOKEN_ABI
-      const instance = new web3.eth.Contract(abi, tokenAddress)
+      const abi = TOKEN_ABI;
+      const instance = new web3.eth.Contract(abi, tokenAddress);
       // const instance = new web3.eth.Contract(abi, "0x201850680b79bbeff4e00684248b237a77bded0c")
       // Get Wallet Account
-      const accounts = yield call(web3.eth.getAccounts)
+      const accounts = yield call(web3.eth.getAccounts);
 
-      const balance = yield call(getBalanceAsync, instance, accounts[0])
-      const decimal = yield call(getDecimalAsync, instance)
-      console.log(balance)
-      const bal = balance / Math.pow(10, decimal)
+      const balance = yield call(getBalanceAsync, instance, accounts[0]);
+      const decimal = yield call(getDecimalAsync, instance);
+      console.log(balance);
+      const bal = balance / Math.pow(10, decimal);
 
-      callback(bal)
+      callback(bal);
     } else {
-      const accounts = yield call(web3.eth.getAccounts)
+      const accounts = yield call(web3.eth.getAccounts);
 
-      console.log("ETH")
-      const balance = yield call(web3.eth.getBalance, accounts[0])
+      console.log("ETH");
+      const balance = yield call(web3.eth.getBalance, accounts[0]);
 
       // const balance = web3.eth.getBalance(accounts[0])
-      console.log("ETH Balance", accounts[0], balance)
-      const bal = balance / Math.pow(10, 18)
-      console.log("eth balance", bal)
-      callback(bal)
+      console.log("ETH Balance", accounts[0], balance);
+      const bal = balance / Math.pow(10, 18);
+      console.log("eth balance", bal);
+      callback(bal);
     }
-  })
+  });
 }
 
 export function* getAllowance() {
   yield takeEvery(actions.GET_ALLOWANCE, function* ({ payload }) {
-    const { vaultAddress, tokenAddress, callback } = payload
+    const { vaultAddress, tokenAddress, callback } = payload;
     console.log(1);
-    const web3 = yield call(getWeb3)
-    console.log(2)
+    const web3 = yield call(getWeb3);
+    console.log(2);
 
     if (tokenAddress != "") {
-      const abi = TOKEN_ABI
-      const instance = new web3.eth.Contract(abi, tokenAddress)
+      const abi = TOKEN_ABI;
+      const instance = new web3.eth.Contract(abi, tokenAddress);
       // const instance = new web3.eth.Contract(abi, "0x201850680b79bbeff4e00684248b237a77bded0c")
 
       // Get Wallet Account
-      const accounts = yield call(web3.eth.getAccounts)
-      console.log("Accounts", accounts)
+      const accounts = yield call(web3.eth.getAccounts);
+      console.log("Accounts", accounts);
       const allowance = yield call(
         getAllowanceAsync,
         instance,
         accounts[0],
-        vaultAddress,
-      )
+        vaultAddress
+      );
 
-      console.log("Allowance Value", allowance)
+      console.log("Allowance Value", allowance);
 
       // const decimal = yield call(getDecimalAsync, instance)
       // const allowanceVal = allowance / Math.pow(10, decimal)
       // console.log("Allowance Value in display", allowanceVal)
-      callback(allowance)
+      callback(allowance);
     }
-  })
+  });
 }
 
 export function* getAvailableRewardAmount() {
   yield takeEvery(actions.GET_AVAILABLE_REWARD_AMOUNT, function* ({ payload }) {
+    const { vaultAddress, tokenAddress, callback } = payload;
 
-    const { vaultAddress, tokenAddress, callback } = payload
+    const web3 = yield call(getWeb3);
+    const abi = ABI_VAULT;
+    const instance = new web3.eth.Contract(abi, vaultAddress);
 
-    const web3 = yield call(getWeb3)
-    const abi = ABI_VAULT
-    const instance = new web3.eth.Contract(abi, vaultAddress)
+    const accounts = yield call(web3.eth.getAccounts);
 
-    const accounts = yield call(web3.eth.getAccounts)
+    const availableRewardAmount = yield call(
+      getAvailableRewardAmountAsync,
+      instance,
+      accounts[0]
+    );
 
-    const availableRewardAmount = yield call(getAvailableRewardAmountAsync, instance, accounts[0])
-    
-    const tokenAbi = TOKEN_ABI
-    const tokenInstance = new web3.eth.Contract(tokenAbi, tokenAddress)
-    const decimal = yield call(getDecimalAsync, tokenInstance)
+    const tokenAbi = TOKEN_ABI;
+    const tokenInstance = new web3.eth.Contract(tokenAbi, tokenAddress);
+    const decimal = yield call(getDecimalAsync, tokenInstance);
 
-    const availableRewardAmountVal = availableRewardAmount / Math.pow(10, decimal)
-    
-    callback(availableRewardAmountVal.toFixed(18))
-  })
+    const availableRewardAmountVal =
+      availableRewardAmount / Math.pow(10, decimal);
+
+    callback(availableRewardAmountVal.toFixed(18));
+  });
 }
 
 export function* getDepositBalances() {
   yield takeEvery(actions.GET_DEPOSIT_BALANCE, function* ({ payload }) {
-    
-    const { vaultAddress, tokenAddress, callback } = payload
+    const { vaultAddress, tokenAddress, callback } = payload;
 
-    const web3 = yield call(getWeb3)
-    const abi = ABI_VAULT
-    const instance = new web3.eth.Contract(abi, vaultAddress)
+    const web3 = yield call(getWeb3);
+    const abi = ABI_VAULT;
+    const instance = new web3.eth.Contract(abi, vaultAddress);
 
-    const accounts = yield call(web3.eth.getAccounts)
+    const accounts = yield call(web3.eth.getAccounts);
 
-    const depositBalances = yield call(getDepositBalancesAsync, instance, accounts[0])
-    
+    const depositBalances = yield call(
+      getDepositBalancesAsync,
+      instance,
+      accounts[0]
+    );
+
     if (tokenAddress != "") {
-      const tokenInstance = new web3.eth.Contract(TOKEN_ABI, tokenAddress)
-      const decimal = yield call(getDecimalAsync, tokenInstance)
-      const depositBalancesVal = depositBalances / Math.pow(10, decimal)
+      const tokenInstance = new web3.eth.Contract(TOKEN_ABI, tokenAddress);
+      const decimal = yield call(getDecimalAsync, tokenInstance);
+      const depositBalancesVal = depositBalances / Math.pow(10, decimal);
 
-      callback(depositBalancesVal)
+      callback(depositBalancesVal);
     } else {
-      const depositBalancesVal = depositBalances / Math.pow(10, 18)
+      const depositBalancesVal = depositBalances / Math.pow(10, 18);
 
-      callback(depositBalancesVal)
+      callback(depositBalancesVal);
     }
-  })
+  });
 }
 
 export function* getRewardBalances() {
   yield takeEvery(actions.GET_REWARD_BALANCE, function* ({ payload }) {
+    const { vaultAddress, callback } = payload;
 
-    const { vaultAddress, callback } = payload
+    const web3 = yield call(getWeb3);
+    const abi = ABI_VAULT;
+    const instance = new web3.eth.Contract(abi, vaultAddress);
 
-    const web3 = yield call(getWeb3)
-    const abi = ABI_VAULT
-    const instance = new web3.eth.Contract(abi, vaultAddress)
+    const accounts = yield call(web3.eth.getAccounts);
 
-    const accounts = yield call(web3.eth.getAccounts)
-
-    const rewardBalances = yield call(getRewardBalancesAsync, instance, accounts[0])
+    const rewardBalances = yield call(
+      getRewardBalancesAsync,
+      instance,
+      accounts[0]
+    );
 
     // const decimal = yield call(getDecimalAsync, instance)
-    const rewardBalancesVal = rewardBalances / Math.pow(10, 18)
+    const rewardBalancesVal = rewardBalances / Math.pow(10, 18);
 
-    callback(rewardBalancesVal)
-  })
+    callback(rewardBalancesVal);
+  });
 }
 
 export function* getTotalDeposit() {
   yield takeEvery(actions.GET_TOTAL_DEPOSIT, function* ({ payload }) {
+    const { vaultAddress, tokenAddress, callback } = payload;
 
-    const { vaultAddress, tokenAddress, callback } = payload
-
-    const web3 = yield call(getWeb3)
-    const abi = ABI_VAULT
-    const instance = new web3.eth.Contract(abi, vaultAddress)
+    const web3 = yield call(getWeb3);
+    const abi = ABI_VAULT;
+    const instance = new web3.eth.Contract(abi, vaultAddress);
 
     // const accounts = yield call(web3.eth.getAccounts)
 
-    const totalDepositAmount = yield call(getTotalDepositAsync, instance)
+    const totalDepositAmount = yield call(getTotalDepositAsync, instance);
 
     if (tokenAddress != "") {
-      const tokenInstance = new web3.eth.Contract(TOKEN_ABI, tokenAddress)
-      const decimal = yield call(getDecimalAsync, tokenInstance)
-      const totalDepositAmountVal = totalDepositAmount / Math.pow(10, decimal)
+      const tokenInstance = new web3.eth.Contract(TOKEN_ABI, tokenAddress);
+      const decimal = yield call(getDecimalAsync, tokenInstance);
+      const totalDepositAmountVal = totalDepositAmount / Math.pow(10, decimal);
 
-      callback(totalDepositAmountVal)
+      callback(totalDepositAmountVal);
     } else {
-      const totalDepositAmountVal = totalDepositAmount / Math.pow(10, 18)
+      const totalDepositAmountVal = totalDepositAmount / Math.pow(10, 18);
 
-      callback(totalDepositAmountVal)
+      callback(totalDepositAmountVal);
     }
-  })
+  });
 }
 
 export function* approveToken() {
   yield takeLatest(actions.APPROVE_TOKEN, function* ({ payload }) {
-    const { tokenAddress, vaultAddress, callback } = payload
+    const { tokenAddress, vaultAddress, callback } = payload;
 
-    console.log("before web3")
-    const web3 = yield call(getWeb3)
-    const abi = TOKEN_ABI
-    const instance = new web3.eth.Contract(abi, tokenAddress)
-    console.log("after instance web3")
+    console.log("before web3");
+    const web3 = yield call(getWeb3);
+    const abi = TOKEN_ABI;
+    const instance = new web3.eth.Contract(abi, tokenAddress);
+    console.log("after instance web3");
     // const instance = new web3.eth.Contract(abi, "0x201850680b79bbeff4e00684248b237a77bded0c")
 
     // Get Wallet Account
-    const accounts = yield call(web3.eth.getAccounts)
-    console.log("aaccount", accounts)
+    const accounts = yield call(web3.eth.getAccounts);
+    console.log("aaccount", accounts);
     // Check balance
-    const tokenBalance = yield call(getBalanceAsync, instance, accounts[0])
-    console.log('tokenBalance - approve token', tokenBalance)
+    const tokenBalance = yield call(getBalanceAsync, instance, accounts[0]);
+    console.log("tokenBalance - approve token", tokenBalance);
 
     // approve with max balance
     const approveResult = yield call(
@@ -756,26 +808,26 @@ export function* approveToken() {
       web3,
       tokenBalance,
       accounts[0],
-      vaultAddress,
-    )
-    console.log(approveResult)
-    callback(approveResult.status)
-  })
+      vaultAddress
+    );
+    console.log(approveResult);
+    callback(approveResult.status);
+  });
 }
 
 export function* depositToken() {
   yield takeLatest(actions.DEPOSIT_TOKEN, function* ({ payload }) {
-    const { vaultAddress, tokenAddress, amount, callback } = payload
-    console.log('test', payload)
-    const web3 = yield call(getWeb3)
+    const { vaultAddress, tokenAddress, amount, callback } = payload;
+    console.log("test", payload);
+    const web3 = yield call(getWeb3);
 
     if (vaultAddress != ADDR_ETH_VAULT) {
-      const abi = ABI_VAULT
-      
-      const instance = new web3.eth.Contract(abi, vaultAddress)
-      console.log('instance', instance)
+      const abi = ABI_VAULT;
+
+      const instance = new web3.eth.Contract(abi, vaultAddress);
+      console.log("instance", instance);
       // Get Wallet Account
-      const accounts = yield call(web3.eth.getAccounts)
+      const accounts = yield call(web3.eth.getAccounts);
 
       const depositResult = yield call(
         depositAsync,
@@ -783,64 +835,64 @@ export function* depositToken() {
         tokenAddress,
         web3,
         amount,
-        accounts[0],
-      )
+        accounts[0]
+      );
 
-      console.log("DepositResult ", depositResult)
-      callback(depositResult.status)
+      console.log("DepositResult ", depositResult);
+      callback(depositResult.status);
     } else {
-      const abi = ABI_VAULT_ETH
+      const abi = ABI_VAULT_ETH;
 
-      const instance = new web3.eth.Contract(abi, vaultAddress)
-      console.log('instance', instance)
+      const instance = new web3.eth.Contract(abi, vaultAddress);
+      console.log("instance", instance);
       // Get Wallet Account
-      const accounts = yield call(web3.eth.getAccounts)
+      const accounts = yield call(web3.eth.getAccounts);
 
       const depositResult = yield call(
         depositEthAsync,
         instance,
         web3,
         amount,
-        accounts[0],
-      )
-      console.log("DepositResultEth ", depositResult)
-      callback(depositResult.status)
+        accounts[0]
+      );
+      console.log("DepositResultEth ", depositResult);
+      callback(depositResult.status);
     }
-  })
+  });
 }
 
 export function* depositAllToken() {
   yield takeLatest(actions.DEPOSIT_TOKEN_ALL, function* ({ payload }) {
-    const { vaultAddress, callback } = payload
+    const { vaultAddress, callback } = payload;
 
-    const web3 = yield call(getWeb3)
-    const abi = ABI_VAULT
-    const instance = new web3.eth.Contract(abi, vaultAddress)
+    const web3 = yield call(getWeb3);
+    const abi = ABI_VAULT;
+    const instance = new web3.eth.Contract(abi, vaultAddress);
 
     // Get Wallet Account
-    const accounts = yield call(web3.eth.getAccounts)
+    const accounts = yield call(web3.eth.getAccounts);
 
     const depositAllResult = yield call(
       depositAllAsync,
       instance,
       web3,
-      accounts[0],
-    )
-    console.log(depositAllResult)
-    callback(depositAllResult.status)
-  })
+      accounts[0]
+    );
+    console.log(depositAllResult);
+    callback(depositAllResult.status);
+  });
 }
 
 export function* withdrawToken() {
   yield takeLatest(actions.WITHDRAW_TOKEN, function* ({ payload }) {
-    const { vaultAddress, tokenAddress, amount, callback } = payload
+    const { vaultAddress, tokenAddress, amount, callback } = payload;
 
-    const web3 = yield call(getWeb3)
-    const abi = ABI_VAULT
-    const instance = new web3.eth.Contract(abi, vaultAddress)
+    const web3 = yield call(getWeb3);
+    const abi = ABI_VAULT;
+    const instance = new web3.eth.Contract(abi, vaultAddress);
 
     // Get Wallet Account
-    const accounts = yield call(web3.eth.getAccounts)
+    const accounts = yield call(web3.eth.getAccounts);
 
     const withdrawResult = yield call(
       withdrawAsync,
@@ -848,149 +900,149 @@ export function* withdrawToken() {
       tokenAddress,
       web3,
       amount,
-      accounts[0],
-    )
-    console.log(withdrawResult)
-    callback(withdrawResult.status)
-  })
+      accounts[0]
+    );
+    console.log(withdrawResult);
+    callback(withdrawResult.status);
+  });
 }
 
 export function* withdrawAllToken() {
   yield takeLatest(actions.WITHDRAW_TOKEN_ALL, function* ({ payload }) {
-    const { vaultAddress, callback } = payload
+    const { vaultAddress, callback } = payload;
 
-    const web3 = yield call(getWeb3)
-    const abi = ABI_VAULT
-    const instance = new web3.eth.Contract(abi, vaultAddress)
+    const web3 = yield call(getWeb3);
+    const abi = ABI_VAULT;
+    const instance = new web3.eth.Contract(abi, vaultAddress);
 
     // Get Wallet Account
-    const accounts = yield call(web3.eth.getAccounts)
+    const accounts = yield call(web3.eth.getAccounts);
 
     const withdrawAllResult = yield call(
       withdrawAllAsync,
       instance,
       web3,
-      accounts[0],
-    )
-    console.log(withdrawAllResult)
-    callback(withdrawAllResult.status)
-  })
+      accounts[0]
+    );
+    console.log(withdrawAllResult);
+    callback(withdrawAllResult.status);
+  });
 }
 
 export function* claimReward() {
   yield takeLatest(actions.CLAIM_REWARD, function* ({ payload }) {
-    const { vaultAddress, amount, callback } = payload
+    const { vaultAddress, amount, callback } = payload;
 
-    const web3 = yield call(getWeb3)
-    const abi = ABI_VAULT
-    const instance = new web3.eth.Contract(abi, vaultAddress)
+    const web3 = yield call(getWeb3);
+    const abi = ABI_VAULT;
+    const instance = new web3.eth.Contract(abi, vaultAddress);
 
     // Get Wallet Account
-    const accounts = yield call(web3.eth.getAccounts)
+    const accounts = yield call(web3.eth.getAccounts);
 
     const claimRewardResult = yield call(
       claimRewardAsync,
       instance,
       web3,
       amount,
-      accounts[0],
-    )
+      accounts[0]
+    );
 
-    console.log(claimRewardResult)
-    callback(claimRewardResult.status)
-  })
+    console.log(claimRewardResult);
+    callback(claimRewardResult.status);
+  });
 }
 
 export function* claimRewardAll() {
   yield takeLatest(actions.CLAIM_REWARD_ALL, function* ({ payload }) {
-    const { vaultAddress, callback } = payload
+    const { vaultAddress, callback } = payload;
 
-    const web3 = yield call(getWeb3)
+    const web3 = yield call(getWeb3);
 
     if (vaultAddress != ADDR_ETH_VAULT) {
-      const abi = ABI_VAULT
-      const instance = new web3.eth.Contract(abi, vaultAddress)
+      const abi = ABI_VAULT;
+      const instance = new web3.eth.Contract(abi, vaultAddress);
 
       // Get Wallet Account
-      const accounts = yield call(web3.eth.getAccounts)
+      const accounts = yield call(web3.eth.getAccounts);
 
       const claimRewardAllResult = yield call(
         claimRewardAllAsync,
         instance,
         web3,
-        accounts[0],
-      )
-      console.log(claimRewardAllResult)
-      callback(claimRewardAllResult.status)
+        accounts[0]
+      );
+      console.log(claimRewardAllResult);
+      callback(claimRewardAllResult.status);
     } else {
-      const abi = ABI_VAULT_ETH
-      const instance = new web3.eth.Contract(abi, vaultAddress)
+      const abi = ABI_VAULT_ETH;
+      const instance = new web3.eth.Contract(abi, vaultAddress);
 
-      const accounts = yield call(web3.eth.getAccounts)
+      const accounts = yield call(web3.eth.getAccounts);
 
       const claimRewardAllResult = yield call(
         claimRewardAllAsync,
         instance,
         web3,
-        accounts[0],
-      )
-      console.log(claimRewardAllResult)
-      callback(claimRewardAllResult.status)
+        accounts[0]
+      );
+      console.log(claimRewardAllResult);
+      callback(claimRewardAllResult.status);
     }
-  })
+  });
 }
 
 export function* sendRewardAmount() {
   yield takeLatest(actions.SEND_REWARD_AMOUNT, function* ({ payload }) {
-    console.log("Payload", payload)
-    const { vaultAddress, amount, callback } = payload
+    console.log("Payload", payload);
+    const { vaultAddress, amount, callback } = payload;
 
-    const web3 = yield call(getWeb3)
+    const web3 = yield call(getWeb3);
 
     if (vaultAddress != ADDR_ETH_VAULT) {
-      const abi = ABI_VAULT
-      const instance = new web3.eth.Contract(abi, vaultAddress)
+      const abi = ABI_VAULT;
+      const instance = new web3.eth.Contract(abi, vaultAddress);
 
       // Get Wallet Account
-      const accounts = yield call(web3.eth.getAccounts)
+      const accounts = yield call(web3.eth.getAccounts);
 
       const sendRewardResult = yield call(
         sendRewardAsync,
         instance,
         web3,
         amount,
-        accounts[0],
-      )
-      console.log(sendRewardResult)
-      callback(sendRewardResult.status)
+        accounts[0]
+      );
+      console.log(sendRewardResult);
+      callback(sendRewardResult.status);
     } else {
-      const abi = ABI_VAULT_ETH
-      const instance = new web3.eth.Contract(abi, vaultAddress)
+      const abi = ABI_VAULT_ETH;
+      const instance = new web3.eth.Contract(abi, vaultAddress);
 
-      const accounts = yield call(web3.eth.getAccounts)
+      const accounts = yield call(web3.eth.getAccounts);
 
       const sendRewardResult = yield call(
         sendRewardAsync,
         instance,
         web3,
         amount,
-        accounts[0],
-      )
-      console.log(sendRewardResult)
-      callback(sendRewardResult.status)
+        accounts[0]
+      );
+      console.log(sendRewardResult);
+      callback(sendRewardResult.status);
     }
-  })
+  });
 }
 
 export function* getEthPrice() {
   yield takeLatest(actions.GET_ETH_PRICE, function* () {
-    let data = yield call(lookUpPrices, ['ethereum'])
+    let data = yield call(lookUpPrices, ["ethereum"]);
 
     yield put({
       type: actions.GET_ETH_PRICE_SUCCESS,
       ethPrice: parseFloat(data.ethereum.usd),
-    })
-  })
+    });
+  });
 }
 
 export default function* rootSaga() {
@@ -1010,5 +1062,6 @@ export default function* rootSaga() {
     fork(claimRewardAll),
     fork(sendRewardAmount),
     fork(getEthPrice),
-  ])
+    fork(getWeb3Instance),
+  ]);
 }

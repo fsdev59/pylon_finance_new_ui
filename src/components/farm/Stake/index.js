@@ -9,7 +9,7 @@ import "./styles.scss";
 import cx from "classnames";
 // import { getAllowance } from "../../../redux/page/saga";
 
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 const TextBlock = ({ title, content, align, colorTitle, colorContent }) => {
   const textAlign = align ? align : "left";
@@ -47,6 +47,7 @@ export default function ({
   getTvl,
   getMiningEarning,
   getAllowance,
+  getWeb3Instance,
 }) {
   const [open, setOpen] = useState(true);
 
@@ -64,12 +65,16 @@ export default function ({
 
   const init = useCallback(() => {
     if (connected) {
-      getBalance(item, (ret) => setBalance(ret));
-      getDepositedAmount(item, (ret) => setDepositedAmount(ret));
-      getTotalDepositedAmount(item, (ret) => setTotalDepositedAmount(ret));
-      getTvl(item, (ret) => setTvl(ret));
-      getMiningEarning(item, (ret) => setMiningEarning(ret));
-      getAllowance(item, (ret) => setAllowance(ret));
+      getWeb3Instance((ret) => {
+        if (ret) {
+          getBalance(item, (ret) => setBalance(ret));
+          getDepositedAmount(item, (ret) => setDepositedAmount(ret));
+          getTotalDepositedAmount(item, (ret) => setTotalDepositedAmount(ret));
+          getTvl(item, (ret) => setTvl(ret));
+          getMiningEarning(item, (ret) => setMiningEarning(ret));
+          getAllowance(item, (ret) => setAllowance(ret));
+        }
+      });
     }
   }, [
     getBalance,
@@ -80,6 +85,7 @@ export default function ({
     item,
     getAllowance,
     connected,
+    getWeb3Instance,
   ]);
 
   useEffect(() => {
@@ -89,29 +95,25 @@ export default function ({
   const handleDeposit = () => {
     if (deposit > 0 && deposit <= balance)
       onDeposit(item, deposit, handleCallback);
-    else
-      toast.error("Must enter correct deposit amount")
+    else toast.error("Must enter correct deposit amount");
   };
 
   const handleWithdraw = () => {
     if (withdraw > 0 && withdraw <= depositedAmount)
       onWithdraw(item, withdraw, handleCallback);
-    else
-      toast.error("Withdraw is not available now.")
+    else toast.error("Withdraw is not available now.");
   };
 
   const handleClaimReward = () => {
-    if (miningEarning > 0)
-      onClaimReward(item, handleCallback);
-    else
-      toast.error("There isn't any reward amount yet.")
+    if (miningEarning > 0) onClaimReward(item, handleCallback);
+    else toast.error("There isn't any reward amount yet.");
   };
 
   const handleCallback = (status = false) => {
     if (status) {
-      toast.success("The transaction has been successful")  
+      toast.success("The transaction has been successful");
     } else {
-      toast.error("The transaction has been failed")
+      toast.error("The transaction has been failed");
     }
     if (connected) {
       getBalance(item, (ret) => setBalance(ret));
@@ -125,7 +127,6 @@ export default function ({
 
   return (
     <div className="stake-container">
-      
       <div className="stake-header">
         <div className="stake-header-wrapper">
           <div className="stake-header-section">
@@ -144,7 +145,7 @@ export default function ({
           <div className="stake-header-section">
             <TextBlock
               title="33%"
-              content={type=="FDI"?"APY":"Mining Seed APY"}
+              content={type == "FDI" ? "APY" : "Mining Seed APY"}
               colorTitle="#fd8300"
               colorContent="#00b9ea"
             />
@@ -210,31 +211,61 @@ export default function ({
               />
             </div>
             <div className="stake-content-row">
-              <span className="percent" onClick={(e) => {setDeposit(convertBalance(balance / 4, 4))}}>25%</span>
-              <span className="percent" onClick={(e) => {setDeposit(convertBalance(balance / 2, 4))}}>50%</span>
-              <span className="percent" onClick={(e) => {setDeposit(convertBalance(balance * 3 / 4, 4))}}>75%</span>
-              <span className="percent" onClick={(e) => {setDeposit(balance)}}>100%</span>
+              <span
+                className="percent"
+                onClick={(e) => {
+                  setDeposit(convertBalance(balance / 4, 4));
+                }}
+              >
+                25%
+              </span>
+              <span
+                className="percent"
+                onClick={(e) => {
+                  setDeposit(convertBalance(balance / 2, 4));
+                }}
+              >
+                50%
+              </span>
+              <span
+                className="percent"
+                onClick={(e) => {
+                  setDeposit(convertBalance((balance * 3) / 4, 4));
+                }}
+              >
+                75%
+              </span>
+              <span
+                className="percent"
+                onClick={(e) => {
+                  setDeposit(balance);
+                }}
+              >
+                100%
+              </span>
             </div>
             <div className="stake-content-row">
-              { item.tokenName != "ETH" ? (allowance > 0 ? (
-                <button
-                  onClick={(e) => {
-                    handleDeposit();
-                  }}
-                  className="blue"
-                >
-                  Deposit
-                </button>
+              {item.tokenName != "ETH" ? (
+                allowance > 0 ? (
+                  <button
+                    onClick={(e) => {
+                      handleDeposit();
+                    }}
+                    className="blue"
+                  >
+                    Deposit
+                  </button>
+                ) : (
+                  <button
+                    onClick={(e) => {
+                      onApprove(item, handleCallback);
+                    }}
+                    className="blue"
+                  >
+                    Approve
+                  </button>
+                )
               ) : (
-                <button
-                  onClick={(e) => {
-                    onApprove(item, handleCallback);
-                  }}
-                  className="blue"
-                >
-                  Approve
-                </button>
-              )) : (
                 <button
                   onClick={(e) => {
                     handleDeposit();
@@ -253,9 +284,7 @@ export default function ({
             </div> */}
             <div className="stake-content-row">
               <div className="title">Mine Earnings</div>
-              <div className="content">
-                {miningEarning} PYLON
-              </div>
+              <div className="content">{miningEarning} PYLON</div>
             </div>
             <div className="stake-content-row">
               <div className="title">
@@ -301,10 +330,38 @@ export default function ({
                   />
                 </div>
                 <div className="stake-content-row">
-                  <span className="percent" onClick={(e) => {setWithdraw(convertBalance(depositedAmount / 4, 4))}}>25%</span>
-                  <span className="percent" onClick={(e) => {setWithdraw(convertBalance(depositedAmount / 2, 4))}}>50%</span>
-                  <span className="percent" onClick={(e) => {setWithdraw(convertBalance(depositedAmount * 3 / 4, 4))}}>75%</span>
-                  <span className="percent" onClick={(e) => {setWithdraw(depositedAmount)}}>100%</span>
+                  <span
+                    className="percent"
+                    onClick={(e) => {
+                      setWithdraw(convertBalance(depositedAmount / 4, 4));
+                    }}
+                  >
+                    25%
+                  </span>
+                  <span
+                    className="percent"
+                    onClick={(e) => {
+                      setWithdraw(convertBalance(depositedAmount / 2, 4));
+                    }}
+                  >
+                    50%
+                  </span>
+                  <span
+                    className="percent"
+                    onClick={(e) => {
+                      setWithdraw(convertBalance((depositedAmount * 3) / 4, 4));
+                    }}
+                  >
+                    75%
+                  </span>
+                  <span
+                    className="percent"
+                    onClick={(e) => {
+                      setWithdraw(depositedAmount);
+                    }}
+                  >
+                    100%
+                  </span>
                 </div>
               </>
             )}
