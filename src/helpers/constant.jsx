@@ -31,6 +31,6 @@ export const ABI_VAULT_ETH =
 
 export const USER = {
   email: "pylon.finance",
-  password: "pylon123",
+  password: "V$h@#fj329vO3&4d",
 };
 

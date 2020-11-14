@@ -511,14 +511,6 @@ const sendRewardAsync = async (instance, web3, amount, address) => {
       return error
     })
 
-    .then((data) => {
-      return data
-    })
-    .catch((error) => {
-      console.log(error)
-      return error
-    })
-
   console.log(gasLimit)
 
   return await instance.methods
