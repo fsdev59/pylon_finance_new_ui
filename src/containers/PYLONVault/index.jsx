@@ -16,20 +16,26 @@ export default function PYLONVault() {
           <TextBlock title="PYLON GPU VAULT" color="orange">
             <p>
               The promise. The journey. The company you take with you. The first
+              {` `}
               <br />
-              real world Tether. This is what defines PYLON. PYLON GPU VAULT is
+              real world Tether. This is what defines PYLON. PYLON GPU VAULT is{" "}
+              {` `}
               <br />
-              now here, seeded with $1,000,000 raised to dividend to users.
+              now here, seeded with $1,000,000 raised to dividend to users.{` `}
               <br />
               Rewards begin immediately upon stake and APY is updated every 7
+              {` `}
               <br />
-              days at ETH current price along with current hashrate
+              days at ETH current price along with current hashrate{` `}
               <br />
               difficulties. You may choose to stake PYLON only as well as enjoy
+              {` `}
               <br />
               fees generated with trades by staking the PYLON/ETH Uniswap LP
+              {` `}
               <br />
               token in addition to your mining income. Long Live the Reaper!
+              {` `}
             </p>
           </TextBlock>
           {/* <div className="section connect-wallet">

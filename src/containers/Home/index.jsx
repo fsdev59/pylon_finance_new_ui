@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-
-
 import TextBlock from "../../components/common/TextBlock";
 import Button from "../../components/common/Button";
 import RectBlock from "../../components/common/RectBlock";
@@ -22,16 +20,20 @@ export default function Home() {
             <TextBlock title="What Is Pylon?">
               <p>
                 PYLON is the first and largest cryptocurrency token backed by
+                {` `}
                 <br />
                 real-world income-generating assets. While most DeFi tokens have
+                {` `}
                 <br />
                 little or zero tangible value, the PYLON price is supported by
+                {` `}
                 <br />
                 the largest Ethereum GPU mining operation in the United States.
+                {` `}
                 <br />
-                PYLON is a 100% community-mined token with no presale or
+                PYLON is a 100% community-mined token with no presale or{` `}
                 <br />
-                pre-mine, and fixed supply of approx 7700.
+                pre-mine, and fixed supply of approx 7700.{` `}
               </p>
             </TextBlock>
           </div>
@@ -39,16 +41,20 @@ export default function Home() {
             <TextBlock title="How Does It Work?">
               <p>
                 First, you stake your PYLON or PYLON-ETH liquidity pool tokens
+                {` `}
                 <br />
                 into the PYLON vault. Our GPU mining farms will mine Etherum
+                {` `}
                 <br />
                 transactions and earn rewards from gas fees. The rewards (in
+                {` `}
                 <br />
-                ETH) are used to market buy PYLON which are then sent to
+                ETH) are used to market buy PYLON which are then sent to{` `}
                 <br />
                 stakers. This constant buying of PYLON from externally generated
+                {` `}
                 <br />
-                revenue guarantees your tokens have real value.
+                revenue guarantees your tokens have real value.{` `}
               </p>
               <p>
                 Additionally, there are two other vaults which take in fees that{" "}
@@ -80,16 +86,22 @@ export default function Home() {
               <div className="section-how-much-left">
                 <p>
                   Based on historic mining revenues from the last 6 years, you
+                  {` `}
                   <br />
                   can expect PYLON to return up to 250% APY in a bull market and
+                  {` `}
                   <br />
-                  about 35% APY in a bear market. So even when the
+                  about 35% APY in a bear market. So even when the{` `}
                   <br />
                   cryptocurrency markets are bleeding red, PYLON will continue
+                  {` `}
+                  {` `}
                   <br />
                   to generate weekly returns for it’s holders that are still
+                  {` `}
                   <br />
                   superior to those of banks and other traditional investments.
+                  {` `}
                 </p>
                 <div className="section-how-much-button">
                   {/* <Button
@@ -152,24 +164,29 @@ export default function Home() {
             <div className="left">
               <h2>Pylon's Value</h2>
               <p>
-                PYLON was created by the owners of the largest Ether mining
+                PYLON was created by the owners of the largest Ether mining{` `}
                 <br />
                 operation in the United States. We mine about 1,078,202,625 KH/s
+                {` `}
                 <br />
                 (kilohash per second). We have over 6 years of mining experience
+                {` `}
                 <br />
-                and have created competitive moats to protect and grow our
+                and have created competitive moats to protect and grow our{` `}
                 <br />
                 revenue.
               </p>
               <p>
                 In addition to being one of the largest ETH miners in the USA,
+                {` `}
                 <br />
                 we’ve successfully launched 9+ DeFi farming projects previous to
+                {` `}
                 <br />
                 launching the PYLON vault. So you’ll have total confidence our
+                {` `}
                 <br />
-                vault smart contracts are 100% safe and have been tested
+                vault smart contracts are 100% safe and have been tested{` `}
                 <br />
                 rigorously.
               </p>
@@ -241,18 +258,20 @@ export default function Home() {
                 <div className="content">
                   <div className="description">
                     <p>
-                      The farms will mine Ethereum, banking on the <br />
+                      The farms will mine Ethereum, banking on the {` `}
+                      <br />
                       elevated gas fees and mining rewards as of late.
                     </p>
                     <p>
-                      These rewards are then returned into the $PYLON <br />
+                      These rewards are then returned into the $PYLON {` `}
+                      <br />
                       ecosystem.
                     </p>
                   </div>
                 </div>
                 <div className="mining-farm">
                   <h2>Mining Farm</h2>
-                  Farms mine Ethereum transactions
+                  Farms mine Ethereum transactions{` `}
                   <br /> and earn rewards/gas fees
                 </div>
               </div>
@@ -263,7 +282,7 @@ export default function Home() {
               alt="Valut/ecosystem Flow Chart"
             />
             <p className="capital">
-              Capital is deployed to return
+              Capital is deployed to return{` `}
               <br /> maximum risk adjusted returns
             </p>
           </div>

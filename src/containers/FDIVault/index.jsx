@@ -16,18 +16,23 @@ export default function FDIVault() {
           <TextBlock title="FDI VAULT" color="orange">
             <p>
               Foreign Direct Investments Vaults allow you to own a GPU mining
+              {` `}
               <br />
               farm with a click of a button. This allows anyone from anywhere in
+              {` `}
               <br />
               the world the opportunity to take advantage of investments that
+              {` `}
               <br />
-              only large hedge funds and investors can access. PYLON gives
+              only large hedge funds and investors can access. PYLON gives{` `}
               <br />
               access to GPU mining hardware investment backed by the largest USA
+              {` `}
               <br />
               GPU mine. KYC free solution to have a real world asset backed by
+              {` `}
               <br />
-              land, real estate and computer hardware.
+              land, real estate and computer hardware.{` `}
             </p>
             <p>Our process is as follows for the FDI VAULT:</p>
             <p>

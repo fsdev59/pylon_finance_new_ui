@@ -66,20 +66,25 @@ export default function Partners() {
               <TextBlock title="Partner with PYLON">
                 <p>
                   Lets work together to help other protocols have access to real
+                  {` `}
                   <br />
-                  world tangible assets! Partnering with PYLON allows other
+                  world tangible assets! Partnering with PYLON allows other{` `}
                   <br />
                   users and projects to take advantage of our mining tech and
+                  {` `}
                   <br />
                   real world asset acquisition. By creating a simple fee system
+                  {` `}
                   <br />
-                  in ones protocol, you can seed your own GPU mine that
+                  in ones protocol, you can seed your own GPU mine that{` `}
                   <br />
                   dividends to your users or community. Reach out to us to find
+                  {` `}
                   <br />
                   out more and see how you can take advantage of this today!
+                  {` `}
                   <br />
-                  Below is a chart explaining how it works.
+                  Below is a chart explaining how it works.{` `}
                 </p>
               </TextBlock>
             </div>

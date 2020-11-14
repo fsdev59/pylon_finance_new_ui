@@ -18,19 +18,23 @@ export default function AboutPYLON() {
               <TextBlock title="Who We Are?">
                 <p>
                   Pylon is a utility token that pays dividends on real world GPU
+                  {` `}
                   <br />
                   mining farm in the US. We are a 100% community mined token
+                  {` `}
                   <br />
                   with no presale, no premine, and a low cap supply of approx
+                  {` `}
                   <br />
                   7700.
                 </p>
                 <p>
                   Backed by the largest USA mining corp, we are able to give
+                  {` `}
                   <br />
-                  users the opportunity to own a piece of one of the most
+                  users the opportunity to own a piece of one of the most{` `}
                   <br />
-                  essential resources needed to support the blockchain
+                  essential resources needed to support the blockchain{` `}
                   <br />
                   ecosystem.
                 </p>
