@@ -290,7 +290,7 @@ const depositAsync = async (instance, tokenAddress, web3, amount, address) => {
   const tokenInstance = new web3.eth.Contract(tokenAbi, tokenAddress)
   const decimal = await getDecimalAsync(tokenInstance)
   
-  console.log("Deposit Amount", amount)
+  console.log("Deposit Amount", new BigNumber(amount).times(new BigNumber(10).pow(decimal)).toString())
   const gasLimit = await instance.methods
     .deposit(
       new BigNumber(amount).times(new BigNumber(10).pow(decimal)).toString(),
@@ -584,8 +584,8 @@ export function* getBalance() {
       const balance = yield call(getBalanceAsync, instance, accounts[0])
       const decimal = yield call(getDecimalAsync, instance)
       console.log(balance)
-      const bal = balance / Math.pow(10, decimal)
-
+      const bal = (balance / Math.pow(10, decimal)).toFixed(18)
+      console.log(bal)
       callback(bal)
     } else {
       const accounts = yield call(web3.eth.getAccounts)
