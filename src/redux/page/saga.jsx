@@ -184,7 +184,7 @@ const getTotalDepositAsync = async (instance) => {
 }
 
 const approveAsync = async (instance, web3, amount, address, spender) => {
-  console.log('before approve gas amount', new BigNumber(amount).toString())
+  console.log('before approve gas amount', new BigNumber(amount).toFixed().toString())
   console.log('before approve gas instance', instance)
   const gasLimit = await instance.methods
     .approve(
@@ -293,7 +293,7 @@ const depositAsync = async (instance, tokenAddress, web3, amount, address) => {
   console.log("Deposit Amount", amount)
   const gasLimit = await instance.methods
     .deposit(
-      new BigNumber(amount).times(new BigNumber(10).pow(decimal)).toString(),
+      new BigNumber(amount).times(new BigNumber(10).pow(decimal)).toFixed().toString(),
     )
     .estimateGas({ from: address })
     .then((data) => {
@@ -306,7 +306,7 @@ const depositAsync = async (instance, tokenAddress, web3, amount, address) => {
 
   return await instance.methods
     .deposit(
-      new BigNumber(amount).times(new BigNumber(10).pow(decimal)).toString(),
+      new BigNumber(amount).times(new BigNumber(10).pow(decimal)).toFixed().toString(),
     )
     .send({
       from: address,
@@ -374,7 +374,7 @@ const withdrawAsync = async (instance, tokenAddress, web3, amount, address) => {
 
   const gasLimit = await instance.methods
     .withdraw(
-      new BigNumber(amount).times(new BigNumber(10).pow(decimal)).toString(),
+      new BigNumber(amount).times(new BigNumber(10).pow(decimal)).toFixed().toString(),
     )
     .estimateGas({ from: address })
     .then((data) => {
@@ -387,7 +387,7 @@ const withdrawAsync = async (instance, tokenAddress, web3, amount, address) => {
 
   return await instance.methods
     .withdraw(
-      new BigNumber(amount).times(new BigNumber(10).pow(decimal)).toString(),
+      new BigNumber(amount).times(new BigNumber(10).pow(decimal)).toFixed().toString(),
     )
     .send({
       from: address,
@@ -451,7 +451,7 @@ const claimRewardAsync = async (instance, web3, amount, address) => {
 
   const gasLimit = await instance.methods
     .claimReward(
-      new BigNumber(amount).times(new BigNumber(10).pow(18)).toString(),
+      new BigNumber(amount).times(new BigNumber(10).pow(18)).toFixed().toString(),
     )
     .estimateGas({ from: address })
     .then((data) => {
@@ -472,7 +472,7 @@ const claimRewardAsync = async (instance, web3, amount, address) => {
 
   return await instance.methods
     .claimReward(
-      new BigNumber(amount).times(new BigNumber(10).pow(18)).toString(),
+      new BigNumber(amount).times(new BigNumber(10).pow(18)).toFixed().toString(),
     )
     .send({
       from: address,
@@ -500,7 +500,7 @@ const sendRewardAsync = async (instance, web3, amount, address) => {
 
   const gasLimit = await instance.methods
     .sendReward(
-      new BigNumber(amount).times(new BigNumber(10).pow(18)).toString(),
+      new BigNumber(amount).times(new BigNumber(10).pow(18)).toFixed().toString(),
     )
     .estimateGas({ from: address })
     .then((data) => {
@@ -511,11 +511,11 @@ const sendRewardAsync = async (instance, web3, amount, address) => {
       return error
     })
 
-  console.log(gasLimit)
+  console.log(new BigNumber(amount).times(new BigNumber(10).pow(18)).toFixed().toString())
 
   return await instance.methods
     .sendReward(
-      new BigNumber(amount).times(new BigNumber(10).pow(18)).toString(),
+      new BigNumber(amount).times(new BigNumber(10).pow(18)).toFixed().toString(),
     )
     .send({
       from: address,
