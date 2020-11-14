@@ -12,10 +12,10 @@ const Header = ({ location }) => {
     if (location.pathname.indexOf("home") > 0) setMenuName("home");
     if (location.pathname.indexOf("about-pylon") > 0)
       setMenuName("about-pylon");
-    if (location.pathname.indexOf("fdi-vault") > 0) setMenuName("fdi-vault");
-    if (location.pathname.indexOf("ycrv-vault") > 0) setMenuName("ycrv-vault");
-    if (location.pathname.indexOf("pylon-vault") > 0)
-      setMenuName("pylon-vault");
+    if (location.pathname.indexOf("fvault") > 0) setMenuName("fvault");
+    if (location.pathname.indexOf("yvault") > 0) setMenuName("yvault");
+    if (location.pathname.indexOf("pvault") > 0)
+      setMenuName("pvault");
     if (location.pathname.indexOf("partners") > 0) setMenuName("partners");
   }, [location.pathname]);
 
@@ -42,22 +42,22 @@ const Header = ({ location }) => {
               >
                 <Link to="/about-pylon">ABOUT PYLON</Link>
               </li>
-              {/* <li className={cx("menu-link", { active: menuName === "ycrv-vault" })}>
-                <Link to="/ycrv-vault">YCRV VAULT</Link>
+              {/* <li className={cx("menu-link", { active: menuName === "yvault" })}>
+                <Link to="/yvault">YCRV VAULT</Link>
               </li> */}
               <li
                 className={cx("menu-link", {
-                  active: menuName === "fdi-vault",
+                  active: menuName === "fvault",
                 })}
               >
-                <Link to="/fdi-vault">FDI VAULT</Link>
+                <Link to="/fvault">FDI VAULT</Link>
               </li>
               <li
                 className={cx("menu-link", {
-                  active: menuName === "pylon-vault",
+                  active: menuName === "pvault",
                 })}
               >
-                <Link to="/pylon-vault">PYLON GPU VAULT</Link>
+                <Link to="/pvault">PYLON GPU VAULT</Link>
               </li>
               <li
                 className={cx("menu-link", { active: menuName === "partners" })}
