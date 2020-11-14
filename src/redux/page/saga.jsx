@@ -634,9 +634,10 @@ export function* getBalance() {
       const balance = yield call(getBalanceAsync, instance, accounts[0])
       const decimal = yield call(getDecimalAsync, instance)
       console.log(balance)
-      const bal = (balance / Math.pow(10, decimal)).toFixed(decimal)
-      console.log(bal)
-      callback(bal)
+      // const bal = (BigNumber(balance).div(Math.pow(10, decimal))).toFixed(decimal)
+      const bal = new BigNumber(balance).div(new BigNumber(10).pow(decimal))
+      console.log(bal.toFixed())
+      callback(bal.toFixed())
     } else {
       const accounts = yield call(web3.eth.getAccounts);
 
@@ -645,9 +646,10 @@ export function* getBalance() {
 
       // const balance = web3.eth.getBalance(accounts[0])
       console.log("ETH Balance", accounts[0], balance)
-      const bal = (balance / Math.pow(10, 18)).toFixed(18)
-      console.log("eth balance", bal)
-      callback(bal)
+      // const bal = (balance / Math.pow(10, 18)).toFixed(18)
+      const bal = new BigNumber(balance).div(new BigNumber(10).pow(18))
+      console.log("eth balance", bal.toFixed())
+      callback(bal.toFixed())
     }
   });
 }
@@ -716,10 +718,10 @@ export function* getAvailableRewardAmount() {
     const tokenInstance = new web3.eth.Contract(tokenAbi, tokenAddress);
     const decimal = yield call(getDecimalAsync, tokenInstance);
 
-    const availableRewardAmountVal =
-      availableRewardAmount / Math.pow(10, decimal);
-
-    callback(availableRewardAmountVal.toFixed(18));
+    // const availableRewardAmountVal =
+      // availableRewardAmount / Math.pow(10, decimal);
+    const availableRewardAmountVal = new BigNumber(availableRewardAmount).div(new BigNumber(10).pow(decimal));
+    callback(availableRewardAmountVal.toFixed());
   });
 }
 
@@ -748,13 +750,13 @@ export function* getDepositBalances() {
     if (tokenAddress != "") {
       const tokenInstance = new web3.eth.Contract(TOKEN_ABI, tokenAddress)
       const decimal = yield call(getDecimalAsync, tokenInstance)
-      const depositBalancesVal = (depositBalances / Math.pow(10, decimal)).toFixed(decimal)
-
-      callback(depositBalancesVal);
+      // const depositBalancesVal = (depositBalances / Math.pow(10, decimal)).toFixed(decimal)
+      const depositBalancesVal = new BigNumber(depositBalances).div(new BigNumber(10).pow(decimal))
+      callback(depositBalancesVal.toFixed());
     } else {
-      const depositBalancesVal = (depositBalances / Math.pow(10, 18)).toFixed(18)
-
-      callback(depositBalancesVal);
+      // const depositBalancesVal = (depositBalances / Math.pow(10, 18)).toFixed(18)
+      const depositBalancesVal = new BigNumber(depositBalances).div(new BigNumber(10).pow(18))
+      callback(depositBalancesVal.toFixed());
     }
   });
 }
@@ -782,9 +784,9 @@ export function* getRewardBalances() {
     );
 
     // const decimal = yield call(getDecimalAsync, instance)
-    const rewardBalancesVal = (rewardBalances / Math.pow(10, 18)).toFixed(18)
-
-    callback(rewardBalancesVal);
+    // const rewardBalancesVal = (rewardBalances / Math.pow(10, 18)).toFixed(18)
+    const rewardBalancesVal = new BigNumber(rewardBalances).div(new BigNumber(10).pow(18))
+    callback(rewardBalancesVal.toFixed());
   });
 }
 
@@ -809,13 +811,14 @@ export function* getTotalDeposit() {
     if (tokenAddress != "") {
       const tokenInstance = new web3.eth.Contract(TOKEN_ABI, tokenAddress)
       const decimal = yield call(getDecimalAsync, tokenInstance)
-      const totalDepositAmountVal = (totalDepositAmount / Math.pow(10, decimal)).toFixed(decimal)
-
-      callback(totalDepositAmountVal);
+      // const totalDepositAmountVal = (totalDepositAmount / Math.pow(10, decimal)).toFixed(decimal)
+      // console.log(totalDepositAmount)
+      const totalDepositAmountVal = new BigNumber(totalDepositAmount).div(new BigNumber(10).pow(decimal))
+      callback(totalDepositAmountVal.toFixed());
     } else {
-      const totalDepositAmountVal = (totalDepositAmount / Math.pow(10, 18)).toFixed(18)
-
-      callback(totalDepositAmountVal);
+      // const totalDepositAmountVal = (totalDepositAmount / Math.pow(10, 18)).toFixed(18)
+      const totalDepositAmountVal = new BigNumber(totalDepositAmount).div(new BigNumber(10).pow(18))
+      callback(totalDepositAmountVal.toFixed());
     }
   });
 }
