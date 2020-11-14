@@ -607,6 +607,7 @@ export function* getWeb3Instance() {
       }
     } catch (e) {
       callback(false);
+      return
     }
   });
 }
@@ -615,7 +616,13 @@ export function* getBalance() {
   yield takeEvery(actions.GET_BALANCE, function* ({ payload }) {
     const { tokenAddress, callback } = payload;
 
-    const web3 = yield call(getWeb3);
+    let web3;
+    try {
+      web3 = yield call(getWeb3);
+    } catch(e) {
+      callback(0) 
+      return
+    }
 
     if (tokenAddress != "") {
       const abi = TOKEN_ABI;
@@ -649,7 +656,13 @@ export function* getAllowance() {
   yield takeEvery(actions.GET_ALLOWANCE, function* ({ payload }) {
     const { vaultAddress, tokenAddress, callback } = payload;
     console.log(1);
-    const web3 = yield call(getWeb3);
+    let web3;
+    try {
+      web3 = yield call(getWeb3);
+    } catch(e) {
+      callback(0) 
+      return
+    }
     console.log(2);
 
     if (tokenAddress != "") {
@@ -681,7 +694,13 @@ export function* getAvailableRewardAmount() {
   yield takeEvery(actions.GET_AVAILABLE_REWARD_AMOUNT, function* ({ payload }) {
     const { vaultAddress, tokenAddress, callback } = payload;
 
-    const web3 = yield call(getWeb3);
+    let web3;
+    try {
+      web3 = yield call(getWeb3);
+    } catch(e) {
+      callback(0) 
+      return
+    }
     const abi = ABI_VAULT;
     const instance = new web3.eth.Contract(abi, vaultAddress);
 
@@ -708,7 +727,13 @@ export function* getDepositBalances() {
   yield takeEvery(actions.GET_DEPOSIT_BALANCE, function* ({ payload }) {
     const { vaultAddress, tokenAddress, callback } = payload;
 
-    const web3 = yield call(getWeb3);
+    let web3;
+    try {
+      web3 = yield call(getWeb3);
+    } catch(e) {
+      callback(0) 
+      return
+    }
     const abi = ABI_VAULT;
     const instance = new web3.eth.Contract(abi, vaultAddress);
 
@@ -738,7 +763,13 @@ export function* getRewardBalances() {
   yield takeEvery(actions.GET_REWARD_BALANCE, function* ({ payload }) {
     const { vaultAddress, callback } = payload;
 
-    const web3 = yield call(getWeb3);
+    let web3;
+    try {
+      web3 = yield call(getWeb3);
+    } catch(e) {
+      callback(0) 
+      return
+    }
     const abi = ABI_VAULT;
     const instance = new web3.eth.Contract(abi, vaultAddress);
 
@@ -761,7 +792,13 @@ export function* getTotalDeposit() {
   yield takeEvery(actions.GET_TOTAL_DEPOSIT, function* ({ payload }) {
     const { vaultAddress, tokenAddress, callback } = payload;
 
-    const web3 = yield call(getWeb3);
+    let web3;
+    try {
+      web3 = yield call(getWeb3);
+    } catch(e) {
+      callback(0) 
+      return
+    }
     const abi = ABI_VAULT;
     const instance = new web3.eth.Contract(abi, vaultAddress);
 
@@ -788,7 +825,14 @@ export function* approveToken() {
     const { tokenAddress, vaultAddress, callback } = payload;
 
     console.log("before web3");
-    const web3 = yield call(getWeb3);
+    let web3;
+    try {
+      web3 = yield call(getWeb3);
+    } catch(e) {
+      callback(false)
+      return
+    }
+    
     const abi = TOKEN_ABI;
     const instance = new web3.eth.Contract(abi, tokenAddress);
     console.log("after instance web3");
@@ -819,7 +863,13 @@ export function* depositToken() {
   yield takeLatest(actions.DEPOSIT_TOKEN, function* ({ payload }) {
     const { vaultAddress, tokenAddress, amount, callback } = payload;
     console.log("test", payload);
-    const web3 = yield call(getWeb3);
+    let web3;
+    try {
+      web3 = yield call(getWeb3);
+    } catch(e) {
+      callback(false) 
+      return
+    }
 
     if (vaultAddress != ADDR_ETH_VAULT) {
       const abi = ABI_VAULT;
@@ -865,7 +915,14 @@ export function* depositAllToken() {
   yield takeLatest(actions.DEPOSIT_TOKEN_ALL, function* ({ payload }) {
     const { vaultAddress, callback } = payload;
 
-    const web3 = yield call(getWeb3);
+    let web3;
+    try {
+      web3 = yield call(getWeb3);
+    } catch(e) {
+      callback(false) 
+      return
+    }
+
     const abi = ABI_VAULT;
     const instance = new web3.eth.Contract(abi, vaultAddress);
 
@@ -887,7 +944,13 @@ export function* withdrawToken() {
   yield takeLatest(actions.WITHDRAW_TOKEN, function* ({ payload }) {
     const { vaultAddress, tokenAddress, amount, callback } = payload;
 
-    const web3 = yield call(getWeb3);
+    let web3;
+    try {
+      web3 = yield call(getWeb3);
+    } catch(e) {
+      callback(false) 
+      return
+    }
     const abi = ABI_VAULT;
     const instance = new web3.eth.Contract(abi, vaultAddress);
 
@@ -911,7 +974,13 @@ export function* withdrawAllToken() {
   yield takeLatest(actions.WITHDRAW_TOKEN_ALL, function* ({ payload }) {
     const { vaultAddress, callback } = payload;
 
-    const web3 = yield call(getWeb3);
+    let web3;
+    try {
+      web3 = yield call(getWeb3);
+    } catch(e) {
+      callback(false) 
+      return
+    }
     const abi = ABI_VAULT;
     const instance = new web3.eth.Contract(abi, vaultAddress);
 
@@ -933,7 +1002,13 @@ export function* claimReward() {
   yield takeLatest(actions.CLAIM_REWARD, function* ({ payload }) {
     const { vaultAddress, amount, callback } = payload;
 
-    const web3 = yield call(getWeb3);
+    let web3;
+    try {
+      web3 = yield call(getWeb3);
+    } catch(e) {
+      callback(false) 
+      return
+    }
     const abi = ABI_VAULT;
     const instance = new web3.eth.Contract(abi, vaultAddress);
 
@@ -957,7 +1032,13 @@ export function* claimRewardAll() {
   yield takeLatest(actions.CLAIM_REWARD_ALL, function* ({ payload }) {
     const { vaultAddress, callback } = payload;
 
-    const web3 = yield call(getWeb3);
+    let web3;
+    try {
+      web3 = yield call(getWeb3);
+    } catch(e) {
+      callback(false) 
+      return
+    }
 
     if (vaultAddress != ADDR_ETH_VAULT) {
       const abi = ABI_VAULT;
@@ -997,7 +1078,13 @@ export function* sendRewardAmount() {
     console.log("Payload", payload);
     const { vaultAddress, amount, callback } = payload;
 
-    const web3 = yield call(getWeb3);
+    let web3;
+    try {
+      web3 = yield call(getWeb3);
+    } catch(e) {
+      callback(false) 
+      return
+    }
 
     if (vaultAddress != ADDR_ETH_VAULT) {
       const abi = ABI_VAULT;
