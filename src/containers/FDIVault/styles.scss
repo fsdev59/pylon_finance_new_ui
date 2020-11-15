@@ -20,22 +20,22 @@
     padding-bottom: 50px;
     box-sizing: border-box;
 
-    // background: url("../../assets/images/vault-image.png");
-    // background-position: right 30%;
-    // background-repeat: no-repeat;
-    // background-size: 40%;
+    background: url("../../assets/images/vault-image.png");
+    background-position: right 30%;
+    background-repeat: no-repeat;
+    background-size: 40%;
 
     @media screen and (max-width: 768px) {
       padding-left: 30px;
       padding-right: 30px;
     }
 
-    .vault-image {
-      width: 50%;
-      @media screen and (max-width: 550px) {
-        width: 100%;
-      }
-    }
+    // .vault-image {
+    //   width: 50%;
+    //   @media screen and (max-width: 550px) {
+    //     width: 100%;
+    //   }
+    // }
   }
 
   .connect-wallet {
