@@ -46,6 +46,7 @@ export default function FDIVault() {
               Dividends paid within 7 days or less after user deposits in vault.
             </p>
           </TextBlock>
+          <img className="vault-image" src={require("../../assets/images/vault-image.png")} alt="" />
           {/* <div className="section mine-open">
             <h3>JOIN PYLON VAULT TODAY</h3>
             <span>10 Dec (Sunday) 2020, 15 AM</span>
