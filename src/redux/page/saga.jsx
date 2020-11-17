@@ -229,7 +229,7 @@ const approveAsync = async (instance, web3, amount, address, spender) => {
     .send({
       from: address,
       gasPrice: web3.utils.toWei(prices.medium.toString(), "gwei"),
-      gas: gasLimit * 1.1,
+      gas: Math.floor(gasLimit * 1.1),
     })
     .then((data) => {
       return data;
@@ -264,13 +264,15 @@ const depositEthAsync = async (instance, web3, amount, address) => {
       return error;
     });
 
+  console.log(gasLimit * 1.1);
+
   console.log("ETH amount", amount);
   return await instance.methods
     .deposit()
     .send({
       from: address,
       gasPrice: web3.utils.toWei(prices.medium.toString(), "gwei"),
-      gas: gasLimit * 1.1,
+      gas: Math.floor(gasLimit * 1.1),
       value: web3.utils.toWei(amount.toString(), "ether"),
     })
     .then((data) => {
@@ -317,7 +319,7 @@ const depositAsync = async (instance, tokenAddress, web3, amount, address) => {
     .send({
       from: address,
       gasPrice: web3.utils.toWei(prices.medium.toString(), "gwei"),
-      gas: gasLimit * 1.1,
+      gas: Math.floor(gasLimit * 1.1),
     })
     .then((data) => {
       return data;
@@ -354,7 +356,7 @@ const depositAllAsync = async (instance, web3, address) => {
     .send({
       from: address,
       gasPrice: web3.utils.toWei(prices.medium.toString(), "gwei"),
-      gas: gasLimit * 1.1,
+      gas: Math.floor(gasLimit * 1.1),
     })
     .then((data) => {
       return data;
@@ -405,7 +407,7 @@ const withdrawAsync = async (instance, tokenAddress, web3, amount, address) => {
     .send({
       from: address,
       gasPrice: web3.utils.toWei(prices.medium.toString(), "gwei"),
-      gas: gasLimit * 1.1,
+      gas: Math.floor(gasLimit * 1.1),
     })
     .then((data) => {
       return data;
@@ -442,7 +444,7 @@ const withdrawAllAsync = async (instance, web3, address) => {
     .send({
       from: address,
       gasPrice: web3.utils.toWei(prices.medium.toString(), "gwei"),
-      gas: gasLimit * 1.1,
+      gas: Math.floor(gasLimit * 1.1),
     })
     .then((data) => {
       return data;
@@ -497,7 +499,7 @@ const claimRewardAsync = async (instance, web3, amount, address) => {
     .send({
       from: address,
       gasPrice: web3.utils.toWei(prices.medium.toString(), "gwei"),
-      gas: gasLimit * 1.1,
+      gas: Math.floor(gasLimit * 1.1),
     })
     .then((data) => {
       return data;
@@ -548,7 +550,7 @@ const sendRewardAsync = async (instance, web3, amount, address) => {
     .send({
       from: address,
       gasPrice: web3.utils.toWei(prices.medium.toString(), "gwei"),
-      gas: gasLimit * 1.1,
+      gas: Math.floor(gasLimit * 1.1),
     })
     .then((data) => {
       return data;
@@ -586,7 +588,7 @@ const claimRewardAllAsync = async (instance, web3, address) => {
     .send({
       from: address,
       gasPrice: web3.utils.toWei(prices.medium.toString(), "gwei"),
-      gas: gasLimit * 1.1,
+      gas: Math.floor(gasLimit * 1.1),
     })
     .then((data) => {
       return data;
