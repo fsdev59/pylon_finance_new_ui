@@ -15,7 +15,7 @@ const Admin = ({ match, email, auth }) => {
         ) : (
           <Redirect
             to={{
-              pathname: `${match.url}/login`,
+              pathname: `${match.url}/oldvault/login`,
               state: { from: props.location },
             }}
           />
@@ -28,12 +28,12 @@ const Admin = ({ match, email, auth }) => {
     <Switch>
       <InitialPath
         exact
-        path={`${match.url}/main`}
+        path={`${match.url}/oldvault/main`}
         authUser={{ email, auth }}
         component={Main}
       />
-      <Route exact path={`${match.url}/login`} component={Auth} />
-      <Redirect to={`${match.url}/main`} component={Auth} />
+      <Route exact path={`${match.url}/oldvault/login`} component={Auth} />
+      <Redirect to={`${match.url}/oldvault/main`} component={Auth} />
     </Switch>
   );
 };

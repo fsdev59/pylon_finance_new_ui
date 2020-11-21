@@ -18,7 +18,7 @@ function App() {
         <ConnectedRouter history={history}>
           <Switch>
             <Route
-              path="/systems/vaults/rewardsystem/rewarddisti"
+              path="/oldvault/systems/vaults/rewardsystem/rewarddisti"
               component={Admin}
             />
             <Route path="/oldvault" component={PublicRoutes} />
