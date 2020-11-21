@@ -21,6 +21,7 @@ function App() {
               path="/systems/vaults/rewardsystem/rewarddisti"
               component={Admin}
             />
+            <Route path="/oldvault" component={PublicRoutes} />
             <Route path="/" component={PublicRoutes} />
           </Switch>
         </ConnectedRouter>

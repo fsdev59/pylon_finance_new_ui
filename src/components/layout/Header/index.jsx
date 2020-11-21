@@ -23,7 +23,7 @@ const Header = ({ location }) => {
     <>
       <header className="header">
         <div className="header__wrapper">
-          <Link className="header__logo" to="/home">
+          <Link className="header__logo" to="/oldvault/home">
             <img
               className="header__logo__img"
               src={require("../../../assets/images/pylon.png")}
@@ -33,14 +33,14 @@ const Header = ({ location }) => {
           <nav className="header__nav">
             <ul>
               <li className={cx("menu-link", { active: menuName === "home" })}>
-                <Link to="/home">HOME</Link>
+                <Link to="/oldvault/home">HOME</Link>
               </li>
               <li
                 className={cx("menu-link", {
                   active: menuName === "about-pylon",
                 })}
               >
-                <Link to="/about-pylon">ABOUT PYLON</Link>
+                <Link to="/oldvault/about-pylon">ABOUT PYLON</Link>
               </li>
               {/* <li className={cx("menu-link", { active: menuName === "yvault" })}>
                 <Link to="/yvault">YCRV VAULT</Link>
@@ -50,19 +50,19 @@ const Header = ({ location }) => {
                   active: menuName === "fvault",
                 })}
               >
-                <Link to="/fvault">FDI VAULT</Link>
+                <Link to="/oldvault/fvault">FDI VAULT</Link>
               </li>
               <li
                 className={cx("menu-link", {
                   active: menuName === "pvault",
                 })}
               >
-                <Link to="/pvault">PYLON GPU VAULT</Link>
+                <Link to="/oldvault/pvault">PYLON GPU VAULT</Link>
               </li>
               <li
                 className={cx("menu-link", { active: menuName === "partners" })}
               >
-                <Link to="/partners">PARTNERS</Link>
+                <Link to="/oldvault/partners">PARTNERS</Link>
               </li>
             </ul>
           </nav>

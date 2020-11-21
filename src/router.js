@@ -18,12 +18,12 @@ const PublicRoutes = ({ match }) => {
       <Header />
       <Switch>
         <Route exact path={`${match.url}`} component={Home} />
-        <Route exact path={`${match.url}home`} component={Home} />
-        <Route exact path={`${match.url}about-pylon`} component={AboutPYLON} />
-        <Route exact path={`${match.url}yvault`} component={YCRVVault} />
-        <Route exact path={`${match.url}fvault`} component={FDIVault} />
-        <Route exact path={`${match.url}pvault`} component={PYLONVault} />
-        <Route exact path={`${match.url}partners`} component={Partners} />
+        <Route exact path={`${match.url}/home`} component={Home} />
+        <Route exact path={`${match.url}/about-pylon`} component={AboutPYLON} />
+        <Route exact path={`${match.url}/yvault`} component={YCRVVault} />
+        <Route exact path={`${match.url}/fvault`} component={FDIVault} />
+        <Route exact path={`${match.url}/pvault`} component={PYLONVault} />
+        <Route exact path={`${match.url}/partners`} component={Partners} />
       </Switch>
       <Footer />
     </>
