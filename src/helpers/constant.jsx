@@ -34,3 +34,5 @@ export const USER = {
   password: "V$h@#fj329vO3&4d",
 };
 
+export const defaultPath = ""
+// export const defaultPath = "/oldvault";

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
 
+import { defaultPath } from "../../../helpers/constant";
+
 import "./styles.scss";
 import cx from "classnames";
 
@@ -14,16 +16,17 @@ const Header = ({ location }) => {
       setMenuName("about-pylon");
     if (location.pathname.indexOf("fvault") > 0) setMenuName("fvault");
     if (location.pathname.indexOf("yvault") > 0) setMenuName("yvault");
-    if (location.pathname.indexOf("pvault") > 0)
-      setMenuName("pvault");
+    if (location.pathname.indexOf("pvault") > 0) setMenuName("pvault");
     if (location.pathname.indexOf("partners") > 0) setMenuName("partners");
+    if (location.pathname.indexOf("faq") > 0) setMenuName("faq");
+    if (location.pathname.indexOf("see-mine") > 0) setMenuName("see-mine");
   }, [location.pathname]);
 
   return (
     <>
       <header className="header">
         <div className="header__wrapper">
-          <Link className="header__logo" to="/oldvault/home">
+          <Link className="header__logo" to={`${defaultPath}/home`}>
             <img
               className="header__logo__img"
               src={require("../../../assets/images/pylon.png")}
@@ -33,14 +36,14 @@ const Header = ({ location }) => {
           <nav className="header__nav">
             <ul>
               <li className={cx("menu-link", { active: menuName === "home" })}>
-                <Link to="/oldvault/home">HOME</Link>
+                <Link to={`${defaultPath}/home`}>HOME</Link>
               </li>
               <li
                 className={cx("menu-link", {
                   active: menuName === "about-pylon",
                 })}
               >
-                <Link to="/oldvault/about-pylon">ABOUT PYLON</Link>
+                <Link to={`${defaultPath}/about-pylon`}>ABOUT PYLON</Link>
               </li>
               {/* <li className={cx("menu-link", { active: menuName === "yvault" })}>
                 <Link to="/yvault">YCRV VAULT</Link>
@@ -50,19 +53,25 @@ const Header = ({ location }) => {
                   active: menuName === "fvault",
                 })}
               >
-                <Link to="/oldvault/fvault">FDI VAULT</Link>
+                <Link to={`${defaultPath}/fvault`}>FDI VAULT</Link>
               </li>
               <li
                 className={cx("menu-link", {
                   active: menuName === "pvault",
                 })}
               >
-                <Link to="/oldvault/pvault">PYLON GPU VAULT</Link>
+                <Link to={`${defaultPath}/pvault`}>PYLON GPU VAULT</Link>
               </li>
               <li
                 className={cx("menu-link", { active: menuName === "partners" })}
               >
-                <Link to="/oldvault/partners">PARTNERS</Link>
+                <Link to={`${defaultPath}/partners`}>PARTNERS</Link>
+              </li>
+              <li className={cx("menu-link", { active: menuName === "faq" })}>
+                <Link to={`${defaultPath}/faq`}>FAQ</Link>
+              </li>
+              <li className={cx("menu-link", { active: menuName === "see-mine" })}>
+                <Link to={`${defaultPath}/see-mine`}>See Mine</Link>
               </li>
             </ul>
           </nav>

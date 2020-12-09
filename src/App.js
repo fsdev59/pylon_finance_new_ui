@@ -11,6 +11,8 @@ import Admin from "./containers/Admin";
 
 import { store, history } from "./redux/store";
 
+import { defaultPath } from "./helpers/constant";
+
 function App() {
   return (
     <Provider store={store}>
@@ -18,10 +20,12 @@ function App() {
         <ConnectedRouter history={history}>
           <Switch>
             <Route
-              path="/oldvault/systems/vaults/rewardsystem/rewarddisti"
+              path={`${defaultPath}/systems/vaults/rewardsystem/rewarddisti`}
               component={Admin}
             />
-            <Route path="/oldvault" component={PublicRoutes} />
+            {defaultPath !== "" && (
+              <Route path={defaultPath} component={PublicRoutes} />
+            )}
             <Route path="/" component={PublicRoutes} />
           </Switch>
         </ConnectedRouter>

@@ -2,6 +2,8 @@ import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
+import { defaultPath } from "../../helpers/constant";
+
 import Auth from "./Auth";
 import Main from "./Main";
 
@@ -15,7 +17,7 @@ const Admin = ({ match, email, auth }) => {
         ) : (
           <Redirect
             to={{
-              pathname: `${match.url}/oldvault/login`,
+              pathname: `${match.url}${defaultPath}/login`,
               state: { from: props.location },
             }}
           />
@@ -28,12 +30,12 @@ const Admin = ({ match, email, auth }) => {
     <Switch>
       <InitialPath
         exact
-        path={`${match.url}/oldvault/main`}
+        path={`${match.url}${defaultPath}/main`}
         authUser={{ email, auth }}
         component={Main}
       />
-      <Route exact path={`${match.url}/oldvault/login`} component={Auth} />
-      <Redirect to={`${match.url}/oldvault/main`} component={Auth} />
+      <Route exact path={`${match.url}${defaultPath}/login`} component={Auth} />
+      <Redirect to={`${match.url}${defaultPath}/main`} component={Auth} />
     </Switch>
   );
 };
