@@ -41,7 +41,7 @@ export default function SeeMine() {
               cooling
             </p>
             <p>
-              All other fees are absorbed for free.which are: {` `}
+              All other fees are absorbed for free.{` `}which are: {` `}
               <br /> 1. insurance {` `}
               <br /> 2. internet {` `}
               <br /> 3. maintenance of machines {` `}
