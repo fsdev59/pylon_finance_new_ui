@@ -15,6 +15,7 @@ export default function SeeMine() {
         <div className="content">
           <div className="section">
             <p>
+              <img src={require("../../assets/images/see-mine.png")} width="100%" alt=""/>
               <a
                 href="https://ethereum.miningpoolhub.com/index.php?page=statistics&action=pool"
                 target="_blank"
